@@ -1,0 +1,86 @@
+{
+  "categories": [
+    {
+      "name": "Single"
+    },
+    {
+      "name": "Double"
+    },
+    {
+      "name": "Family"
+    },
+    {
+      "name": "VIP"
+    }
+  ],
+  "rooms": [
+    {
+      "roomNumber": 101,
+      "roomFloor": "Floor 1",
+      "price": 500000,
+      "isAvailable": true,
+      "facilities": ["Wifi", "TV", "Tủ lạnh", "Máy lạnh", "Giường đơn"],
+      "status": "Clean",
+      "isChildren": false
+    },
+    {
+      "roomNumber": 201,
+      "roomFloor": "Floor 2",
+      "price": 1000000,
+      "isAvailable": true,
+      "facilities": ["Wifi", "TV", "Tủ lạnh", "Máy lạnh", "Giường đôi"],
+      "status": "Clean",
+      "isChildren": false
+    },
+    {
+      "roomNumber": 301,
+      "roomFloor": "Floor 3",
+      "price": 1500000,
+      "isAvailable": true,
+      "facilities": ["Wifi", "TV", "Tủ lạnh", "Máy lạnh", "2 Giường đôi"],
+      "status": "Clean",
+      "isChildren": true
+    },
+    {
+      "roomNumber": 401,
+      "roomFloor": "Floor 4",
+      "price": 2500000,
+      "isAvailable": true,
+      "facilities": ["Wifi", "TV", "Tủ lạnh", "2 Máy lạnh", "2 Giường đôi"],
+      "status": "Clean",
+      "isChildren": false
+    }
+  ],
+  "transports": [
+    {
+      "vehicle": "BMW",
+      "pickup_location": "Q7, HCM",
+      "destination": "abc",
+      "price": 250000,
+      "time": "Sat Oct 28 2023 07:35:44"
+    }
+  ],
+  "restaurants": [
+    {
+      "tableNumber": "#1",
+      "status": "Còn trống"
+    },
+    {
+      "tableNumber": "#2",
+      "status": "Còn trống"
+    },
+    {
+      "tableNumber": "#3",
+      "status": "Còn trống"
+    }
+  ],
+  "guests": [
+    {
+      "fname": "Lam",
+      "lname": "Si",
+      "phone": "0231823934",
+      "email": "thientaitrinhlamnhu@gmail.com",
+      "reservation": []
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+import mongoose from 'mongoose';
+
+const invoiceSchema = new mongoose.Schema({
+    taxes: {
+        type: Number,
+        require: true
+    },
+    total: {
+        type: Number,
+        require: true
+    },
+    paid_at: {
+        type: Date,
+        require: true
+    },
+    change: {
+        type: Number,
+        require: true
+    },
+    take: {
+        type: Number,
+        require: true
+    },
+    payment_method: {
+        type: String,
+        require: true
+    },
+    reservation: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Reservation'
+    }
+}, { timestamps: true });
+
+const Invoice = mongoose.model('Invoice', invoiceSchema);
+export default Invoice;

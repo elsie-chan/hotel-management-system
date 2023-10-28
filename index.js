@@ -13,7 +13,7 @@ const URL = variables.PREFIX_URL || 'http://localhost';
 
 configSource(app);
 
-//await connectDatabase();
+await connectDatabase();
 
 app.listen(PORT, () => {
     console.log(`Server is running at ${URL}:${PORT}`);
