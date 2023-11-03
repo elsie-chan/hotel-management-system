@@ -1,5 +1,5 @@
-import Transport from '../models/transport.model';
-import { ErrorMessage } from '../error/message.error';
+import Transport from '../models/transport.model.js';
+import { ErrorMessage } from '../error/message.error.js';
 
 const getAll = async () => {
     try {

@@ -1,4 +1,4 @@
-import Restaurant from "../models/restaurant.model";
+import Restaurant from "../models/restaurant.model.js";
 import { ErrorMessage } from "../error/message.error.js";
 
 const getAll = async () => {

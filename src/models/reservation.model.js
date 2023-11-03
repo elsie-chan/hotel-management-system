@@ -21,7 +21,7 @@ const reservationSchema = new mongoose.Schema({
         type: Date,
         require: true
     },
-    total_amout: {
+    total_amount: {
         type: Number,
         require: true
     },

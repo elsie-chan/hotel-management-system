@@ -38,6 +38,8 @@ class ApiRoomController {
     }
     async createRoom(req, res) {
         try {
+
+            console.log(req.body)
             const newRoom = await RoomService.create(req.body);
             return res.status(200).json({
                 message: 'Create room successfully',

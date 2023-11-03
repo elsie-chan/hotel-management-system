@@ -39,17 +39,13 @@ const accountSchema = new mongoose.Schema({
         enum: [...Object.keys(Role)],
         default: Role.MANAGER
     },
-    createAt: {
-        type: Date,
-        default: Date.now
-    },
     token: {
         type: String,
-        required: false
+        required: true
     },
     refreshToken: {
         type: String,
-        required: false
+        required: true
     },
     sales: [{
         type: mongoose.Schema.Types.ObjectId,

@@ -50,6 +50,8 @@ const getRoomIsAvailableOfCategory = async (category) => {
 }
 const create = async (data) => {
     try {
+        let isAvailable = data.isAvailable==='Available';
+        data.isAvailable = isAvailable;
         const room = new Room(data);
         return await room.save();
     } catch(e){
