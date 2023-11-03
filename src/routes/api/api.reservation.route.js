@@ -4,13 +4,13 @@ import ApiReservationController from "../../controllers/api/api.reservation.cont
 
 const router = express.Router();
 
-router.get("/reservation", ApiReservationController.getAll);
-router.get("/reservation/:id", ApiReservationController.getRestaurantById);
-router.get("/reservation/guest/:id", ApiReservationController.getReservationByGuest);
-router.get("/reservation/checkIn", ApiReservationController.getCheckIn);
-router.get("/reservation/checkOut", ApiReservationController.getCheckOut);
-router.post("/reservation/add", validation.reservation, ApiReservationController.create);
-router.put("/reservation/:id", validation.reservation, ApiReservationController.update);
-router.delete("/reservation/:id", ApiReservationController.delete);
+router.get("/", ApiReservationController.getAll);
+router.get("/:id", ApiReservationController.getReservationById);
+router.get("/guest/:id", ApiReservationController.getReservationByGuest);
+router.get("/checkIn", ApiReservationController.updateCheckIn);
+router.get("/checkOut", ApiReservationController.updateCheckOut);
+router.post("/add", validation.reservation, ApiReservationController.create);
+router.put("/:id", validation.reservation, ApiReservationController.update);
+router.delete("/:id", ApiReservationController.delete);
 
 export default router;

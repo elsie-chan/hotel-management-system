@@ -1,5 +1,6 @@
 import Reservation from "../models/reservation.model.js";
 import { ErrorMessage } from "../error/message.error.js";
+import Guest from "../models/guest.model.js";
 
 const getAll = async () => {
     try {
@@ -28,26 +29,45 @@ const getReservationByGuest = async (guest) => {
     }
 }
 
-const getCheckIn = async () => {
+const updateCheckIn = async (id, checkIn) => {
     try {
-        const reservation = Reservation.find({checkIn: {$gte: new Date()}});
+        const reservation = Reservation.findByIdAndUpdate(id,{checkIn});
+        if(!reservation) return ErrorMessage(400, "Reservation not found");
         return await reservation;
-    } catch (e) {
-        return ErrorMessage(400, "Reservation not found");
+    } catch(e){
+        return ErrorMessage(400, "Reservation not updated");
     }
 }
-const getCheckOut = async () => {
+const updateCheckOut = async (id, checkOut) => {
     try {
-        const reservation = Reservation.find({checkOut: {$lte: new Date()}});
+        const reservation = await Reservation.findOne({_id: id, isDeleted: false});
+        if(reservation.select('checkOut') > checkOut){
+            let hours = checkOut.getHours() - reservation.select('checkOut').getHours();
+            let minutes = checkOut.getMinutes() - reservation.select('checkOut').getMinutes();
+            let cost = 150000;
+            let total = reservation.select('total');
+            if(minutes > 0) hours++;
+            total += cost * hours;
+            reservation.total = total;
+        }
+        if(!reservation) return ErrorMessage(400, "Reservation not found");
         return await reservation;
-    } catch (e) {
-        return ErrorMessage(400, "Reservation not found");
+    } catch(e){
+        return ErrorMessage(400, "Reservation not updated");
     }
 }
 const create = async (data) => {
     try {
+        const guest = await Guest.findOne({phone: data.phone});
+        if(!guest){
+            const newGuest = new Guest({fname: data.fname, lname: data.lname, phone: data.phone});
+            await newGuest.save();
+            data.guest = newGuest._id;
+        }
         const reservation = new Reservation(data);
-        return await reservation.save();
+        await reservation.save()
+        await Guest.findByIdAndUpdate(data._id,{$push: {reservations: reservation}});
+        return await reservation;
     } catch (e) {
         return ErrorMessage(400, "Reservation not created");
     }
@@ -63,14 +83,23 @@ const update = async (id, data) => {
     }
 }
 
-// const remove = async (id) => {
-//     try {
-//         const reservation = Reservation.findByIdAndDelete(id);
-//         if(!reservation) return ErrorMessage(400, "Reservation not found");
-//         return await reservation;
-//     } catch(e){
-//         return ErrorMessage(400, "Reservation not deleted");
-//     }
-// }
+const remove = async (id) => {
+    try {
+        const reservation = Reservation.findByIdAndUpdate(id,{isDeleted: true});
+        if(!reservation) return ErrorMessage(400, "Reservation not found");
+        return await reservation;
+    } catch(e){
+        return ErrorMessage(400, "Reservation not deleted");
+    }
+}
 
-export default { getAll, getReservationById, create, update }
+export default {
+    getAll,
+    getReservationById,
+    getReservationByGuest,
+    create,
+    update,
+    updateCheckIn,
+    updateCheckOut,
+    remove
+}

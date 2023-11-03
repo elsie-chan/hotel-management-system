@@ -19,6 +19,23 @@ class ApiRestaurantController {
             return res.status(500).json({ message: e });
         }
     }
+    async getRestaurantIsAvailable(req, res) {
+        try {
+            const restaurants = await RestaurantService.getRestaurantIsAvailable();
+            return res.status(200).json(restaurants);
+        } catch (e) {
+            return res.status(500).json({ message: e });
+        }
+    }
+    async bookTable(req, res) {
+        try {
+            const { reservation_id } = req.body;
+            const restaurant = await RestaurantService.bookTable(req.params.id, reservation_id);
+            return res.status(200).json(restaurant);
+        } catch (e) {
+            return res.status(500).json({ message: e });
+        }
+    }
 }
 
 export default new ApiRestaurantController();

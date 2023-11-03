@@ -14,9 +14,14 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage: storage });
 
-router.get('/room', ApiRoomController.getAll);
-router.get('/room/:id', ApiRoomController.getRoomById);
 router.post('/add', validation, upload.single('image'), ApiRoomController.createRoom.bind(ApiRoomController));
-router.put('/room/update/:id', validation, ApiRoomController.updateRoom);
-router.delete('/room/delete/:id', ApiRoomController.deleteRoom);
+router.get('/', ApiRoomController.getAll);
+router.get('/:id', ApiRoomController.getRoomById);
+router.post('/room-number', validation, ApiRoomController.getRoomByNumber);
+router.get('/count', ApiRoomController.countRoom);
+router.get('/available', ApiRoomController.getRoomIsAvailable);
+router.get('/unavailable', ApiRoomController.getRoomIsUnavailable);
+router.get('/category/available/:id', ApiRoomController.getRoomIsAvailableOfCategory);
+router.put('/update/:id', validation, ApiRoomController.updateRoom);
+router.delete('/delete/:id', ApiRoomController.deleteRoom);
 export default router;

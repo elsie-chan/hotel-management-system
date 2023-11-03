@@ -21,13 +21,18 @@ const reservationSchema = new mongoose.Schema({
         type: Date,
         require: true
     },
-    total_amount: {
+    total: {
         type: Number,
         require: true
     },
     payment_status: {
         type: String,
         require: true
+    },
+    isDeleted: {
+        type: Boolean,
+        required: false,
+        default: false
     },
     rooms: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -40,10 +45,6 @@ const reservationSchema = new mongoose.Schema({
     transport:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Transport'
-    },
-    guest: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Guest'
     }
 }, { timestamps: true });
 

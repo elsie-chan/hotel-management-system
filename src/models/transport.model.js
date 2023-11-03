@@ -26,7 +26,7 @@ const transportSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Guest'
     }]
-}, { timestamps: true });
+});
 
 const Transport = mongoose.model('Transport', transportSchema);
 export default Transport;

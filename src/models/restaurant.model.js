@@ -16,12 +16,8 @@ const restaurantSchema = new mongoose.Schema({
     status: {
         type: String,
         require: true
-    },
-    guestNumber: {
-        type: Number,
-        require: true
     }
-}, { timestamps: true });
+});
 
 const Restaurant = mongoose.model('Restaurant', restaurantSchema);
 export default Restaurant;

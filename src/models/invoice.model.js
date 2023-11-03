@@ -13,14 +13,6 @@ const invoiceSchema = new mongoose.Schema({
         type: Date,
         require: true
     },
-    change: {
-        type: Number,
-        require: true
-    },
-    take: {
-        type: Number,
-        require: true
-    },
     payment_method: {
         type: String,
         require: true
@@ -28,6 +20,11 @@ const invoiceSchema = new mongoose.Schema({
     reservation: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Reservation'
+    },
+    isDeleted: {
+        type: Boolean,
+        required: false,
+        default: false
     }
 }, { timestamps: true });
 

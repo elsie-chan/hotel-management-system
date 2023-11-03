@@ -35,4 +35,18 @@ const countRoom = async () => {
         return ErrorMessage(400, "Category not found");
     }
 }
-export default { getAll, getCategoryById , countRoom }
+
+const createCategory = async (category) => {
+    try {
+        const newCategory = new Category(category);
+        return await newCategory.save();
+    } catch (e) {
+        return ErrorMessage(400, "Category not found");
+    }
+}
+export default {
+    getAll,
+    getCategoryById ,
+    countRoom,
+    createCategory
+}

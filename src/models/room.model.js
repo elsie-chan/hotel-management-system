@@ -14,7 +14,7 @@ const roomSchema = new mongoose.Schema({
         required: true
     },
     isAvailable: {
-        type: Boolean,
+        type: String,
         required: true
     },
     facilities: {
@@ -26,6 +26,15 @@ const roomSchema = new mongoose.Schema({
         required: true
     },
     isChildren: {
+        type: Boolean,
+        required: false,
+        default: false
+    },
+    images: {
+        type: String,
+        required: false
+    },
+    isDeleted: {
         type: Boolean,
         required: false,
         default: false

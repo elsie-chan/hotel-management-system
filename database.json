@@ -1,16 +1,39 @@
 {
+  "guests": [
+    {
+      "fname": "Lam",
+      "lname": "Si",
+      "phone": "0231823934",
+      "email": "thientaitrinhlamnhu@gmail.com",
+      "reservation": [],
+      "feedbacks": [
+        {
+          "note": "Dịch vụ ở đây quá tệ",
+          "status": false
+        },
+        {
+            "note": "Phòng có gián",
+            "status": false
+        }
+      ]
+    }
+  ],
   "categories": [
     {
-      "name": "Single"
+      "name": "Single",
+      "rooms": []
     },
     {
-      "name": "Double"
+      "name": "Double",
+      "rooms": []
     },
     {
-      "name": "Family"
+      "name": "Family",
+      "rooms": []
     },
     {
-      "name": "VIP"
+      "name": "VIP",
+      "rooms": []
     }
   ],
   "rooms": [
@@ -18,36 +41,45 @@
       "roomNumber": 101,
       "roomFloor": "Floor 1",
       "price": 500000,
-      "isAvailable": true,
+      "isAvailable": "Còn trống",
       "facilities": ["Wifi", "TV", "Tủ lạnh", "Máy lạnh", "Giường đơn"],
-      "status": "Clean",
+      "status": "Sạch sẽ",
+      "isChildren": false
+    },
+    {
+      "roomNumber": 102,
+      "roomFloor": "Floor 1",
+      "price": 500000,
+      "isAvailable": "Còn trống",
+      "facilities": ["Wifi", "TV", "Tủ lạnh", "Máy lạnh", "Giường đơn"],
+      "status": "Sạch sẽ",
       "isChildren": false
     },
     {
       "roomNumber": 201,
       "roomFloor": "Floor 2",
       "price": 1000000,
-      "isAvailable": true,
+      "isAvailable": "Còn trống",
       "facilities": ["Wifi", "TV", "Tủ lạnh", "Máy lạnh", "Giường đôi"],
-      "status": "Clean",
+      "status": "Sạch sẽ",
       "isChildren": false
     },
     {
       "roomNumber": 301,
       "roomFloor": "Floor 3",
       "price": 1500000,
-      "isAvailable": true,
+      "isAvailable": "Còn trống",
       "facilities": ["Wifi", "TV", "Tủ lạnh", "Máy lạnh", "2 Giường đôi"],
-      "status": "Clean",
+      "status": "Sạch sẽ",
       "isChildren": true
     },
     {
       "roomNumber": 401,
       "roomFloor": "Floor 4",
       "price": 2500000,
-      "isAvailable": true,
+      "isAvailable": "Còn trống",
       "facilities": ["Wifi", "TV", "Tủ lạnh", "2 Máy lạnh", "2 Giường đôi"],
-      "status": "Clean",
+      "status": "Sạch sẽ",
       "isChildren": false
     }
   ],
@@ -72,15 +104,6 @@
     {
       "tableNumber": "#3",
       "status": "Còn trống"
-    }
-  ],
-  "guests": [
-    {
-      "fname": "Lam",
-      "lname": "Si",
-      "phone": "0231823934",
-      "email": "thientaitrinhlamnhu@gmail.com",
-      "reservation": []
     }
   ]
 }

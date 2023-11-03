@@ -3,7 +3,8 @@ import ApiCategoryController from "../../controllers/api/api.category.controller
 
 const router = express.Router();
 
-router.get('/category', ApiCategoryController.getAll);
-router.get('/category/:id', ApiCategoryController.getCategoryById);
-router.get('/category/count', ApiCategoryController.countRoom)
+router.get('/', ApiCategoryController.getAll);
+router.get('/:id', ApiCategoryController.getCategoryById);
+router.get('/count', ApiCategoryController.countRoom);
+router.post('/add', ApiCategoryController.createCategory);
 export default router;
