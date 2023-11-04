@@ -8,7 +8,7 @@ Router.get("/dashboard", (req, res) => {
     res.render("layouts/manager/dashboard")
 })
 Router.get("/room", async ( req, res) => {
-    const rooms = await ApiRoomController.getAll(req, res);
+    const rooms = await ApiRoomController.getAll(req,res);
     console.log(rooms)
     const categories = await Category.find();
     res.render("layouts/manager/room", {rooms: rooms.data, pagination: rooms.pagination, categories: categories})

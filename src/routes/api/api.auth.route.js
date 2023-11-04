@@ -15,6 +15,9 @@ Router.post("/authenticate", validation, (req, res, next) => {
             session: true
         },
         (err, user, info) => {
+            console.log("err", err)
+            console.log("user", user)
+            console.log("info", info)
         if (err) {
             console.log(err)
             return next(err)
@@ -26,22 +29,13 @@ Router.post("/authenticate", validation, (req, res, next) => {
         }
         req.logIn(user, (err) => {
             if (err) {
-                console.log(err)
-                return next(err)
+                return res.redirect('/auth/login')
             }
-            req.session.accounts = req?.session.accounts || []
-            const account = req.session.accounts.find(account => account._id === user._id)
-            if (!account) {
-                req.session.accounts.push({
-                    _id: user._id,
-                    username: user.username,
-                    token: user.token
-                })
-            }
-            req.session.accounts.save()
+
+            return res.redirect('/');
+
         })
-        return res.redirect("/")
-    })
+    })(req, res, next);
 })
 
 export default Router;

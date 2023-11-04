@@ -69,7 +69,7 @@ const jwtStrategy = new Strategy(jwtOptions, async ( payload, done ) => {
 export default function passportConfig(app) {
     app.use(session({
         secret: "secret",
-        resave: false,
+        resave: true,
         saveUninitialized: true
     }))
 

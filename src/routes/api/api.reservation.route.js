@@ -9,8 +9,8 @@ router.get("/:id", ApiReservationController.getReservationById);
 router.get("/guest/:id", ApiReservationController.getReservationByGuest);
 router.get("/checkIn", ApiReservationController.updateCheckIn);
 router.get("/checkOut", ApiReservationController.updateCheckOut);
-router.post("/add", validation.reservation, ApiReservationController.create);
-router.put("/:id", validation.reservation, ApiReservationController.update);
+router.post("/add", validation, ApiReservationController.create);
+router.put("/:id", validation, ApiReservationController.update);
 router.delete("/:id", ApiReservationController.delete);
 
 export default router;
