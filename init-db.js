@@ -6,6 +6,7 @@ import Room from './src/models/room.model.js';
 import Guest from "./src/models/guest.model.js";
 import Restaurant from "./src/models/restaurant.model.js";
 import Transport from "./src/models/transport.model.js";
+import Reservation from "./src/models/reservation.model.js";
 dotenv.config();
 mongoose.set('strictQuery', false);
 const loadDatabase = async () => {
@@ -37,7 +38,25 @@ const loadDatabase = async () => {
         return Transport.create({...transport});
     });
 
-    await Promise.all([...rooms, ...categories, ...guests, ...restaurants, ...transports]);
+    const reservations = data.reservations.map(async (reservation) => {
+        // const guest = await Guest.findOne({lname: reservation.lname});
+        const transport = Transport.findOne({vehicle: reservation.transport});
+        const room = Room.findOne({roomNumber: reservation.rooms[0].roomNumber});
+        const reservationData = {
+            fname: reservation.fname,
+            lname: reservation.lname,
+            phone: reservation.phone,
+            checkIn: reservation.checkIn,
+            checkOut: reservation.checkOut,
+            total: reservation.total,
+            payment_status: reservation.payment_status,
+            rooms: [await room],
+            transport: await transport
+        };
+        // await Guest.find({_id: guest._id}, {$push: {reservations: reservationData}});
+        return Reservation.create({...reservationData});
+    });
+    await Promise.all([...rooms, ...categories, ...guests, ...restaurants, ...transports, ...reservations]);
 
     for(let i = 0; i < rooms.length; i++) {
         const room = await rooms[i];
@@ -50,6 +69,11 @@ const loadDatabase = async () => {
 
     const guest = await Guest.findOne({lname: "Si"});
     await Transport.findOneAndUpdate({vehicle: "BMW"}, {guest: guest});
+    for(let i = 0; i < reservations.length; i++){
+        const reservation = await reservations[i];
+        const guest = await Guest.findOne({lname: reservation.lname});
+        await Guest.findByIdAndUpdate(guest._id,{$push: {reservations: reservation}});
+    }
 }
 
 export default loadDatabase;

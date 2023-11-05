@@ -94,16 +94,27 @@
   ],
   "restaurants": [
     {
-      "tableNumber": "#1",
-      "status": "Còn trống"
-    },
+      "food": "Bún bò",
+      "price": 50000,
+      "image": "abc",
+      "material": [ "bún", "bò", "rau thơm", "hành tây", "hành lá", "ớt", "tỏi", "nước mắm", "đường", "muối", "hạt nêm"]
+    }
+  ],
+  "reservations": [
     {
-      "tableNumber": "#2",
-      "status": "Còn trống"
-    },
-    {
-      "tableNumber": "#3",
-      "status": "Còn trống"
+      "lname": "Si",
+      "fname": "Lam",
+      "phone": "0231823934",
+      "checkIn": "Sat Nov 4 2023 07:35:44",
+      "checkOut": "Sat Nov 5 2023 07:35:44",
+      "rooms": [
+        {
+          "roomNumber": 101
+        }
+      ],
+      "transport" : "BMW",
+      "total": 500000,
+      "payment_status": "Đã thanh toán"
     }
   ]
 }

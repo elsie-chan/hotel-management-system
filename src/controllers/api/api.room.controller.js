@@ -6,8 +6,8 @@ class ApiRoomController {
         try {
             const page = req.query.page || 1;
             const rooms = await RoomService.getAll();
-            // return res.status(200).json(rooms);
-            return paginate(rooms, page, 10);
+            return res.status(200).json(rooms);
+            // return paginate(rooms, page, 10);
         } catch (e) {
             return res.status(500).json({ message: e });
         }
@@ -67,8 +67,6 @@ class ApiRoomController {
     }
     async createRoom(req, res) {
         try {
-
-            console.log(req.body)
             const newRoom = await RoomService.create(req.body);
             if(newRoom.status === 400) return res.status(400).json({ message: newRoom.message });
             return res.status(200).json({

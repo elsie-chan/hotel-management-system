@@ -11,9 +11,9 @@ const getAll = async () => {
         return ErrorMessage(400, "Restaurant not found");
     }
 }
-const getRestaurantIsAvailable = async () => {
+const getTableIsAvailable = async () => {
     try {
-        const restaurants = Restaurant.find({ status: "available" });
+        const restaurants = Restaurant.find({status: "Còn trống"});
         return await restaurants;
     } catch (e) {
         return ErrorMessage(400, "Restaurant not found");
@@ -31,16 +31,11 @@ const bookTable = async (id, reservation_id) => {
     try {
         const restaurant = await Restaurant.findById(id);
         const reservation = await Reservation.findById(reservation_id);
-        if (restaurant.status === "available") {
-            restaurant.status = "Booked";
-            restaurant.guest = reservation.select("guest");
-            restaurant.time = Date.now();
-            restaurant.save();
-            reservation.restaurant = restaurant;
-            return restaurant;
-        }
+        // const guest = await Guest.findOne({lname : reservation.lname});
+        await Reservation.findByIdAndUpdate(reservation_id,{restaurant: restaurant});
+        return restaurant;
     } catch(e) {
         return ErrorMessage(400, "Restaurant not found");
     }
 }
-export default { getAll, getRestaurantById , getRestaurantIsAvailable, bookTable}
+export default { getAll, getRestaurantById , getTableIsAvailable, bookTable}

@@ -26,6 +26,17 @@ class ApiReservationController{
             return res.status(400).json(e.message);
         }
     }
+    async bookingRoom(req, res){
+        try {
+            const { fromDate, toDate, quantity, isChildren } = req.body;
+            console.log(fromDate, toDate, quantity, isChildren)
+            const reservation = await ReservationService.bookingRoom("2023-11-04", "2023-11-05", 1, false);
+            // return res.status(200).json(reservation);
+            return res.json(reservation);
+        } catch (e) {
+            return res.status(400).json(e.message);
+        }
+    }
     async updateCheckIn(req, res){
         try {
             const reservation = await ReservationService.updateCheckIn(req.params.id, req.body.checkIn);

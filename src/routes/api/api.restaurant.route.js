@@ -5,8 +5,7 @@ import ApiRestaurantController from "../../controllers/api/api.restaurant.contro
 const router = express.Router();
 
 router.get('/', ApiRestaurantController.getAll);
-router.get('/:id', ApiRestaurantController.getRestaurantById);
-router.get('/available', ApiRestaurantController.getRestaurantIsAvailable);
 router.post('/book/:id', validation, ApiRestaurantController.bookTable);
+router.get('/:id', ApiRestaurantController.getRestaurantById);
 
 export default router;

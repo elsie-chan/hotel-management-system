@@ -20,11 +20,6 @@ const invoiceSchema = new mongoose.Schema({
     reservation: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Reservation'
-    },
-    isDeleted: {
-        type: Boolean,
-        required: false,
-        default: false
     }
 }, { timestamps: true });
 

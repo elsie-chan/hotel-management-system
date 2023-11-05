@@ -1,21 +1,23 @@
 import mongoose from 'mongoose';
 
 const restaurantSchema = new mongoose.Schema({
-    tableNumber: {
+    food: {
         type: String,
-        require: true
+        required: true,
+        trim: true
     },
-    time:{
-        type: Date,
-        require: true
+    price: {
+        type: Number,
+        default: 0,
+        required: true
     },
-    guest: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Guest'
-    },
-    status: {
+    image: {
         type: String,
-        require: true
+        required: true
+    },
+    material: {
+        type: Array,
+        required: true
     }
 });
 

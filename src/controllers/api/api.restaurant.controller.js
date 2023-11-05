@@ -6,7 +6,8 @@ class ApiRestaurantController {
         try {
             const page = req.query.page || 1;
             const restaurants = await RestaurantService.getAll();
-            return paginate(restaurants, page, 10);
+            return res.status(200).json(restaurants);
+            // return paginate(restaurants, page, 10);
         } catch (e) {
             return res.status(500).json({ message: e });
         }
@@ -15,14 +16,6 @@ class ApiRestaurantController {
         try {
             const restaurant = await RestaurantService.getRestaurantById(req.params.id);
             return res.status(200).json(restaurant);
-        } catch (e) {
-            return res.status(500).json({ message: e });
-        }
-    }
-    async getRestaurantIsAvailable(req, res) {
-        try {
-            const restaurants = await RestaurantService.getRestaurantIsAvailable();
-            return res.status(200).json(restaurants);
         } catch (e) {
             return res.status(500).json({ message: e });
         }

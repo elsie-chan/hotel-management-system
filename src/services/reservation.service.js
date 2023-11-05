@@ -1,6 +1,8 @@
 import Reservation from "../models/reservation.model.js";
 import { ErrorMessage } from "../error/message.error.js";
 import Guest from "../models/guest.model.js";
+import Room from "../models/room.model.js";
+import Category from "../models/category.model.js";
 
 const getAll = async () => {
     try {
@@ -41,11 +43,11 @@ const updateCheckIn = async (id, checkIn) => {
 const updateCheckOut = async (id, checkOut) => {
     try {
         const reservation = await Reservation.findOne({_id: id, isDeleted: false});
-        if(reservation.select('checkOut') > checkOut){
-            let hours = checkOut.getHours() - reservation.select('checkOut').getHours();
-            let minutes = checkOut.getMinutes() - reservation.select('checkOut').getMinutes();
+        if(reservation.checkOut > checkOut){
+            let hours = checkOut.getHours() - reservation.checkOut.getHours();
+            let minutes = checkOut.getMinutes() - reservation.checkOut.getMinutes();
             let cost = 150000;
-            let total = reservation.select('total');
+            let total = reservation.total;
             if(minutes > 0) hours++;
             total += cost * hours;
             reservation.total = total;
@@ -91,6 +93,39 @@ const remove = async (id) => {
     } catch(e){
         return ErrorMessage(400, "Reservation not deleted");
     }
+}
+
+const bookingRoom = async(fromDate, toDate, quantity, isChildren) => {
+    console.log(fromDate, toDate, quantity, isChildren)
+    try {
+        const reservation = Reservation.find({$and: [{checkIn: {$gte: fromDate}}, {checkOut: {$lte: toDate}}]}).populate('room');
+        return await reservation;
+    } catch (e) {
+        return ErrorMessage(400, "Reservation not found");
+    }
+    // const reservation = Reservation.find({$and: [{checkIn: {$gte: fromDate}}, {checkOut: {$lte: toDate}}]}).populate('room');
+    // let category = "";
+    // switch(quantity){
+    //     case 1:
+    //         category = "Single";
+    //         break;
+    //     case 2:
+    //         category = "Double";
+    //         break;
+    //     case 3:
+    //         category = "Triple";
+    //         break;
+    //     case 4:
+    //         category = "VIP";
+    //         break;
+    //     default:
+    //         break;
+    // }
+    // if(category === "") return ErrorMessage(400, "Category not found");
+    // const cate = await Category.find({name: category});
+    // const room = Room.find({$and: [{isAvailable: "Còn trống"}, {isChildren: isChildren}, {roomType: cate}]});
+    // return await room;
+
 }
 
 export default {

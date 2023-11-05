@@ -4,7 +4,7 @@ import ApiTransportController from "../../controllers/api/api.transport.controll
 
 const router = express.Router();
 
-router.get('/transport', ApiTransportController.getAll);
-router.get('/transport/:id', ApiTransportController.getTransportById);
+router.get('/', ApiTransportController.getAll);
+router.get('/:id', ApiTransportController.getTransportById);
 
 export default router;

@@ -17,7 +17,7 @@ const guestSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    reservation: {
+    reservations: {
         type: Array,
         required: false
     },
