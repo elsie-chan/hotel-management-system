@@ -4,8 +4,9 @@ import paginate from "../../utils/paginate.js";
 class ApiReservationController{
     async getAll(req, res){
         try {
+            const page = req.query.page || 1;
             const reservations = await ReservationService.getAll();
-            return res.status(200).json(reservations);
+            return paginate(reservations, page, 10);
         } catch (e) {
             return res.status(400).json(e.message);
         }
@@ -29,10 +30,8 @@ class ApiReservationController{
     async bookingRoom(req, res){
         try {
             const { fromDate, toDate, quantity, isChildren } = req.body;
-            console.log(fromDate, toDate, quantity, isChildren)
-            const reservation = await ReservationService.bookingRoom("2023-11-04", "2023-11-05", 1, false);
-            // return res.status(200).json(reservation);
-            return res.json(reservation);
+            const reservation = await ReservationService.bookingRoom(new Date(fromDate), new Date(toDate), quantity, isChildren);
+            return res.status(200).json(reservation);
         } catch (e) {
             return res.status(400).json(e.message);
         }

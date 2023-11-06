@@ -6,8 +6,7 @@ class ApiRoomController {
         try {
             const page = req.query.page || 1;
             const rooms = await RoomService.getAll();
-            return res.status(200).json(rooms);
-            // return paginate(rooms, page, 10);
+            return paginate(rooms, page, 10);
         } catch (e) {
             return res.status(500).json({ message: e });
         }

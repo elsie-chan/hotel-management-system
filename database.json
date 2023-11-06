@@ -92,12 +92,12 @@
       "time": "Sat Oct 28 2023 07:35:44"
     }
   ],
-  "restaurants": [
+  "meals": [
     {
-      "food": "Bún bò",
+      "name": "Bún bò",
       "price": 50000,
-      "image": "abc",
-      "material": [ "bún", "bò", "rau thơm", "hành tây", "hành lá", "ớt", "tỏi", "nước mắm", "đường", "muối", "hạt nêm"]
+      "type": "abc",
+      "ingredients": "abc"
     }
   ],
   "reservations": [
@@ -113,8 +113,7 @@
         }
       ],
       "transport" : "BMW",
-      "total": 500000,
-      "payment_status": "Đã thanh toán"
+      "status": "Đã thanh toán"
     }
   ]
 }

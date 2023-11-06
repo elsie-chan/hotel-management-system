@@ -21,11 +21,15 @@ const reservationSchema = new mongoose.Schema({
         type: Date,
         require: true
     },
-    total: {
+    note: {
+        type: String,
+        require: false
+    },
+    quests: {
         type: Number,
         require: true
     },
-    payment_status: {
+    status: {
         type: String,
         require: true
     },
@@ -38,9 +42,9 @@ const reservationSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Room'
     }],
-    restaurant:{
+    meal:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Restaurant'
+        ref: 'Meal'
     },
     transport:{
         type: mongoose.Schema.Types.ObjectId,

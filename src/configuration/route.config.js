@@ -5,7 +5,7 @@ import ManagerRoute from "../routes/manager.route.js";
 import { default as RoomRoutes} from '../routes/api/api.room.route.js';
 import { default as TransportRoutes} from '../routes/api/api.transport.route.js';
 import { default as CategoryRoutes} from '../routes/api/api.category.route.js';
-import { default as RestaurantRoutes} from '../routes/api/api.restaurant.route.js';
+import { default as MealRoutes} from '../routes/api/api.meal.route.js';
 import { default as ReservationRoutes} from '../routes/api/api.reservation.route.js';
 import session from "express-session";
 
@@ -17,7 +17,7 @@ export default (app) => {
     app.use('/api/room',RoomRoutes);
     app.use('/api/transport',TransportRoutes);
     app.use('/api/category', CategoryRoutes);
-    app.use('/api/restaurant', RestaurantRoutes);
+    app.use('/api/meal', MealRoutes);
     app.use('/api/reservation', ReservationRoutes);
     app.get('/test', (req, res) => {
         if (!req.isAuthenticated()) return res.status(401).json({ message: 'Unauthorized' });

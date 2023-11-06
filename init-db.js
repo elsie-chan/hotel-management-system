@@ -4,7 +4,7 @@ import fs, {truncate} from 'fs';
 import Category from './src/models/category.model.js';
 import Room from './src/models/room.model.js';
 import Guest from "./src/models/guest.model.js";
-import Restaurant from "./src/models/restaurant.model.js";
+import Meal from "./src/models/meal.model.js";
 import Transport from "./src/models/transport.model.js";
 import Reservation from "./src/models/reservation.model.js";
 dotenv.config();
@@ -30,8 +30,8 @@ const loadDatabase = async () => {
         return Guest.create({...guest});
     });
 
-    const restaurants = data.restaurants.map((restaurant) => {
-        return Restaurant.create({...restaurant});
+    const restaurants = data.meals.map((meal) => {
+        return Meal.create({...meal});
     });
 
     const transports = data.transports.map((transport) => {
@@ -48,8 +48,7 @@ const loadDatabase = async () => {
             phone: reservation.phone,
             checkIn: reservation.checkIn,
             checkOut: reservation.checkOut,
-            total: reservation.total,
-            payment_status: reservation.payment_status,
+            status: reservation.status,
             rooms: [await room],
             transport: await transport
         };
