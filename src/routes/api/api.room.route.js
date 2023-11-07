@@ -25,4 +25,6 @@ router.put('/:id', validation, ApiRoomController.updateRoom);
 router.delete('/:id', ApiRoomController.deleteRoom);
 router.get('/:id', ApiRoomController.getRoomById);
 
+router.put('/update/:id', validation, upload.single('image'), ApiRoomController.updateRoom);
+router.delete('/delete/:id', ApiRoomController.deleteRoom);
 export default router;

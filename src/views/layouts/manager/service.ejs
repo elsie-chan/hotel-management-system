@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Feedback</title>
+    <title>Airport Transfer</title>
     <link rel="icon" href="/images/icon.png" type="image/x-icon"/>
     <link rel="stylesheet" href="/css/styles.min.css"/>
     <link rel="stylesheet"
@@ -21,8 +21,8 @@
         <!-- Sidebar scroll-->
         <div>
             <div class="brand-logo d-flex align-items-center justify-content-between">
-                <a href="#" class="text-nowrap logo-img">
-                    <img src="" width="180" alt=""/>
+                <a href="/manager/service" class="text-nowrap logo-img">
+                    <img src="/images/Logo.png" width="150" alt=""/>
                 </a>
                 <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                     <i class="ti ti-x fs-8"></i>
@@ -129,6 +129,22 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
+                        <a class="sidebar-link" href="/manager/meal" aria-expanded="false">
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-soup"
+                                     width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50"
+                                     fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                      <path d="M4 11h16a1 1 0 0 1 1 1v.5c0 1.5 -2.517 5.573 -4 6.5v1a1 1 0 0 1 -1 1h-8a1 1 0 0 1 -1 -1v-1c-1.687 -1.054 -4 -5 -4 -6.5v-.5a1 1 0 0 1 1 -1z"/>
+                                      <path d="M12 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"/>
+                                      <path d="M16 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"/>
+                                      <path d="M8 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"/>
+                                </svg>
+                            </span>
+                            <span class="hide-menu">Meal</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
                         <a class="sidebar-link" href="" aria-expanded="false">
                             <span>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout-2"
@@ -155,9 +171,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
-<!--                            <h5 class="card-title fw-semibold mb-4">All messages</h5>-->
-                            <a href="#" class="link-primary serviceAirport card-title fw-semibold mb-4 card-link">Airport Transfer</a>
-                            <a href="#" class="serviceRestaurant card-title fw-semibold mb-4 card-link ">Reservation</a>
+                            <h5 class="card-title fw-semibold mb-4">Airport Transfer</h5>
                             <hr>
                             <div class="table-responsive">
                                 <table class="table-hover table airportTable text-nowrap mb-0 align-middle ">
@@ -186,28 +200,30 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="">
-                                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0">#0012345</h6></td>
-                                        <td class="border-bottom-0">
-                                            <h6 class="fw-normal mb-1">John Smith</h6>
-                                            <span class="fw-normal mb-1">(102)345-678</span>
-                                        </td>
-                                        <td class="border-bottom-0">
-                                            <h6 class="fw-normal">Car-8</h6>
-                                            <span class="fw-normal mb-1">$100</span>
-                                        </td>
-                                        <td class="border-bottom-0">
-                                            <p class="mb-0 fw-normal">Tan Son Nhat International Airport</p>
-                                        </td>
-                                        <td class="border-bottom-0">
-                                            <p class="mb-0 fw-normal">Park Hyatt Saigon Hotel</p>
-                                        </td>
-                                        <td class="border-bottom-0">
-                                            <p class="mb-0 fw-normal">2021-08-20 10:00</p>
-                                        </td>
+                                    <% services.forEach(function(service) { %>
+                                        <tr class="">
+                                            <td class="border-bottom-0"><h6
+                                                        class="fw-semibold mb-0"><%= service.id %></h6></td>
+                                            <td class="border-bottom-0">
+                                                <h6 class="fw-normal mb-1">John Smith</h6>
+                                                <span class="fw-normal mb-1">(102)345-678</span>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <h6 class="fw-normal"><%= service.vehicle %></h6>
+                                                <span class="fw-normal mb-1"><%= service.price %></span>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <p class="mb-0 fw-normal"><%= service.pickup_location %></p>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <p class="mb-0 fw-normal"><%= service.destination %></p>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <p class="mb-0 fw-normal"><%= new Date(service.time).toLocaleString() %></p>
+                                            </td>
 
-                                    </tr>
-
+                                        </tr>
+                                    <% }); %>
                                     </tbody>
                                 </table>
 
@@ -244,7 +260,10 @@
                                         </td>
                                         <td class="border-bottom-0">
                                             <div class="d-flex align-items-center gap-2 cursor-pointer">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                     class="icon icon-tabler icon-tabler-dots" width="24" height="24"
+                                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                     fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                                     <path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
                                                     <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
@@ -276,28 +295,7 @@
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 <script src="/js/manager/sidebarmenu.js"></script>
-<script>
-    $(document).ready(function () {
-        $('.serviceAirport').click(function () {
-            if($(this).hasClass('link-primary')){
-                return;
-            }
-            $(this).addClass('link-primary');
-            $('.serviceRestaurant').removeClass('link-primary');
-            $('.airportTable').removeClass('d-none');
-            $('.restaurantTable').addClass('d-none');
-        });
-        $('.serviceRestaurant').click(function () {
-            if($(this).hasClass('link-primary')){
-                return;
-            }
-            $(this).addClass('link-primary');
-            $('.serviceAirport').removeClass('link-primary');
-            $('.airportTable').addClass('d-none');
-            $('.restaurantTable').removeClass('d-none');
-        });
-    });
-</script>
+<script src="/js/manager/service.js"></script>
 </body>
 
 </html>

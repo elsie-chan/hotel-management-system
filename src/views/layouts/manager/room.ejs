@@ -11,6 +11,7 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/1.35.0/iconfont/tabler-icons.min.css"
           integrity="sha512-tpsEzNMLQS7w9imFSjbEOHdZav3/aObSESAL1y5jyJDoICFF2YwEdAHOPdOr1t+h8hTzar0flphxR76pd0V1zQ=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
 </head>
 <body>
 <!--  Body Wrapper -->
@@ -119,6 +120,22 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
+                        <a class="sidebar-link" href="/manager/meal" aria-expanded="false">
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-soup"
+                                     width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50"
+                                     fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                      <path d="M4 11h16a1 1 0 0 1 1 1v.5c0 1.5 -2.517 5.573 -4 6.5v1a1 1 0 0 1 -1 1h-8a1 1 0 0 1 -1 -1v-1c-1.687 -1.054 -4 -5 -4 -6.5v-.5a1 1 0 0 1 1 -1z"/>
+                                      <path d="M12 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"/>
+                                      <path d="M16 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"/>
+                                      <path d="M8 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"/>
+                                </svg>
+                            </span>
+                            <span class="hide-menu">Meal</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
                         <a class="sidebar-link" href="" aria-expanded="false">
                             <span>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -164,7 +181,7 @@
                                 <thead class="text-dark fs-4">
                                 <tr>
                                     <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Id</h6>
+                                        <h6 class="fw-semibold mb-0">Number</h6>
                                     </th>
                                     <th class="border-bottom-0">
                                         <h6 class="fw-semibold mb-0">Information</h6>
@@ -201,12 +218,12 @@
                                     </td>
                                     <td class="border-bottom-0">
                                         <div class="d-flex align-items-center gap-2">
-                                            <span class="badge bg-success rounded-3 fw-semibold">Clear</span>
+                                            <span class="badge bg-success rounded-3 fw-semibold"><%= room.status%></span>
                                         </div>
                                     </td>
                                     <td class="border-bottom-0">
                                         <div class="d-flex align-items-center gap-2">
-                                            <span class="badge <%= room.status==='Available'? 'bg-success': 'bg-warning'%> rounded-3 fw-semibold"><%= room.status %></span>
+                                            <span class="badge <%= room.status==='Available'? 'bg-success': 'bg-warning'%> rounded-3 fw-semibold"><%= room.isAvailable %></span>
                                         </div>
                                     </td>
                                     <td class="border-bottom-0">
@@ -220,10 +237,10 @@
                                         </div>
                                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                                             <div class="message-body">
-                                                <a href="#" class="d-flex align-items-center gap-2 dropdown-item" data-bs-toggle="modal" data-bs-target="#editRoomModal">
+                                                <a href="#" class="update-room d-flex align-items-center gap-2 dropdown-item" data-bs-toggle="modal" data-bs-target="#editRoomModal" data-id="<%= room.id %>">
                                                     <p class="mb-0 fs-3">Edit</p>
                                                 </a>
-                                                <a href="#" class="d-flex align-items-center gap-2 dropdown-item">
+                                                <a href="#" class="delete-room d-flex align-items-center gap-2 dropdown-item" data-id="<%= room.id %>">
                                                     <p class="mb-0 fs-3">Hide</p>
                                                 </a>
                                             </div>
@@ -329,9 +346,9 @@
                                         <div class="col-sm-12">
                                             <select class="form-select" id="room_cleaning-status--add">
                                                 <option value="" disabled selected hidden>Choose cleaning status</option>
-                                                <option value="1">Clean</option>
-                                                <option value="2">Cleaning</option>
-                                                <option value="3">Dirty</option>
+                                                <option value="Clean">Clean</option>
+                                                <option value="Cleaning">Cleaning</option>
+                                                <option value="Dirty">Dirty</option>
                                             </select>
                                         </div>
                                     </div>
@@ -340,8 +357,8 @@
                                         <div class="col-sm-12">
                                             <select class="form-select" id="room_status--add">
                                                 <option value="" disabled selected hidden>Choose status</option>
-                                                <option value="1">Available</option>
-                                                <option value="2">Booked</option>
+                                                <option value="Available">Available</option>
+                                                <option value="Booked">Booked</option>
                                             </select>
                                         </div>
                                     </div>
@@ -384,11 +401,11 @@
                             <div class="image_inputs col-10">
                                 <div class="row align-items-center">
                                     <div class="image_container col-4">
-                                        <label class="col mt-1 " for="image_upload--add"
+                                        <label class="col mt-1 " for="image_upload--edit"
                                                style="height: fit-content;">
-                                            <img id="image_preview" class="card-hover image_upload" width="100%"
+                                            <img id="edit--image_preview" class="card-hover image_upload" width="100%"
                                                  height="100%" src="/images/img_1.jpg" alt="room image uploaded">
-                                            <input type="file" id="image_upload--add" accept="image/png, image/jpge, image/jpg" class="visually-hidden">
+                                            <input type="file" id="image_upload--edit" accept="image/png, image/jpge, image/jpg" class="visually-hidden">
                                         </label>
                                     </div>
                                     <div class="col text">
@@ -399,29 +416,28 @@
 
                             <div class="col-10">
                                 <div class="d-flex flex-row justify-content-between row mb-2">
-                                    <label for="room_number--add" class="col-4 col-md-4 col-form-label">Room Number</label>
+                                    <label for="edit--room_number" class="col-4 col-md-4 col-form-label">Room Number</label>
                                     <div class="col">
-                                        <input type="number" class="form-control" id="room_number--add" placeholder="Enter room number">
+                                        <input type="number" class="form-control" id="edit--room_number" placeholder="Enter room number">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <div class="col">
-                                        <label for="edit--import_price" class="col-sm-6 col-form-label">Room type</label>
+                                        <label for="edit--room_type" class="col-sm-6 col-form-label">Room type</label>
                                         <div class="col-sm-12">
-                                            <select class="form-select">
+                                            <select class="form-select" id="edit--room_type">
                                                 <option value="" disabled selected hidden>Choose room type</option>
-                                                <option value="1">Single bed</option>
-                                                <option value="2">Double bed</option>
-                                                <option value="3">Triple bed</option>
-                                                <option value="4">Quad bed</option>
+                                                <% categories.forEach(function(category) { %>
+                                                    <option value="<%= category._id %>"><%= category.name %></option>
+                                                <% }) %>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col">
-                                        <label for="edit--retail_price" class="col-sm-6 col-form-label">Room floor</label>
+                                        <label for="edit--room_floor" class="col-sm-6 col-form-label">Room floor</label>
                                         <div class="col-sm-12">
                                             <input type="text" min="0" class="form-control"
-                                                   id="edit--retail_price"
+                                                   id="edit--room_floor"
                                                    placeholder="Enter room floor"
                                                    aria-label=""
                                                    aria-describedby="addon-wrapping">
@@ -430,37 +446,37 @@
                                 </div>
                                 <div class="mb-3 row">
                                     <div class="col">
-                                        <label for="edit--import_price" class="col col-form-label">Cleaning status</label>
+                                        <label for="edit--cleaning-status" class="col col-form-label">Cleaning status</label>
                                         <div class="col-sm-12">
-                                            <select class="form-select">
+                                            <select class="form-select" id="edit--cleaning-status">
                                                 <option value="" disabled selected hidden>Choose cleaning status</option>
-                                                <option value="1">Clean</option>
-                                                <option value="2">Cleaning</option>
-                                                <option value="3">Dirty</option>
+                                                <option value="Clean">Clean</option>
+                                                <option value="Cleaning">Cleaning</option>
+                                                <option value="Dirty">Dirty</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col">
-                                        <label for="edit--retail_price" class="col-sm-6 col-form-label">Status</label>
+                                        <label for="edit--room_status" class="col-sm-6 col-form-label">Status</label>
                                         <div class="col-sm-12">
-                                            <select class="form-select" id="">
+                                            <select class="form-select" id="edit--room_status">
                                                 <option value="" disabled selected hidden>Choose status</option>
-                                                <option value="1">Available</option>
-                                                <option value="2">Booked</option>
+                                                <option value="Available">Available</option>
+                                                <option value="Booked">Booked</option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="d-flex flex-row justify-content-between row mb-2">
-                                    <label for="account__email--add" class="col-4 col-md-4 col-form-label">Price</label>
+                                    <label for="edit--room-price" class="col-4 col-md-4 col-form-label">Price</label>
                                     <div class="col">
-                                        <input type="text" class="form-control" id="account__email--add">
+                                        <input type="text" class="form-control" id="edit--room-price">
                                     </div>
                                 </div>
                                 <div class="d-flex flex-row justify-content-between row mb-2">
-                                    <label for="account__email--add" class="col-4 col-md-4 col-form-label">Facility</label>
+                                    <label for="edit--room-facilities" class="col-4 col-md-4 col-form-label">Facility</label>
                                     <div class="col-12">
-                                        <input type="text" class="form-control" id="account__email--add">
+                                        <input type="text" class="form-control" id="edit--room-facilities">
                                     </div>
                                 </div>
                             </div>
@@ -468,7 +484,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn " data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="addAccountBtn btn btn-primary">Save</button>
+                        <button type="button" class="saveEditRoomBtn btn btn-primary">Save</button>
                     </div>
                 </div>
             </div>

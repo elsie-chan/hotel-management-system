@@ -22,7 +22,7 @@ const sendFeedback = async (id, feedback) => {
 
 const getFeedback = async (id) => {
     try {
-        const guest = Guest.findById(id);
+        const guest = Guest.find({_id: id});
         if(!guest) return ErrorMessage(400, "Guest not found");
         return await guest;
     } catch(e){

@@ -41,9 +41,9 @@
       "roomNumber": 101,
       "roomFloor": "Floor 1",
       "price": 500000,
-      "isAvailable": "Còn trống",
+      "isAvailable": "Available",
       "facilities": ["Wifi", "TV", "Tủ lạnh", "Máy lạnh", "Giường đơn"],
-      "status": "Sạch sẽ",
+      "status": "Clean",
       "isChildren": false
     },
     {
