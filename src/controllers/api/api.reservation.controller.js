@@ -1,5 +1,6 @@
 import { ReservationService } from "../../services/index.js";
 import paginate from "../../utils/paginate.js";
+import dayjs from "dayjs";
 
 class ApiReservationController{
     async getAll(req, res){
@@ -30,7 +31,9 @@ class ApiReservationController{
     async bookingRoom(req, res){
         try {
             const { fromDate, toDate, quantity, isChildren } = req.body;
-            const reservation = await ReservationService.bookingRoom(new Date(fromDate), new Date(toDate), quantity, isChildren);
+            const from = new Date(dayjs(fromDate).format("YYYY-MM-DD"));
+            const to = new Date(dayjs(toDate).format("YYYY-MM-DD"));
+            const reservation = await ReservationService.bookingRoom(from, to, quantity, isChildren);
             return res.status(200).json(reservation);
         } catch (e) {
             return res.status(400).json(e.message);

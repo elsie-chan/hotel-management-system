@@ -28,6 +28,33 @@ class ApiMealController {
             return res.status(500).json({ message: e });
         }
     }
+
+    async createMeal(req, res) {
+        try {
+            const meal = await MealService.create(req.body);
+            return res.status(200).json(meal);
+        } catch (e) {
+            return res.status(500).json({ message: e });
+        }
+    }
+
+    async updateMeal(req, res) {
+        try {
+            const meal = await MealService.update(req.params.id, req.body);
+            return res.status(200).json(meal);
+        } catch (e) {
+            return res.status(500).json({ message: e });
+        }
+    }
+
+    async deleteMeal(req, res) {
+        try {
+            const meal = await MealService.deleteMeal(req.params.id);
+            return res.status(200).json(meal);
+        } catch (e) {
+            return res.status(500).json({ message: e });
+        }
+    }
 }
 
 export default new ApiMealController();

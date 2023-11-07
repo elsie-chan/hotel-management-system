@@ -49,6 +49,8 @@ const loadDatabase = async () => {
             checkIn: reservation.checkIn,
             checkOut: reservation.checkOut,
             status: reservation.status,
+            note: reservation.note,
+            quests: reservation.quests,
             rooms: [await room],
             transport: await transport
         };
