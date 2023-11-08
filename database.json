@@ -5,17 +5,7 @@
       "lname": "Si",
       "phone": "0231823934",
       "email": "thientaitrinhlamnhu@gmail.com",
-      "reservation": [],
-      "feedbacks": [
-        {
-          "note": "Dịch vụ ở đây quá tệ",
-          "status": false
-        },
-        {
-            "note": "Phòng có gián",
-            "status": false
-        }
-      ]
+      "reservation": []
     }
   ],
   "categories": [

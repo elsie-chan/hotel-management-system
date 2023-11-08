@@ -9,6 +9,7 @@ import { default as CategoryRoutes} from '../routes/api/api.category.route.js';
 import { default as MealRoutes} from '../routes/api/api.meal.route.js';
 import { default as ReservationRoutes} from '../routes/api/api.reservation.route.js';
 import { default as GuestRoutes} from '../routes/api/api.guest.route.js'
+import { default as FeedbackRoutes} from '../routes/api/api.feedback.route.js'
 import session from "express-session";
 
 export default (app) => {
@@ -23,6 +24,7 @@ export default (app) => {
     app.use('/api/meal', MealRoutes);
     app.use('/api/guest', GuestRoutes)
     app.use('/api/reservation', ReservationRoutes);
+    app.use('/api/feedback', FeedbackRoutes);
 
     app.get('/test', (req, res) => {
         if (!req.isAuthenticated()) return res.status(401).json({ message: 'Unauthorized' });

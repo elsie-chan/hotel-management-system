@@ -25,16 +25,7 @@ const guestSchema = new mongoose.Schema({
         type: String,
         required: false,
         default: 'GUEST'
-    },
-    feedbacks: [{
-        note: {
-            type: String
-        },
-        status: {
-            type: Boolean,
-            default: false
-        }
-    }]
+    }
 });
 
 const Guest = mongoose.model("Guest", guestSchema);

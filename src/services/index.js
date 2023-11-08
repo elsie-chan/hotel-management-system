@@ -5,6 +5,7 @@ import { default as CategoryService } from './category.service.js';
 import { default as ReservationService } from './reservation.service.js';
 import { default as AuthService } from './auth.service.js'
 import { default as GuestService } from './guest.service.js';
+import { default as FeedbackService } from './feedback.service.js';
 
 export {
     CategoryService,
@@ -13,5 +14,6 @@ export {
     MealService,
     ReservationService,
     AuthService,
-    GuestService
+    GuestService,
+    FeedbackService
 }
