@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import dayjs from "dayjs";
 
 const transportSchema = new mongoose.Schema({
     vehicle: {
@@ -19,8 +20,7 @@ const transportSchema = new mongoose.Schema({
     },
     time: {
         type: Date,
-        require: false,
-        default: new Date(Date.now())
+        require: false
     },
     guest: [{
         type: mongoose.Schema.Types.ObjectId,

@@ -6,7 +6,8 @@ class ApiFeedbackController{
         try{
             const page = req.query.page || 1;
             const feedbacks = await FeedbackService.getAll();
-            return paginate(feedbacks, page, 10);
+            return res.status(200).json(feedbacks);
+            // return paginate(feedbacks, page, 10);
         } catch(e){
             return res.status(400).json(e.message);
         }

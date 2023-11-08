@@ -7,6 +7,7 @@ import Guest from "./src/models/guest.model.js";
 import Meal from "./src/models/meal.model.js";
 import Transport from "./src/models/transport.model.js";
 import Reservation from "./src/models/reservation.model.js";
+import dayjs from "dayjs";
 dotenv.config();
 mongoose.set('strictQuery', false);
 const loadDatabase = async () => {
@@ -35,6 +36,8 @@ const loadDatabase = async () => {
     });
 
     const transports = data.transports.map((transport) => {
+        transport.time = dayjs(transport.time).format("YYYY-MM-DD HH:mm:ss");
+        console.log(transport.time)
         return Transport.create({...transport});
     });
 
