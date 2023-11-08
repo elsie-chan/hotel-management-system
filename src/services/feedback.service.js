@@ -33,12 +33,14 @@ const updateStatus = async (id) => {
     }
 }
 
-const create = async (data) => {
+const sendFeedback = async (data) => {
+    console.log(data);
     try {
         const reservation = await Reservation.findById(data.reservation);
         if(!reservation) return ErrorMessage(400, "Reservation not found");
-        const guest = await Guest.findById(data.guest);
+        const guest = await Guest.findOne({phone: data.guest});
         if(!guest) return ErrorMessage(400, "Guest not found");
+        data.guest = guest._id;
         const newFeedback = new Feedback(data);
         return await newFeedback.save();
     } catch (e) {
@@ -57,7 +59,7 @@ const getFeedbackByStatus = async (status) => {
 
 export default {
     getAll,
-    create,
+    sendFeedback,
     getFeedbackById,
     updateStatus,
     getFeedbackByStatus

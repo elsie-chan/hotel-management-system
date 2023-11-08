@@ -8,7 +8,6 @@ class ApiReservationController{
             const page = req.query.page || 1;
             const reservations = await ReservationService.getAll();
             console.log(await reservations)
-            // return res.status(200).json(reservations);
             return paginate(reservations, page, 10);
         } catch (e) {
             return res.status(400).json(e.message);

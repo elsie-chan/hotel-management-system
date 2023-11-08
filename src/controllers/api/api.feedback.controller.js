@@ -4,8 +4,9 @@ import paginate from "../../utils/paginate.js";
 class ApiFeedbackController{
     async getAll(req, res){
         try{
+            const page = req.query.page || 1;
             const feedbacks = await FeedbackService.getAll();
-            return res.status(200).json(feedbacks);
+            return paginate(feedbacks, page, 10);
         } catch(e){
             return res.status(400).json(e.message);
         }
@@ -28,10 +29,10 @@ class ApiFeedbackController{
             return res.status(400).json(e.message);
         }
     }
-    async create(req, res){
+    async sendFeedback(req, res){
         try{
             const data = req.body;
-            const feedback = await FeedbackService.create(data);
+            const feedback = await FeedbackService.sendFeedback(data);
             return res.status(200).json(feedback);
         } catch(e){
             return res.status(400).json(e.message);

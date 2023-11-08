@@ -19,7 +19,7 @@ configSource(app);
 passportConfig(app);
 
 await connectDatabase();
-// await loadDatabase();
+await loadDatabase();
 initRoutes(app);
 
 routes(app);

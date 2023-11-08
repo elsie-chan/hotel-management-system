@@ -75,9 +75,9 @@ const create = async (data) => {
 
 const update = async (id, data) => {
     try {
-        const reservation = Reservation.findByIdAndUpdate(id,data);
+        const reservation = await Reservation.findByIdAndUpdate(id,data);
         if(!reservation) return ErrorMessage(400, "Reservation not found");
-        return await reservation;
+        return reservation;
     } catch(e){
         return ErrorMessage(400, "Reservation not updated");
     }
