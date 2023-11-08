@@ -3,6 +3,10 @@ $(document).ready(function (){
         e.preventDefault();
         checkAvailable();
     });
+    $('.sendFbBtn').on('click', function (e) {
+        e.preventDefault();
+        sendFeedback();
+    });
 });
 function checkAvailable() {
     let fromDate = $('#checkin_date').val();
@@ -28,6 +32,25 @@ function checkAvailable() {
         },
         error: function (err) {
             console.log(err);
+        }
+    })
+}
+function sendFeedback() {
+    let phone = $('#phone').val();
+    let message = $('#message').val();
+    $.ajax({
+        url: '/api/guest/send-feedback/' + id,
+        type: 'POST',
+        data: JSON.stringify({
+            phone: phone,
+            fb: message
+        }),
+        contentType: 'application/json',
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (err) {
+            console.log(err)
         }
     })
 }

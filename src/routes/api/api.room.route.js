@@ -21,7 +21,6 @@ router.get('/count', ApiRoomController.countRoom);
 router.get('/available', ApiRoomController.getRoomIsAvailable);
 router.get('/unavailable', ApiRoomController.getRoomIsUnavailable);
 router.get('/category/available/:id', ApiRoomController.getRoomIsAvailableOfCategory);
-router.put('/:id', validation, ApiRoomController.updateRoom);
 router.delete('/:id', ApiRoomController.deleteRoom);
 router.get('/:id', ApiRoomController.getRoomById);
 

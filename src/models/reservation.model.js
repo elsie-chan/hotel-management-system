@@ -25,7 +25,7 @@ const reservationSchema = new mongoose.Schema({
         type: String,
         require: false
     },
-    quests: {
+    guests: {
         type: Number,
         require: true
     },

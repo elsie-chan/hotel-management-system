@@ -6,7 +6,7 @@ import Category from "../models/category.model.js";
 
 const getAll = async () => {
     try {
-        const reservations = Reservation.find();
+        const reservations = Reservation.find().populate("rooms").populate("meal").populate("transport");
         return await reservations;
     } catch (e) {
         return ErrorMessage(400, "Reservation not found");

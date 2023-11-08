@@ -7,7 +7,7 @@ import { default as TransportRoutes} from '../routes/api/api.transport.route.js'
 import { default as CategoryRoutes} from '../routes/api/api.category.route.js';
 import { default as MealRoutes} from '../routes/api/api.meal.route.js';
 import { default as ReservationRoutes} from '../routes/api/api.reservation.route.js';
-import { default as GuestRoutes} from '../routes/api/api.geust.route.js'
+import { default as GuestRoutes} from '../routes/api/api.guest.route.js'
 import session from "express-session";
 
 export default (app) => {

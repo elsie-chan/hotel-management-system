@@ -11,6 +11,7 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/1.35.0/iconfont/tabler-icons.min.css"
           integrity="sha512-tpsEzNMLQS7w9imFSjbEOHdZav3/aObSESAL1y5jyJDoICFF2YwEdAHOPdOr1t+h8hTzar0flphxR76pd0V1zQ=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
 </head>
 <body>
 <!--  Body Wrapper -->
@@ -131,12 +132,14 @@
                     <li class="sidebar-item">
                         <a class="sidebar-link active" href="/manager/meal" aria-expanded="false">
                             <span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-soup" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-soup"
+                                     width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50"
+                                     fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <path d="M4 11h16a1 1 0 0 1 1 1v.5c0 1.5 -2.517 5.573 -4 6.5v1a1 1 0 0 1 -1 1h-8a1 1 0 0 1 -1 -1v-1c-1.687 -1.054 -4 -5 -4 -6.5v-.5a1 1 0 0 1 1 -1z" />
-  <path d="M12 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2" />
-  <path d="M16 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2" />
-  <path d="M8 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2" />
+  <path d="M4 11h16a1 1 0 0 1 1 1v.5c0 1.5 -2.517 5.573 -4 6.5v1a1 1 0 0 1 -1 1h-8a1 1 0 0 1 -1 -1v-1c-1.687 -1.054 -4 -5 -4 -6.5v-.5a1 1 0 0 1 1 -1z"/>
+  <path d="M12 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"/>
+  <path d="M16 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"/>
+  <path d="M8 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"/>
 </svg>
                             </span>
                             <span class="hide-menu">Meal</span>
@@ -164,113 +167,231 @@
         </div>
     </aside>
     <div class="body-wrapper">
+        <!--  Header Start -->
+        <header class="app-header">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <ul class="navbar-nav">
+                    <li class="nav-item d-block d-xl-none">
+                        <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
+                            <i class="ti ti-menu-2"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
         <div class="container-fluid">
             <div class="card">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col">
-                            <h5 class="card-title fw-semibold mb-4">All meals</h5>
-                            <hr>
-                            <div class="table-responsive">
-                                <table class="table-hover table airportTable text-nowrap mb-0 align-middle ">
-                                    <thead class="text-dark fs-4">
-                                    <tr>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Id</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Name</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Type</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Price</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Ingredients</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
-                                        </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr class="">
-                                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0">#0012345</h6></td>
-                                        <td class="border-bottom-0">
-                                            <h6 class="fw-normal mb-1">John Smith</h6>
-                                            <span class="fw-normal mb-1">(102)345-678</span>
-                                        </td>
-                                        <td class="border-bottom-0">
-                                            <h6 class="fw-normal">Car-8</h6>
-                                            <span class="fw-normal mb-1">$100</span>
-                                        </td>
-                                        <td class="border-bottom-0">
-                                            <p class="mb-0 fw-normal">Tan Son Nhat International Airport</p>
-                                        </td>
-                                        <td class="border-bottom-0">
-                                            <p class="mb-0 fw-normal">Park Hyatt Saigon Hotel</p>
-                                        </td>
-                                        <td class="border-bottom-0">
-                                            <p class="mb-0 fw-normal">2021-08-20 10:00</p>
-                                        </td>
+                    <div class="row align-items-center">
+                        <h5 class="col card-title fw-semibold">All meals</h5>
+                        <button type="button" class="col-2 btn btn-outline-primary m-1" data-bs-toggle="modal"
+                                data-bs-target="#addMealModal">Add meal
+                        </button>
+                    </div>
 
-                                    </tr>
-
-                                    </tbody>
-                                </table>
-
-                                <table class="table-hover table restaurantTable text-nowrap mb-0 align-middle d-none">
-                                    <thead class="text-dark fs-4">
-                                    <tr>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Reservation id</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Guest</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0"># of guests</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Reservation</h6>
-                                        </th>
-
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr class="">
-                                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0">#0012345</h6></td>
-                                        <td class="border-bottom-0">
-                                            <h6 class="fw-normal mb-1">John Smith</h6>
-                                            <span class="fw-normal mb-1">(102)345-678</span>
-                                        </td>
-                                        <td class="border-bottom-0 ">
-                                            <h6 class="fw-normal ">4</h6>
-                                        </td>
-                                        <td class="border-bottom-0">
-                                            <p class="mb-0 fw-normal">2021-08-20 10:00</p>
-                                        </td>
-                                        <td class="border-bottom-0">
-                                            <div class="d-flex align-items-center gap-2 cursor-pointer">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                    <path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
-                                                    <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
-                                                    <path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
-                                                </svg>
+                    <div class="table-responsive">
+                        <table class="table-hover table airportTable text-nowrap mb-0 align-middle ">
+                            <thead class="text-dark fs-4">
+                            <tr>
+                                <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Id</h6>
+                                </th>
+                                <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Name</h6>
+                                </th>
+                                <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Type</h6>
+                                </th>
+                                <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Ingredients</h6>
+                                </th>
+                                <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Price</h6>
+                                </th>
+                                <th class="border-bottom-0">
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <% meals.forEach((meal) => { %>
+                                <tr class="">
+                                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><%= meal.id %></h6></td>
+                                    <td class="border-bottom-0">
+                                        <p class="mb-0 fw-normal"><%= meal.name %></p>
+                                    </td>
+                                    <td class="border-bottom-0">
+                                        <p class="mb-0 fw-normal"><%= meal.type %></p>
+                                    </td>
+                                    <td class="border-bottom-0">
+                                        <p class="mb-0 fw-normal"><%= meal.ingredients %></p>
+                                    </td>
+                                    <td class="border-bottom-0">
+                                        <p class="mb-0 fw-normal"><%= meal.price %></p>
+                                    </td>
+                                    <td class="border-bottom-0">
+                                        <div class="d-flex align-items-center gap-2 cursor-pointer"
+                                             data-bs-toggle="dropdown">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                 class="icon icon-tabler icon-tabler-dots" width="24" height="24"
+                                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                                 stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                <path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                                                <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                                                <path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                                            </svg>
+                                        </div>
+                                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
+                                             aria-labelledby="drop2">
+                                            <div class="message-body">
+                                                <a href="#"
+                                                   class="edit-meal d-flex align-items-center gap-2 dropdown-item"
+                                                   data-bs-toggle="modal" data-bs-target="#editMealModal"
+                                                   data-id="<%= meal.id %>">
+                                                    <p class="mb-0 fs-3">Edit</p>
+                                                </a>
+                                                <a href="#"
+                                                   class="delete-meal d-flex align-items-center gap-2 dropdown-item"
+                                                   data-id="<%= meal.id %>">
+                                                    <p class="mb-0 fs-3">Remove</p>
+                                                </a>
                                             </div>
-                                        </td>
-                                    </tr>
-
-                                    </tbody>
-                                </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item <%= pagination.page == 1 ? 'disabled' : '' %>">
+                            <a class="page-link"
+                               href="/manager/meal/?page=<%= +pagination.page - 1 && 1 %>"
+                               aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <% for (let i = 1; i <= pagination.pages; i++) { %>
+                            <li class="page-item <%= i == (pagination.page) && 'active' %>">
+                                <a class="page-link" href="/manager/meal/?page=<%= i %>"
+                                ><%= i %></a>
+                            </li>
+                        <% } %>
+                        <li class="page-item <%= pagination.page == pagination.pages ? 'disabled' : '' %>">
+                            <a
+                                    class="page-link"
+                                    href="/manager/meal/?page=<%= +pagination.page + 1 %>"
+                                    aria-label="Next"
+                            >
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- Add meal modal -->
+        <div class="modal fade" id="addMealModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="">Add new meal</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex flex-row justify-content-center row">
+                            <div class="col-10">
+                                <div class="d-flex flex-row justify-content-between row mb-2">
+                                    <label for="meal_name--add" class="col-4 col-md-4 col-form-label">Name</label>
+                                    <div class="col">
+                                        <input type="text" class="form-control" id="meal_name--add"
+                                               placeholder="Enter name">
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row justify-content-between row mb-2">
+                                    <label for="meal_type--add" class="col-4 col-md-4 col-form-label">Type</label>
+                                    <div class="col">
+                                        <input type="text" class="form-control" id="meal_type--add"
+                                               placeholder="Enter type">
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row justify-content-between row mb-2">
+                                    <label for="meal_price--add" class="col-4 col-md-4 col-form-label">Price</label>
+                                    <div class="col">
+                                        <input type="text" class="form-control" id="meal_price--add" placeholder="Enter price">
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row justify-content-between row mb-2">
+                                    <label for="meal_ingredients--add"
+                                           class="col-4 col-md-4 col-form-label">Ingredients</label>
+                                    <div class="col-12">
+                                        <input type="text" class="form-control" id="meal_ingredients--add" placeholder="Enter ingredients">
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn " data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="addMealBtn btn btn-primary">Add</button>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Add meal modal -->
+        <!-- Edit meal modal -->
+        <div class="modal fade" id="editMealModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="">Edit meal</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex flex-row justify-content-center row">
+                            <div class="col-10">
+                                <div class="d-flex flex-row justify-content-between row mb-2">
+                                    <label for="meal_name--edit" class="col-4 col-md-4 col-form-label">Name</label>
+                                    <div class="col">
+                                        <input type="text" class="form-control" id="meal_name--edit">
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row justify-content-between row mb-2">
+                                    <label for="meal_type--edit" class="col-4 col-md-4 col-form-label">Type</label>
+                                    <div class="col">
+                                        <input type="text" class="form-control" id="meal_type--edit">
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row justify-content-between row mb-2">
+                                    <label for="meal_price--edit" class="col-4 col-md-4 col-form-label">Price</label>
+                                    <div class="col">
+                                        <input type="text" class="form-control" id="meal_price--edit" >
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row justify-content-between row mb-2">
+                                    <label for="meal_ingredients--edit"
+                                           class="col-4 col-md-4 col-form-label">Ingredients</label>
+                                    <div class="col-12">
+                                        <input type="text" class="form-control" id="meal_ingredients--edit">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn " data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="editMealBtn btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Edit meal modal -->
     </div>
 </div>
 <script

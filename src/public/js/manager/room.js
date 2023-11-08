@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    uploadImage();
     $('.addRoomBtn').on('click', function () {
         addRoom();
     });
@@ -6,6 +7,7 @@ $(document).ready(function () {
         let id = $(this).attr('data-id');
         console.log(id)
         fillData(id);
+        editImage();
         $('.saveEditRoomBtn').on('click', function () {
             updateRoom(id);
         });
@@ -43,10 +45,37 @@ function roomStatus(id) {
     var option = select.options[select.selectedIndex];
     return option.text;
 }
+function uploadImage() {
+    let imageFile = $('#room_image--add');
+    let imagePreview = $('#image_preview');
+    let imagePath;
+    console.log($('#image_preview').attr('src'))
+
+    imageFile.on('change', function () {
+        console.log()
+        let image = this.files[0];
+        console.log(image)
+        imagePath = URL.createObjectURL(image);
+        imagePreview.attr('src', imagePath);
+    })
+}
+function editImage() {
+    let imageFile = $('#image_upload--edit');
+    let imagePreview = $('#edit--image_preview');
+    let imagePath;
+    console.log($('#edit--image_preview').attr('src'))
+
+    imageFile.on('change', function () {
+        console.log()
+        let image = this.files[0];
+        console.log(image)
+        imagePath = URL.createObjectURL(image);
+        imagePreview.attr('src', imagePath);
+    })
+}
 
 function addRoom() {
     let image = $('#room_image--add')[0].files[0];
-    console.log($('#room_image--add'))
     let number = $('#room_number--add').val();
     let type = roomTypeupdate('room_type--add');
     let floor = $('#room_floor--add').val();
@@ -55,13 +84,13 @@ function addRoom() {
     let cleaningStatus = roomCleaningStatus();
     let status = roomStatus('room_status--add');
 
-    console.log(number, type, floor, price, cleaningStatus, status);
-    facilities.forEach((item, index) => {
-        facilities[index] = item.trim();
-        console.log(facilities[index])
-    });
+    console.log(number, type, floor, price, cleaningStatus, status, image);
+    // facilities.forEach((item, index) => {
+    //     facilities[index] = item.trim();
+    //     console.log(facilities[index])
+    // });
 
-    let data = new FormData()
+    let data = new FormData();
     data.append('image', image)
     data.append('roomNumber', number)
     data.append('roomType', type)
@@ -86,6 +115,7 @@ function addRoom() {
         },
         error: function (err) {
             console.log("err")
+            console.log(err)
         }
     })
 }
@@ -94,7 +124,7 @@ function fillData(id) {
         url: '/api/room/' + id,
         type: 'GET',
         success: function (data) {
-            console.log(data.status)
+            console.log(data.images)
             $('#edit--room_number').val(data.roomNumber);
             // $('#edit--room_type').val(data.roomType);
             $("#edit--room_type option[value='" + data.roomType +"']").attr("selected", 1);
@@ -103,7 +133,7 @@ function fillData(id) {
             // $("#edit--room-status option:contains(" + data.isAvailable + ")").prop('selected', true)[0] = true;
             $('#edit--room-price').val(data.price);
             $('#edit--room-facilities').val(data.facilities);
-            $('#edit--image_preview').attr('src', '/images/uploads/rooms/' + data.image);
+            $('#edit--image_preview').attr('src', '/uploads/rooms/' + data.images);
         },
         error: function (err) {
             console.log(err)
@@ -121,8 +151,8 @@ function updateRoom(id) {
     let price = $('#edit--room-price').val();
     let facilities = $('#edit--room-facilities').val().split(',');
 
-    console.log(number, type, floor, price, clean, status, facilities);
-    let data = new FormData()
+    console.log(number, type, floor, price, clean, status, facilities, image);
+    let data = new FormData();
     data.append('image', image)
     data.append('roomNumber', number)
     data.append('roomType', type)

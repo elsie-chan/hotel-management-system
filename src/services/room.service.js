@@ -64,24 +64,41 @@ const getRoomIsAvailableOfCategory = async (category) => {
         return ErrorMessage(400, "Room not found");
     }
 }
-const create = async (data) => {
+const create = async (data, files) => {
     try {
+        if (!files) {
+            return ErrorMessage(400, "Please choose image");
+        }
         const room = await Room.findOne({ roomNumber: data.roomNumber });
         if(room){
             return ErrorMessage(400, "Room number already exists");
         }
-        const newRoom = new Room(data);
+        const newRoom = new Room({
+            roomNumber: data.roomNumber,
+            roomType: data.roomType,
+            roomFloor: data.roomFloor,
+            price: data.price,
+            facilities: data.facilities,
+            status: data.status,
+            isAvailable: data.isAvailable,
+            images: files.filename
+        });
         return await newRoom.save();
     } catch(e){
         return ErrorMessage(500, e.message);
     }
 }
-const updateRoom = async (id, data) => {
-    const room = await Room.findByIdAndUpdate(id, data);
-    if(!room){
-        return null;
+const updateRoom = async (id, data, file) => {
+    try {
+        data.images = file.filename;
+        const room = await Room.findByIdAndUpdate({_id: id}, {$set:data},{new:true});
+        if(!room){
+            return null;
+        }
+        return room;
+    } catch (e) {
+        return ErrorMessage(400, e.message);
     }
-    return room;
 }
 const deleteRoom = async (id) => {
     try {

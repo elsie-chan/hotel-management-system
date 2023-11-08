@@ -201,7 +201,7 @@
                             <% reservations.forEach(function(reservation) { %>
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">Reservation Id: #202312345</h5>
+                                        <h5 class="card-title">Reservation Id: <%= reservation.id %></h5>
                                         <div class="row justify-content-between">
                                             <div class="col">
                                                 <h6 class="card-subtitle fw-semibold">Check in:
@@ -216,7 +216,7 @@
                                             </div>
                                             <div class="col">
                                                 <h6 class="card-subtitle fw-semibold">Guests: <span
-                                                            class="fw-light text-muted">2</span>
+                                                            class="fw-light text-muted"><%= reservation.guests %></span>
                                                 </h6>
                                             </div>
                                             <div class="col-1 text-end">
@@ -262,9 +262,7 @@
                                                 </h6>
                                             </div>
                                             <div class="col">
-                                                <h6 class="card-subtitle fw-semibold">Email: <span
-                                                            class="fw-light text-muted">tdt@gmail.com</span>
-                                                </h6>
+
                                             </div>
                                             <div class="col-1 text-end invisible">
                                                 <div class="d-flex align-items-center gap-2 cursor-pointer">
@@ -285,28 +283,35 @@
                                         <div class="row mb-2 justify-content-start ">
                                             <div class="col d-flex align-items-center">
                                                 <h6 class="card-subtitle fw-semibold">Room: </h6>
-                                                <span class="badge bg-success rounded-3 "></span>
+                                                <% reservation.rooms.forEach((room) => {  %>
+                                                <span class="badge bg-success rounded-3 "><%= room.roomNumber %></span>
+                                                <% }); %>
                                             </div>
                                         </div>
                                         <div class="row mb-2 justify-content-start ">
                                             <div class="col d-flex align-items-center">
-                                                <h6 class="card-subtitle fw-semibold">Status: <span class="fw-light text-muted">Due to</span></h6>
+                                                <h6 class="card-subtitle fw-semibold">Status: <span class="fw-light text-muted"><%= reservation.status %></span></h6>
                                             </div>
                                         </div>
                                         <div class="row mb-2 justify-content-start ">
                                             <div class="col d-flex align-items-center">
-                                                <h6 class="card-subtitle fw-semibold">Meal: <span class="fw-light text-muted">None</span></h6>
+                                                <h6 class="card-subtitle fw-semibold">Meal: <span class="fw-light text-muted"><%= (reservation.meal)? 'Yes': 'None' %></span></h6>
                                             </div>
                                         </div>
                                         <div class="row mb-2 justify-content-start ">
                                             <div class="col d-flex align-items-center">
-                                                <h6 class="card-subtitle fw-semibold">Airport transfer: <span class="fw-light text-muted">None</span></h6>
+                                                <h6 class="card-subtitle fw-semibold">Airport transfer:
+                                                    <% if (reservation.transport) { %>
+                                                    <a href="/manager/transport/<%= reservation.transport._id %>" class="link-info">View detail</a>
+                                                    <% } else { %>
+                                                        <span class="fw-light text-muted"> None</span></h6>
+                                                <% } %>
                                             </div>
                                         </div>
                                         <div class="row mb-2 justify-content-start ">
                                             <div class="col d-flex flex-row">
                                                 <h6 class="card-subtitle fw-semibold">Special request: <span
-                                                            class="fw-light text-muted">None</span></h6>
+                                                            class="fw-light text-muted"><%= reservation.note %></span></h6>
                                             </div>
                                         </div>
 
@@ -332,18 +337,18 @@
                                 <div class="col-10">
                                     <div class="row">
                                         <div class="col-md-6 form-group">
-                                            <label class="text-black font-weight-bold" for="reservation_name--add">Name</label>
-                                            <input type="text" id="reservation_name--add" class="form-control ">
+                                            <label class="text-black font-weight-bold" for="reservation_fname--add">First name</label>
+                                            <input type="text" id="reservation_fname--add" class="form-control ">
                                         </div>
                                         <div class="col-md-6 form-group">
-                                            <label class="text-black font-weight-bold" for="reservation_phone--add">Phone</label>
-                                            <input type="text" id="reservation_phone--add" class="form-control ">
+                                            <label class="text-black font-weight-bold" for="reservation_lname--add">Last name</label>
+                                            <input type="text" id="reservation_lname--add" class="form-control ">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12 form-group">
-                                            <label class="text-black font-weight-bold" for="reservation_email--add">Email</label>
-                                            <input type="email" id="reservation_email--add" class="form-control ">
+                                            <label class="text-black font-weight-bold" for="reservation_phone--add">Phone</label>
+                                            <input type="text" id="reservation_phone--add" class="form-control ">
                                         </div>
                                     </div>
 

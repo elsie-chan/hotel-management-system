@@ -5,13 +5,14 @@ $(document).ready(function () {
 });
 
 function addReservation() {
-    let name = $('#reservation_name--add').val();
+    let fname = $('#reservation_fname--add').val();
+    let lname = $('#reservation_lname--add').val();
     let phone = $('#reservation_phone--add').val();
-    let email = $('#reservation_email--add').val();
     let checkin = $('#reservation_checkin--add').val();
     let checkout = $('#reservation_checkout--add').val();
     let adult = $('#reservation_adult--add').val();
     let children = $('#reservation_children--add').val();
+    let guests = parseInt(adult) + parseInt(children);
     let room = $('#reservation_room--add').val();
     let pickUp = $('#reservation_pickUp--add').val();
     let destination = $('#reservation_destination--add').val();
@@ -19,24 +20,23 @@ function addReservation() {
     let appointment = $('#reservation_appointment--add').val();
     let note = $('#reservation_note--add').val();
 
-    console.log(name, phone, email, checkin, checkout, adult, children, room, pickUp, destination, vehicle, appointment, note);
+    console.log(fname, lname, phone, checkin, checkout, adult, children, room, pickUp, destination, vehicle, appointment, note);
 
     $.ajax({
         url: '/api/reservation/add',
         type: 'POST',
         data: {
-            name: name,
+            fname: fname,
+            lname: lname,
             phone: phone,
-            email: email,
-            checkin: checkin,
-            checkout: checkout,
-            adult: adult,
-            children: children,
-            room: room,
-            pickUp: pickUp,
-            destination: destination,
-            vehicle: vehicle,
-            appointment: appointment,
+            checkIn: checkin,
+            checkOut: checkout,
+            rooms: room,
+            guests: guests,
+            // pickUp: pickUp,
+            // destination: destination,
+            // vehicle: vehicle,
+            // appointment: appointment,
             note: note
         },
         contentType: 'application/json',

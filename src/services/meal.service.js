@@ -13,10 +13,12 @@ const getAll = async () => {
 
 const create = async (data) => {
     try {
-        const meal = Meal.findOne({ name: data.name });
+        console.log(data)
+        const meal = await Meal.findOne({ name: data.name });
         if (meal) return ErrorMessage(400, "Meal is exist");
         const newMeal = new Meal(data);
-        return await newMeal;
+        console.log(newMeal)
+        return await newMeal.save();
     } catch (e) {
         return ErrorMessage(400, "Meal not created");
     }
@@ -24,10 +26,10 @@ const create = async (data) => {
 
 const update = async (id, data) => {
     try {
-        const meal = Meal.findOne({ _id: id });
+        const meal = await Meal.findOne({ _id: id });
         if (!meal) return ErrorMessage(400, "Meal not found");
-        const result = await Meal.findByIdAndUpdate(id, data);
-        return await result;
+        const result = await Meal.findOneAndUpdate({_id: id}, {$set:data},{new:true});
+        return result;
     } catch (e) {
         return ErrorMessage(400, "Meal not updated");
     }
@@ -35,7 +37,7 @@ const update = async (id, data) => {
 
 const deleteMeal = async (id) => {
     try {
-        const meal = await Meal.findByIdAndUpdate(id);
+        const meal = await Meal.findByIdAndDelete(id);
         if(!meal){
             return ErrorMessage(400, "Room not found");
         }

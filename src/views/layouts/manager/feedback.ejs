@@ -184,28 +184,33 @@
                     <div class="row">
                         <div class="col">
                             <h5 class="card-title fw-semibold mb-4">All messages</h5>
+                            <% feedbacks.forEach((feedback) => { %>
                             <div class="card">
                                 <div class="card-body row align-items-center">
                                     <div class="col-10">
-                                        <h5 class="card-title">Reservation Id: #202312345</h5>
+                                        <h5 class="card-title">Reservation Id: <%= feedback.reservations[0]._id %></h5>
                                         <div class="row mb-2 justify-content-start ">
                                             <div class="col d-flex flex-row">
                                                 <h6 class="card-subtitle  fw-semibold">Name: <span
-                                                            class="fw-light text-muted">John Smith</span></h6>
+                                                            class="fw-light text-muted"><%= feedback.fname + " " + feedback.lname %></span></h6>
                                             </div>
                                         </div>
                                         <div class="row mb-2 justify-content-start ">
                                             <div class="col d-flex flex-row">
-                                                <h6 class="card-subtitle  fw-semibold">Message: <span
-                                                            class="fw-light text-muted">Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum </span></h6>
+                                                <h6 class="card-subtitle  fw-semibold">Message:
+                                                    <% feedback.feedbacks.forEach((fb) => { %>
+                                                    <span class="fw-light text-muted "><%- fb.note %></span><br>
+                                                    <% })%>
+                                                </h6>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col">
-                                        <button type="button" class="btn btn-primary m-1">Read</button>
+                                        <button type="button" class="fbStatusBtn btn btn-primary m-1"><%= %></button>
                                     </div>
                                 </div>
                             </div>
+                            <% }); %>
                         </div>
                     </div>
                 </div>
@@ -225,7 +230,7 @@
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 <script src="/js/manager/sidebarmenu.js"></script>
-
+<script src="/js/manager/feedback.js"></script>
 </body>
 
 </html>

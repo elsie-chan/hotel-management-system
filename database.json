@@ -42,45 +42,50 @@
       "roomFloor": "Floor 1",
       "price": 500000,
       "isAvailable": "Available",
-      "facilities": ["Wifi", "TV", "Tủ lạnh", "Máy lạnh", "Giường đơn"],
+      "facilities": ["Wifi", "TV", "Fridge", "Air conditioner", "Single bed"],
       "status": "Clean",
-      "isChildren": false
+      "isChildren": false,
+      "images": "101.png"
     },
     {
       "roomNumber": 102,
       "roomFloor": "Floor 1",
       "price": 500000,
-      "isAvailable": "Còn trống",
+      "isAvailable": "Available",
       "facilities": ["Wifi", "TV", "Tủ lạnh", "Máy lạnh", "Giường đơn"],
-      "status": "Sạch sẽ",
-      "isChildren": false
+      "status": "Clean",
+      "isChildren": false,
+        "images": "102.png"
     },
     {
       "roomNumber": 201,
       "roomFloor": "Floor 2",
       "price": 1000000,
-      "isAvailable": "Còn trống",
+      "isAvailable": "Available",
       "facilities": ["Wifi", "TV", "Tủ lạnh", "Máy lạnh", "Giường đôi"],
-      "status": "Sạch sẽ",
-      "isChildren": false
+      "status": "Clean",
+      "isChildren": false,
+        "images": "201.png"
     },
     {
       "roomNumber": 301,
       "roomFloor": "Floor 3",
       "price": 1500000,
-      "isAvailable": "Còn trống",
+      "isAvailable": "Available",
       "facilities": ["Wifi", "TV", "Tủ lạnh", "Máy lạnh", "2 Giường đôi"],
-      "status": "Sạch sẽ",
-      "isChildren": true
+      "status": "Clean",
+      "isChildren": true,
+        "images": "301.png"
     },
     {
       "roomNumber": 401,
       "roomFloor": "Floor 4",
       "price": 2500000,
-      "isAvailable": "Còn trống",
+      "isAvailable": "Available",
       "facilities": ["Wifi", "TV", "Tủ lạnh", "2 Máy lạnh", "2 Giường đôi"],
-      "status": "Sạch sẽ",
-      "isChildren": false
+      "status": "Clean",
+      "isChildren": false,
+        "images": "401.png"
     }
   ],
   "transports": [
@@ -96,8 +101,8 @@
     {
       "name": "Bún bò",
       "price": 50000,
-      "type": "abc",
-      "ingredients": "abc"
+      "type": "Vietnamese rice noodle",
+      "ingredients": "sliced beef, chả lụa, and pork knuckles"
     }
   ],
   "reservations": [
@@ -113,7 +118,7 @@
         }
       ],
       "transport" : "BMW",
-      "status": "Đã thanh toán",
+      "status": "Confirmed",
       "quests": 1,
       "note": "Tôi có vấn đề về OCD"
     }
