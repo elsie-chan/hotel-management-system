@@ -38,11 +38,11 @@ const reservationSchema = new mongoose.Schema({
         required: false,
         default: false
     },
-    rooms: [{
+    room: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Room'
-    }],
-    meal:[{
+    },
+    meals:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Meal'
     }],

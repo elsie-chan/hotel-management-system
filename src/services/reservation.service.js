@@ -8,7 +8,7 @@ import Meal from "../models/meal.model.js";
 
 const getAll = async () => {
     try {
-        const reservations = Reservation.find().populate("rooms").populate("meal").populate("transport");
+        const reservations = Reservation.find().populate("room").populate("meals").populate("transport");
         return await reservations;
     } catch (e) {
         return ErrorMessage(400, "Reservation not found");
@@ -42,7 +42,7 @@ const updateStatus = async () => {
 }
 const updateCheckIn = async (id, checkIn) => {
     try {
-        const reservation = Reservation.findByIdAndUpdate(id,{checkIn});
+        const reservation = await Reservation.findByIdAndUpdate(id,{checkIn});
         if(!reservation) return ErrorMessage(400, "Reservation not found");
         return await reservation;
     } catch(e){
@@ -91,14 +91,10 @@ const update = async (id, data) => {
             }
             data.meal = meal_id;
         }
-        if(data.rooms){
-            const room_id = [];
-            for(let i= 0; i<data.rooms.length; i++){
-                const room = await Room.findOne({roomNumber: data.rooms[i].roomNumber});
-                if(!room) return ErrorMessage(400, "Room not found");
-                room_id.push(room._id);
-            }
-            data.rooms = room_id;
+        if(data.room){
+            const room_id = await Room.findOne({roomNumber: data.rooms[i].roomNumber});
+            if(!room_id) return ErrorMessage(400, "Room not found");
+            data.room = room_id;
         }
         const reservation = await Reservation.findByIdAndUpdate(id,data);
         if(!reservation) return ErrorMessage(400, "Reservation not found");
@@ -125,9 +121,7 @@ const bookingRoom = async(fromDate, toDate, quantity, isChildren) => {
         if(!reservation) return ErrorMessage(400, "Reservation not found");
         let room_id = [];
         for(const temp of reservation){
-            for(const room of temp.rooms){
-                room_id.push(room);
-            }
+            room_id.push(temp.room);
         }
         let category = "";
         switch(quantity){
@@ -148,7 +142,7 @@ const bookingRoom = async(fromDate, toDate, quantity, isChildren) => {
         }
         if(category === "") return ErrorMessage(400, "Category not found");
         const cate = await Category.find({name: category});
-        const room = Room.find({$and: [{_id: {$nin: room_id}}, {isChildren: isChildren}, {roomType: cate}]});
+        const room = Room.find({$and: [{_id: {$nin: room_id}}, {isChildren: isChildren}, {roomType: cate}, {isAvailable: "Available"}]});
         return await room;
     } catch (e) {
         return ErrorMessage(400, "Reservation not found");

@@ -102,11 +102,7 @@
       "phone": "0231823934",
       "checkIn": "Nov 4 2023",
       "checkOut": "Nov 5 2023",
-      "rooms": [
-        {
-          "roomNumber": 101
-        }
-      ],
+      "room": 101,
       "transport" : "BMW",
       "status": "Confirmed",
       "quests": 1,

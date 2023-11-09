@@ -43,7 +43,7 @@ const loadDatabase = async () => {
 
     const reservations = data.reservations.map(async (reservation) => {
         const transport = Transport.findOne({vehicle: reservation.transport});
-        const room = Room.findOne({roomNumber: reservation.rooms[0].roomNumber});
+        const room = await Room.findOne({roomNumber: reservation.room});
         const reservationData = {
             fname: reservation.fname,
             lname: reservation.lname,
@@ -53,7 +53,7 @@ const loadDatabase = async () => {
             status: reservation.status,
             note: reservation.note,
             quests: reservation.quests,
-            rooms: [await room],
+            room: await room,
             transport: await transport
         };
         return Reservation.create({...reservationData});

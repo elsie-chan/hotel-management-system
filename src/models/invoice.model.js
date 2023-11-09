@@ -11,7 +11,8 @@ const invoiceSchema = new mongoose.Schema({
     },
     paid_at: {
         type: Date,
-        require: true
+        require: false,
+        default: Date.now()
     },
     payment_method: {
         type: String,
