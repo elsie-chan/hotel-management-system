@@ -82,22 +82,172 @@ data-sidebartyp="full"data-sidebar-position="fixed" data-header-position="relati
                         </a>
                     </li>
                 </ul>
-                <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
-                    <li class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-                        <a target="_blank" class="btn btn-primary">Add Booking</a>
-                    </li>
-                </div>
             </nav>
         </header>
         <div class="container-fluid">
+            <div class="row align-items-center mb-3">
+                <button type="button" class="ms-auto col-2 btn btn-outline-primary" data-bs-toggle="modal"
+                        data-bs-target="#addBookingModal">Add booking
+                </button>
+            </div>
             <div class="row">
                 <div class="col-12">
                     <div class="" id="cal">
-
                     </div>
                 </div>
             </div>
+
         </div>
+        <!-- Add booking modal -->
+        <div class="modal fade modal-xl" id="addBookingModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="">Add new booking</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <header>
+                            <div class="container">
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <img class="img-fluid ms-auto me-auto d-block" src="/images/Logo.png" width="200">
+                                </div>
+                              </div>
+                            </div>
+                          </header>
+                          
+                          <section class="mt-4">
+                            <div class="container">
+                              <form class="card">
+                                <div class="card-header">
+                                  <nav class="nav nav-pills nav-fill">
+                                    <a class="nav-link tab-pills" href="#">Book a room</a>
+                                    <a class="nav-link tab-pills" href="#">Add information</a>
+                                    <a class="nav-link tab-pills" href="#">Comfirm</a>
+                                  </nav>
+                                </div>
+                                <div class="card-body">
+                                  <div class="tab d-none">
+                                    <div class="row">
+                                      <div class="col-md-3 form-group">
+                                        <label for="name" class="form-label">From</label>
+                                        <input type="date" id="book_room_from--add" class="form-control">
+                                      </div>
+                                      <div class="col-md-3 form-group">
+                                        <label for="email" class="form-label">To</label>
+                                        <input type="date" id="book_room_to--add" class="form-control">
+                                      </div>
+                                      <div class="col-md-3 form-group">
+                                        <label for="book_room_adult--add" class="font-weight-bold text-black">Adults</label>
+                                          <div class="field-icon-wrap"  >
+                                              <select name="" id="book_room_adult--add" class="form-control">
+                                                  <option value="1">1</option>
+                                                  <option value="2">2</option>
+                                                  <option value="3">3</option>
+                                                  <option value="4+">4+</option>
+                                              </select>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-3 form-group">
+                                        <label for="book_room_children--add" class="font-weight-bold text-black">Children</label>
+                                            <div class="field-icon-wrap">
+                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                <select name="" id="book_room_children--add" class="form-control">
+                                                    <option value="0">0</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3+">3+</option>
+                                                </select>
+                                            </div>
+                                      </div>
+                                      <div class="row mb-6 ">
+                                        <div class="col-md-12 form-group">
+                                            <label class="text-black font-weight-bold" for="reservation_note--add">Room information</label>
+                                            <textarea name="message" id="room_note--add" class="form-control " cols="10" rows="8"></textarea>
+                                        </div>
+                                    </div>
+                                    </div>
+                                  </div>
+                                  <div class="tab d-none">
+                                    <div class="mb-3">
+                                      <label for="name" class="form-label">Name</label>
+                                      <input type="text" class="form-control" name="name" id="name" placeholder="Please enter Guest's name">
+                                    </div>
+                                    <div class="mb-3">
+                                      <label for="phone number" class="form-label">Phone</label>
+                                      <input type="text" class="form-control" name="phone" id="phone" placeholder="Please enter Guest's phone">
+                                    </div>
+                                    <div class="mb-3">
+                                      <label for="book_room_vehicle--add" class="font-weight-bold text-black">Vehicle</label>
+                                            <div class="field-icon-wrap">
+                                                <select name="" id="book_room_vehicle--add" class="form-control">
+                                                    <option value="None">None</option>
+                                                    <option value="Car">Car</option>
+                                                    <option value="Bus">Bus</option>
+                                                    <option value="Limousine">Limousine</option>
+                                                </select>
+                                            </div>
+                                            <div class="row">
+                                              <div class="col-md-6 form-group">
+                                                  <label class="text-black font-weight-bold" for="book_room_vehicle_pickUp--add"></label>
+                                                  <input type="text" id="book_room_vehicle_pickUp--add" class="form-control "placeholder="Please enter Vehicle Pick up location">
+                                              </div>
+                                              <div class="col-md-6 form-group">
+                                                <label class="text-black font-weight-bold" for="book_room_vehicle_destination--add"></label>
+                                                <input type="text" id="book_room_vehicle_destination--add" class="form-control "placeholder="Please enter Vehicle destination">
+                                            </div>
+                                          </div>
+                                    </div>
+                                    <div class="mb-3">
+                                      <label for="book_room_vehicle--add" class="font-weight-bold text-black">Meal</label>
+                                            <div class="row">
+                                              <div class="col-md-4 form-group">
+                                                  <label class="text-black font-weight-bold" for="book_room_meal_name--add"></label>
+                                                  <input type="text" id="book_room_meal_type--add" class="form-control" placeholder="Please enter Meal name">
+                                              </div>
+                                              <div class="col-md-4 form-group">
+                                                <label class="text-black font-weight-bold" for="book_room_meal_type--add"></label>
+                                                <input type="text" id="book_room_meal_type--add" class="form-control "placeholder="Please enter Meal type">
+                                              </div>
+                                              <div class="col-md-4 form-group">
+                                                <label class="text-black font-weight-bold" for="book_room_meal_price--add"></label>
+                                                <input type="text" id="book_room_meal_price--add" class="form-control "placeholder="Please enter Meal price">
+                                              </div>
+                                            <div class ="row">
+                                              <div class="col-md-12 form-group">
+                                                <label class="text-black font-weight-bold" for="book_room_meal_price--add"></label>
+                                                <input type="text" id="book_room_meal_ingredients--add" class="form-control "placeholder="Please enter Meal ingredients">
+                                              </div>
+                                            </div>
+                                          </div>
+                                    </div>
+                                  </div>
+                                  <div class="tab d-none">
+                                    <p>All Set! Please submit to continue. Thank you</p>
+                                  </div>
+                                </div>
+                                <div class="card-footer text-end">
+                                  <div class="d-flex">
+                                    <button type="button" id="back_button" class="btn btn-link" onclick="back()">Back</button>
+                                    <button type="button" id="next_button" class="btn btn-primary ms-auto" onclick="next()">Next</button>
+                                  </div>
+                                </div>
+                              </form>
+                            </div>
+                          </section>
+                </div>
+            </div>
+        </div>
+        <!-- Add booking modal -->
+
+        
+
+
+
+
 
     </div>
 </body>
@@ -148,5 +298,6 @@ data-sidebartyp="full"data-sidebar-position="fixed" data-header-position="relati
         calendar.render();
       });
 </script>
+<script src="/js/receptionist/frontdesk.js"></script>
 
 </html>

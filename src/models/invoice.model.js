@@ -5,6 +5,23 @@ const invoiceSchema = new mongoose.Schema({
         type: Number,
         require: true
     },
+    roomTotal: {
+        type: Number,
+        require: false
+
+    },
+    transportTotal: {
+        type: Number,
+        require: false
+    },
+    mealTotal: {
+        type: Number,
+        require: false
+    },
+    subTotal: {
+        type: Number,
+        require: false
+    },
     total: {
         type: Number,
         require: true

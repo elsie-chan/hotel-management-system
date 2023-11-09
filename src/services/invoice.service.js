@@ -4,7 +4,14 @@ import {ErrorMessage} from "../error/message.error.js";
 
 const getAll = async () => {
      try {
-         const invoices = Invoice.find().populate("reservation", "--createdAt --updatedAt --isDeleted --__v");
+         const invoices = Invoice.find().populate(
+             {
+                 path: "reservation",
+                    populate: {
+                        path: "room meals transport"
+                    }
+             }
+         );
          return await invoices;
      } catch (e) {
          return ErrorMessage(500, e.message)
@@ -19,13 +26,20 @@ const create = async(reservation_id, taxes, payment_status) => {
         }
         let total = 0;
         const day = (reservation.checkOut - reservation.checkIn) / (1000 * 60 * 60 * 24);
-        total += (reservation.room.price * day) + reservation.transport.price;
+        const roomTotal = reservation.room.price * day;
+        const transportTotal = reservation.transport.price;
+        const mealTotal = 0;
         reservation.meals.forEach(meal => {
             total += meal.price;
         });
-        total = total + (total * (taxes / 100));
+        total += roomTotal + transportTotal + mealTotal;
+        total = total + (total * taxes) / 100;
         const data = {
             taxes: taxes,
+            roomTotal: roomTotal,
+            transportTotal: transportTotal,
+            mealTotal: mealTotal,
+            subTotal: transportTotal + mealTotal,
             total: total,
             payment_method: payment_status,
             reservation: reservation_id
