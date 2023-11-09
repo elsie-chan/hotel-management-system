@@ -19,16 +19,39 @@ function checkAvailable() {
 
     $.ajax({
         url: '/api/reservation/booking',
-        type: 'GET',
+        type: 'POST',
         data: JSON.stringify({
-            fromDate: fromDate,
-            toDate: toDate,
-            quantity: quantity,
-            isChildren: isChildren
+            fromDate,
+            toDate,
+            quantity,
+            isChildren
         }),
         contentType: 'application/json',
         success: function (data) {
+            window.href = '#next';
             console.log(data);
+            if (data.length === 0) {
+                toastr.info('No room available!');
+                return;
+            };
+            $('.roomsList').empty();
+            data.forEach(function (item) {
+                const result = `
+                <div class="col-md-6 col-lg-4" data-aos="fade-up">
+                <a href="https://www.traveloka.com/vi-vn/hotel" class="room">
+                    <figure class="img-wrap">
+                        <img src="/uploads/rooms/${item.images}" alt="Cannot load image" class="img-fluid mb-3">
+                    </figure>
+                    <div class="p-3 text-center room-info">
+                        <h2>${item.roomType.name}</h2>
+                        <span class="text-uppercase letter-spacing-1">${item.price} / per night</span>
+                    </div>
+                </a>
+            </div>
+            `
+                $('.roomsList').append(result);
+
+            })
         },
         error: function (err) {
             console.log(err);
@@ -36,18 +59,24 @@ function checkAvailable() {
     })
 }
 function sendFeedback() {
+    let id = $('#reservationId').val();
     let phone = $('#phone').val();
     let message = $('#message').val();
     $.ajax({
-        url: '/api/guest/send-feedback/' + id,
+        url: '/api/feedback/send-feedback/',
         type: 'POST',
         data: JSON.stringify({
-            phone: phone,
-            fb: message
+            reservation: id,
+            guest: phone,
+            note: message
         }),
         contentType: 'application/json',
         success: function (data) {
             console.log(data);
+            toastr.success('Feedback sent successfully!');
+            setTimeout(function () {
+                window.location.href = '/contact';
+            }, 1000);
         },
         error: function (err) {
             console.log(err)

@@ -20,8 +20,10 @@ $(document).ready(function () {
             type: 'DELETE',
             success: function (data) {
                 console.log(data)
-                toastr.success(data.message, 'Success', {timeOut: 5000});
-                // location.reload();
+                location.reload();
+                setTimeout(function () {
+                    toastr.success(data.message, 'Success', {timeOut: 5000});
+                }, 1000);
             },
             error: function (err) {
                 console.log(err)
@@ -175,7 +177,9 @@ function updateRoom(id) {
         success: function (data) {
             console.log(data)
             toastr.success(data.message, 'Success', {timeOut: 5000});
-            // location.reload();
+            setTimeout(function () {
+                location.reload();
+            }, 1000);
         },
         error: function (err) {
             console.log(err)

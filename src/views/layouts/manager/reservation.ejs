@@ -11,6 +11,7 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/1.35.0/iconfont/tabler-icons.min.css"
           integrity="sha512-tpsEzNMLQS7w9imFSjbEOHdZav3/aObSESAL1y5jyJDoICFF2YwEdAHOPdOr1t+h8hTzar0flphxR76pd0V1zQ=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
 </head>
 <body>
 <!--  Body Wrapper -->
@@ -237,9 +238,9 @@
                                                      aria-labelledby="drop2">
                                                     <div class="message-body">
                                                         <a href="#"
-                                                           class="update-room d-flex align-items-center gap-2 dropdown-item"
-                                                           data-bs-toggle="modal" data-bs-target="#">
-                                                            <p class="mb-0 fs-3">Edit</p>
+                                                           class="update-reservation d-flex align-items-center gap-2 dropdown-item"
+                                                           data-bs-toggle="modal" data-bs-target="#editReservationModal" data-id="<%= reservation.id %>">
+                                                            <p class="mb-0 fs-3" >Edit</p>
                                                         </a>
                                                         <a href="#"
                                                            class="d-flex align-items-center gap-2 dropdown-item">
@@ -283,9 +284,7 @@
                                         <div class="row mb-2 justify-content-start ">
                                             <div class="col d-flex align-items-center">
                                                 <h6 class="card-subtitle fw-semibold">Room: </h6>
-                                                <% reservation.rooms.forEach((room) => {  %>
-                                                <span class="badge bg-success rounded-3 "><%= room.roomNumber %></span>
-                                                <% }); %>
+                                                <span class="badge bg-success rounded-3 "><%= reservation.room.roomNumber %></span>
                                             </div>
                                         </div>
                                         <div class="row mb-2 justify-content-start ">
@@ -318,16 +317,42 @@
                                     </div>
                                 </div>
                             <% }) %>
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination justify-content-center">
+                                        <li class="page-item <%= pagination.page == 1 ? 'disabled' : ''%>">
+                                            <a class="page-link"
+                                               href="/manager/invoice/?page=<%= +pagination.page -1 && 1 %>"
+                                               aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        <% for (let i = 1; i <= pagination.pages; i++) {%>
+                                            <li class="page-item <%= i == (pagination.page) && 'active'%>">
+                                                <a class="page-link" href="/manager/invoice/?page=<%= i %>"
+                                                ><%= i %></a>
+                                            </li>
+                                        <% }%>
+                                        <li class="page-item <%= pagination.page == pagination.pages ? 'disabled' : ''%>">
+                                            <a
+                                                    class="page-link"
+                                                    href="/manager/invoice/?page=<%= +pagination.page  + 1 %>"
+                                                    aria-label="Next"
+                                            >
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Add reservation modal -->
-            <div class="modal fade" id="addReservationModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <!-- Edit reservation modal -->
+            <div class="modal fade" id="editReservationModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="">Add new reservation</h5>
+                            <h5 class="modal-title" id="">Edit reservation</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true"></span>
                             </button>
@@ -337,100 +362,57 @@
                                 <div class="col-10">
                                     <div class="row">
                                         <div class="col-md-6 form-group">
-                                            <label class="text-black font-weight-bold" for="reservation_fname--add">First name</label>
-                                            <input type="text" id="reservation_fname--add" class="form-control ">
+                                            <label class="text-black font-weight-bold" for="reservation_fname--edit">First name</label>
+                                            <input type="text" id="reservation_fname--edit" class="form-control ">
                                         </div>
                                         <div class="col-md-6 form-group">
-                                            <label class="text-black font-weight-bold" for="reservation_lname--add">Last name</label>
-                                            <input type="text" id="reservation_lname--add" class="form-control ">
+                                            <label class="text-black font-weight-bold" for="reservation_lname--edit">Last name</label>
+                                            <input type="text" id="reservation_lname--edit" class="form-control ">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12 form-group">
-                                            <label class="text-black font-weight-bold" for="reservation_phone--add">Phone</label>
-                                            <input type="text" id="reservation_phone--add" class="form-control ">
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-6 form-group">
-                                            <label class="text-black font-weight-bold" for="reservation_checkin--add">Date Check In</label>
-                                            <input type="date" id="reservation_checkin--add" class="form-control">
-                                        </div>
-                                        <div class="col-md-6 form-group">
-                                            <label class="text-black font-weight-bold" for="reservation_checkout--add">Date Check Out</label>
-                                            <input type="date" id="reservation_checkout--add" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-6 form-group">
-                                            <label for="reservation_adult--add" class="font-weight-bold text-black">Adults</label>
-                                            <div class="field-icon-wrap">
-                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                <select name="" id="reservation_adult--add" class="form-control">
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4+">4+</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 form-group">
-                                            <label for="reservation_children--add" class="font-weight-bold text-black">Children</label>
-                                            <div class="field-icon-wrap">
-                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                <select name="" id="reservation_children--add" class="form-control">
-                                                    <option value="0">0</option>
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3+">3+</option>
-                                                </select>
-                                            </div>
+                                            <label class="text-black font-weight-bold" for="reservation_phone--edit">Phone</label>
+                                            <input type="text" id="reservation_phone--edit" class="form-control ">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12 form-group">
-                                            <label class="text-black font-weight-bold" for="reservation_room--add">Room</label>
-                                            <input type="text" id="reservation_room--add" class="form-control ">
+                                            <label class="text-black font-weight-bold" for="reservation_status--edit">Status</label>
+                                            <select name="" id="reservation_status--edit" class="form-control">
+                                                <option value="Confirmed">Confirmed</option>
+                                                <option value="Checked in">Checked in</option>
+                                                <option value="Checked out">Checked out</option>
+                                                <option value="Cancelled">Cancelled</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <label class="text-black font-weight-bold" for="reservation_room--edit">Room</label>
+                                            <input type="text" id="reservation_room--edit" class="form-control ">
                                         </div>
                                     </div>
 
                                     <span class="d-block text-uppercase">Airport Transfer:</span>
-                                    <div class="row">
-                                        <div class="col-md-12 form-group">
-                                            <label class="text-black font-weight-bold" for="reservation_pickUp--add">Pick up location</label>
-                                            <input type="text" id="reservation_pickUp--add" class="form-control ">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12 form-group">
-                                            <label class="text-black font-weight-bold" for="reservation_destination--add">Destination</label>
-                                            <input type="text" id="reservation_destination--add" class="form-control ">
-                                        </div>
-                                    </div>
+
                                     <div class="row">
                                         <div class="col-md-6 form-group">
-                                            <label for="reservation_vehicle--add" class="font-weight-bold text-black">Vehicle</label>
+                                            <label for="reservation_vehicle--edit" class="font-weight-bold text-black">Vehicle</label>
                                             <div class="field-icon-wrap">
-                                                <select name="" id="reservation_vehicle--add" class="form-control">
+                                                <select name="" id="reservation_vehicle--edit" class="form-control">
                                                     <option value="Car">Car</option>
                                                     <option value="Bus">Bus</option>
                                                     <option value="Limousine">Limousine</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 form-group">
-                                            <label for="reservation_appointment--add" class="font-weight-bold text-black">Appointment</label>
-                                            <div class="field-icon-wrap">
-                                                <input type="datetime-local" id="reservation_appointment--add" class="form-control">
-                                            </div>
-                                        </div>
+
 
                                         <div class="row mb-4">
                                             <div class="col-md-12 form-group">
-                                                <label class="text-black font-weight-bold" for="reservation_note--add">Notes</label>
-                                                <textarea name="message" id="reservation_note--add" class="form-control " cols="30" rows="8"></textarea>
+                                                <label class="text-black font-weight-bold" for="reservation_note--edit">Notes</label>
+                                                <textarea name="message" id="reservation_note--edit" class="form-control " cols="30" rows="8"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -439,12 +421,12 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn " data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="addReservationBtn btn btn-primary">Add</button>
+                            <button type="button" class="editReservationBtn btn btn-primary" >Save</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Add reservation modal -->
+            <!-- Edit reservation modal -->
         </div>
     </div>
 </div>

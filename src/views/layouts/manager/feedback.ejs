@@ -11,6 +11,7 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/1.35.0/iconfont/tabler-icons.min.css"
           integrity="sha512-tpsEzNMLQS7w9imFSjbEOHdZav3/aObSESAL1y5jyJDoICFF2YwEdAHOPdOr1t+h8hTzar0flphxR76pd0V1zQ=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
 </head>
 <body>
 <!--  Body Wrapper -->
@@ -184,33 +185,64 @@
                     <div class="row">
                         <div class="col">
                             <h5 class="card-title fw-semibold mb-4">All messages</h5>
+                            <% if (feedbacks.length===0) { %>
+                                <div class="alert alert-warning" role="alert">
+                                    No data!
+                                </div>
+                            <% } else { %>
                             <% feedbacks.forEach((feedback) => { %>
                             <div class="card">
                                 <div class="card-body row align-items-center">
                                     <div class="col-10">
-                                        <h5 class="card-title">Reservation Id: <%= feedback.reservations[0]._id %></h5>
+                                        <h5 class="card-title">Reservation Id: <%= feedback.reservation %></h5>
                                         <div class="row mb-2 justify-content-start ">
                                             <div class="col d-flex flex-row">
                                                 <h6 class="card-subtitle  fw-semibold">Name: <span
-                                                            class="fw-light text-muted"><%= feedback.fname + " " + feedback.lname %></span></h6>
+                                                            class="fw-light text-muted">Elsie</span></h6>
                                             </div>
                                         </div>
                                         <div class="row mb-2 justify-content-start ">
                                             <div class="col d-flex flex-row">
                                                 <h6 class="card-subtitle  fw-semibold">Message:
-                                                    <% feedback.feedbacks.forEach((fb) => { %>
-                                                    <span class="fw-light text-muted "><%- fb.note %></span><br>
-                                                    <% })%>
+                                                    <span class="fw-light text-muted "><%- feedback.note %></span><br>
                                                 </h6>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col">
-                                        <button type="button" class="fbStatusBtn btn btn-primary m-1"><%= %></button>
+
+                                        <button type="button" class="fbStatusBtn btn btn-primary m-1 <%= (feedback.status===true)? 'disabled':'' %>" data-id="<%= feedback.id %>"><%= (feedback.status===true)? 'Solved':'Solve' %></button>
                                     </div>
                                 </div>
                             </div>
                             <% }); %>
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination justify-content-center">
+                                        <li class="page-item <%= pagination.page == 1 ? 'disabled' : ''%>">
+                                            <a class="page-link"
+                                               href="/manager/invoice/?page=<%= +pagination.page -1 && 1 %>"
+                                               aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        <% for (let i = 1; i <= pagination.pages; i++) {%>
+                                            <li class="page-item <%= i == (pagination.page) && 'active'%>">
+                                                <a class="page-link" href="/manager/invoice/?page=<%= i %>"
+                                                ><%= i %></a>
+                                            </li>
+                                        <% }%>
+                                        <li class="page-item <%= pagination.page == pagination.pages ? 'disabled' : ''%>">
+                                            <a
+                                                    class="page-link"
+                                                    href="/manager/invoice/?page=<%= +pagination.page  + 1 %>"
+                                                    aria-label="Next"
+                                            >
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            <% } %>
                         </div>
                     </div>
                 </div>

@@ -4,8 +4,9 @@ import paginate from '../../utils/paginate.js';
 class ApiInvoiceController {
     getAll = async (req, res) => {
         try {
+            const page = req.query.page || 1;
             const invoices = await InvoiceService.getAll();
-            return res.status(200).json(invoices);
+            return paginate(invoices, page, 10);
         } catch (e) {
             return res.status(500).json(e.message);
         }

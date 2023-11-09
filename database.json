@@ -103,6 +103,12 @@
       "checkIn": "Nov 4 2023",
       "checkOut": "Nov 5 2023",
       "room": 101,
+      "guests": 2,
+      "rooms": [
+        {
+          "roomNumber": 101
+        }
+      ],
       "transport" : "BMW",
       "status": "Confirmed",
       "quests": 1,

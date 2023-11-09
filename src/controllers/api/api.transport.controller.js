@@ -14,7 +14,8 @@ class ApiTransportController {
     async getTransportById(req, res) {
         try {
             const transport = await TransportService.getTransportById(req.params.id);
-            return res.status(200).json(transport);
+            const a = new Array(transport);
+            return paginate(a, 1, 1);
         } catch (e) {
             return res.status(500).json({ message: e });
         }

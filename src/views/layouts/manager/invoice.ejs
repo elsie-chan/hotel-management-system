@@ -188,71 +188,90 @@
                     <div class="row">
                         <div class="col">
                             <h5 class="card-title fw-semibold mb-4">All invoices</h5>
+                            <% if (invoices.length===0) { %>
+                            <div class="alert alert-warning" role="alert">
+                                No data!
+                            </div>
+                            <% } else { %>
+
+                            <% invoices.forEach(function(invoice) { %>
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Reservation Id: #202312345</h5>
-                                    <div class="row mb-2 justify-content-start ">
-                                        <div class="col d-flex align-items-center">
-                                            <h6 class="card-subtitle fw-semibold">Room: </h6>
-                                            <span class="badge bg-success rounded-3 ">#002</span>
+                                    <h5 class="card-title">Reservation Id: <%= invoice.reservation.id %></h5>
+<!--                                    <div class="row mb-2 justify-content-start ">-->
+<!--                                        <div class="col d-flex align-items-center">-->
+<!--                                            <h6 class="card-subtitle fw-semibold">Room: </h6>-->
+<!--                                            <span class="badge bg-success rounded-3 "></span>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+                                    <div class="row justify-content-between">
+                                        <div class="col">
+                                            <h6 class="card-subtitle fw-semibold">Room:
+                                                <span
+                                                        class="fw-light text-muted"><%= invoice.reservation.roomNumber %></span>
+                                            </h6>
+                                        </div>
+                                        <div class="col">
+                                            <h6 class="card-subtitle fw-semibold">Total: <span
+                                                        class="fw-light text-muted"><%= invoice.reservation.roomNumber %></span>
+                                            </h6>
+                                        </div>
+                                        <div class="col">
+                                            <h6 class="card-subtitle fw-semibold">
+                                            </h6>
                                         </div>
                                     </div>
-                                    <div class="table-responsive">
-                                        <table class="table text-nowrap mb-0 align-middle">
-                                            <thead class="text-dark">
-                                            </thead>
-                                            <tbody>
-                                            <tr class="pb-2 d-flex align-items-center justify-content-between">
-                                                <td class="py-0 ps-sm-0 border-bottom-0"><h6
-                                                            class="card-subtitle fw-semibold">Used services: <span
-                                                                class="fw-light text-muted">Table booking, Airport Transfer</span>
-                                                    </h6></td>
-                                                <td class="py-0 ps-sm-0 border-bottom-0"><h6
-                                                            class="card-subtitle fw-semibold">Quantity: <span
-                                                                class="fw-light text-muted">3</span></h6></td>
-                                                <td class="py-0 ps-sm-0 border-bottom-0"><h6
-                                                            class="card-subtitle fw-semibold">Total: <span
-                                                                class="fw-light text-muted">$1000</span></h6></td>
-                                                <td class="py-0 border-bottom-0">
-                                                    <div class="d-flex align-items-center gap-2 cursor-pointer">
-                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                             class="icon icon-tabler icon-tabler-dots" width="24"
-                                                             height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                             stroke="currentColor" fill="none" stroke-linecap="round"
-                                                             stroke-linejoin="round">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                            <path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
-                                                            <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
-                                                            <path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
-                                                        </svg>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr class="pb-2 d-flex align-items-center justify-content-between">
-                                                <td class="py-0 ps-sm-0 border-bottom-0"><h6
-                                                            class="card-subtitle mb-2 fw-semibold">Subtotal: <span
-                                                                class="fw-light text-muted">$3000</span></h6></td>
-                                            </tr>
-                                            <tr class="pb-2  d-flex align-items-center justify-content-between">
-                                                <td class="py-0 ps-sm-0 border-bottom-0"><h6
-                                                            class="card-subtitle mb-2 fw-semibold ">Tax(0%): <span
-                                                                class="fw-light text-muted">$0</span></h6></td>
-                                            </tr>
-                                            <tr class="pb-0 d-flex align-items-center justify-content-between">
-                                                <td class="py-0 ps-sm-0 border-bottom-0"><h6
-                                                            class="card-subtitle mb-2 fw-semibold">Total: <span
-                                                                class="fw-semibold lead">$4000</span></h6></td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                    <div class="row justify-content-between">
+                                        <div class="col">
+                                            <h6 class="card-subtitle fw-semibold">Room:
+                                                <span
+                                                        class="fw-light text-muted"><%= invoice.reservation.roomNumber %></span>
+                                            </h6>
+                                        </div>
+                                        <div class="col">
+                                            <h6 class="card-subtitle fw-semibold">Total: <span
+                                                        class="fw-light text-muted"><%= invoice.reservation.roomNumber %></span>
+                                            </h6>
+                                        </div>
+                                        <div class="col">
+                                            <h6 class="card-subtitle fw-semibold">
+                                            </h6>
+                                        </div>
                                     </div>
 
                                 </div>
                             </div>
-
+                            <% }); %>
+                            <% } %>
                         </div>
                     </div>
                 </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item <%= pagination.page == 1 ? 'disabled' : ''%>">
+                            <a class="page-link"
+                               href="/manager/invoice/?page=<%= +pagination.page -1 && 1 %>"
+                               aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <% for (let i = 1; i <= pagination.pages; i++) {%>
+                            <li class="page-item <%= i == (pagination.page) && 'active'%>">
+                                <a class="page-link" href="/manager/invoice/?page=<%= i %>"
+                                ><%= i %></a>
+                            </li>
+                        <% }%>
+                        <li class="page-item <%= pagination.page == pagination.pages ? 'disabled' : ''%>">
+                            <a
+                                    class="page-link"
+                                    href="/manager/invoice/?page=<%= +pagination.page  + 1 %>"
+                                    aria-label="Next"
+                            >
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>

@@ -3,7 +3,7 @@ import { ErrorMessage } from '../error/message.error.js';
 
 const getAll = async () => {
     try {
-        const transports = Transport.find();
+        const transports = Transport.find().populate("guest");
         return await transports;
     } catch (e) {
         return ErrorMessage(400, "Transport not found");

@@ -21,7 +21,9 @@ $(document).ready(function () {
                 console.log(data)
                 if (data.status === 200) {
                     window.location.reload();
-                    toastr.success(data.message, 'Deleted', {timeOut: 5000});
+                    setTimeout(function () {
+                        toastr.success(data.message, 'Deleted', {timeOut: 3000});
+                    }, 1000);
                 } else {
                     toastr.error(data.message, 'Error', {timeOut: 5000});
                 }
@@ -54,7 +56,10 @@ function addMeal() {
         success: function (data) {
             console.log(data);
             window.location.reload();
-            toastr.success(data.message, 'Success', {timeOut: 3000});
+            setTimeout(function () {
+                toastr.success(data.message, 'Success', {timeOut: 3000});
+            }, 1000);
+
         },
         error: function (error) {
             console.log(error);
@@ -101,7 +106,9 @@ function editMeal(id) {
         success: function (data) {
             console.log(data);
             window.location.reload();
-            toastr.success(data.message, 'Success', {timeOut: 3000});
+            setTimeout(function () {
+                toastr.success(data.message, 'Success', {timeOut: 3000});
+            }, 1000);
         },
         error: function (error) {
             console.log(error);

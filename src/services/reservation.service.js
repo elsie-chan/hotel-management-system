@@ -17,7 +17,7 @@ const getAll = async () => {
 
 const getReservationById = async (id) => {
     try {
-        const reservation = Reservation.findById(id);
+        const reservation = Reservation.findById(id).populate("room", "roomNumber").populate("meals").populate("transport");
         return await reservation;
     } catch (e) {
         return ErrorMessage(400, "Reservation not found");
@@ -142,7 +142,7 @@ const bookingRoom = async(fromDate, toDate, quantity, isChildren) => {
         }
         if(category === "") return ErrorMessage(400, "Category not found");
         const cate = await Category.find({name: category});
-        const room = Room.find({$and: [{_id: {$nin: room_id}}, {isChildren: isChildren}, {roomType: cate}, {isAvailable: "Available"}]});
+        const room = Room.find({$and: [{_id: {$nin: room_id}}, {isChildren: isChildren}, {roomType: cate}, {isAvailable: "Available"}]}).populate("roomType", "name");
         return await room;
     } catch (e) {
         return ErrorMessage(400, "Reservation not found");
