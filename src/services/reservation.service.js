@@ -4,6 +4,7 @@ import Guest from "../models/guest.model.js";
 import Room from "../models/room.model.js";
 import Category from "../models/category.model.js";
 import Transport from "../models/transport.model.js";
+import Meal from "../models/meal.model.js";
 
 const getAll = async () => {
     try {
@@ -76,16 +77,29 @@ const create = async (data) => {
 
 const update = async (id, data) => {
     try {
-        const transport = await Transport.findOne({vehicle: data.transport});
-        if(!transport) return ErrorMessage(400, "Transport not found");
-        data.transport = transport._id;
-        const room_id = [];
-        for(let i= 0; i<data.rooms.length; i++){
-            const room = await Room.findOne({roomNumber: data.rooms[i].roomNumber});
-            if(!room) return ErrorMessage(400, "Room not found");
-            room_id.push(room._id);
+        if(data.transport){
+            const transport = await Transport.findOne({vehicle: data.transport});
+            if(!transport) return ErrorMessage(400, "Transport not found");
+            data.transport = transport._id;
         }
-        data.rooms = room_id;
+        if(data.meal){
+            const meal_id = [];
+            for(let i= 0; i<data.meal.length; i++){
+                const meal = await Meal.findOne({name: data.meal[i].name});
+                if(!meal) return ErrorMessage(400, "Meal not found");
+                meal_id.push(meal._id);
+            }
+            data.meal = meal_id;
+        }
+        if(data.rooms){
+            const room_id = [];
+            for(let i= 0; i<data.rooms.length; i++){
+                const room = await Room.findOne({roomNumber: data.rooms[i].roomNumber});
+                if(!room) return ErrorMessage(400, "Room not found");
+                room_id.push(room._id);
+            }
+            data.rooms = room_id;
+        }
         const reservation = await Reservation.findByIdAndUpdate(id,data);
         if(!reservation) return ErrorMessage(400, "Reservation not found");
         return reservation;

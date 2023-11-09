@@ -5,10 +5,10 @@ const categorySchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    rooms: {
-        type: Array,
-        required: false
-    }
+    rooms: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Room"
+    }]
 });
 
 const Category = mongoose.model("Category", categorySchema);

@@ -36,13 +36,12 @@ const loadDatabase = async () => {
     });
 
     const transports = data.transports.map((transport) => {
-        transport.time = dayjs(transport.time).format("YYYY-MM-DD HH:mm:ss");
-        console.log(transport.time)
+        // transport.time = dayjs(transport.time).format("YYYY-MM-DD HH:mm:ss");
+        // console.log(transport.time)
         return Transport.create({...transport});
     });
 
     const reservations = data.reservations.map(async (reservation) => {
-        // const guest = await Guest.findOne({lname: reservation.lname});
         const transport = Transport.findOne({vehicle: reservation.transport});
         const room = Room.findOne({roomNumber: reservation.rooms[0].roomNumber});
         const reservationData = {
@@ -57,7 +56,6 @@ const loadDatabase = async () => {
             rooms: [await room],
             transport: await transport
         };
-        // await Guest.find({_id: guest._id}, {$push: {reservations: reservationData}});
         return Reservation.create({...reservationData});
     });
     await Promise.all([...rooms, ...categories, ...guests, ...restaurants, ...transports, ...reservations]);

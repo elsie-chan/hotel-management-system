@@ -88,9 +88,21 @@ const create = async (data, files) => {
         return ErrorMessage(500, e.message);
     }
 }
-const updateRoom = async (id, data, file) => {
+const updateRoomWithImg = async (id, data, file) => {
     try {
         data.images = file.filename;
+        const room = await Room.findByIdAndUpdate({_id: id}, {$set:data},{new:true});
+        if(!room){
+            return null;
+        }
+        return room;
+    } catch (e) {
+        return ErrorMessage(400, e.message);
+    }
+}
+
+const updateRoom = async (id, data) => {
+    try {
         const room = await Room.findByIdAndUpdate({_id: id}, {$set:data},{new:true});
         if(!room){
             return null;
@@ -120,6 +132,7 @@ export default {
     getRoomById,
     create,
     updateRoom,
+    updateRoomWithImg,
     deleteRoom,
     countRoom,
     getRoomIsAvailableOfCategory,

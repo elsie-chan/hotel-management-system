@@ -1,5 +1,6 @@
 import Category from "../models/category.model.js";
 import { ErrorMessage } from "../error/message.error.js";
+import Room from "../models/room.model.js";
 
 const getAll = async () => {
     try {
@@ -11,7 +12,7 @@ const getAll = async () => {
 }
 const getCategoryById = async (id) => {
     try {
-        const category = Category.findById(id);
+        const category = Category.findById(id).populate("rooms");
         return await category;
     } catch (e) {
         return ErrorMessage(400, "Category not found");
@@ -20,15 +21,14 @@ const getCategoryById = async (id) => {
 const countRoom = async () => {
     try {
         const result = [];
-        const category = Category.find();
+        const category = await Category.find();
         for(const item of category) {
             let count = 0;
-            for(const room of item.rooms){
-                if(room.isAvailable === true) {
-                    count++;
-                }
+            for(const room_id of item.rooms){
+                const room = await Room.findById(room_id);
+                if(room.isAvailable === "Available") count++;
             }
-            result.push({ name: item.name, availabe: count, total: item.rooms.length });
+            result.push({ name: item.name, availabe: count, unavailable: item.rooms.length - count, total: item.rooms.length });
         }
         return result;
     } catch (e) {

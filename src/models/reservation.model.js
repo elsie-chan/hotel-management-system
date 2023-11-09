@@ -42,10 +42,10 @@ const reservationSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Room'
     }],
-    meal:{
+    meal:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Meal'
-    },
+    }],
     transport:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Transport'

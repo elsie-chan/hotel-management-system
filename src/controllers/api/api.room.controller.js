@@ -80,9 +80,12 @@ class ApiRoomController {
     }
     async updateRoom(req, res) {
         const { id } = req.params;
-        console.log(req.file)
         try {
-            await RoomService.updateRoom(id, req.body, req.file);
+            if(req.file){
+                await RoomService.updateRoomWithImg(id, req.body, req.file);
+            } else {
+                await RoomService.updateRoom(id, req.body);
+            }
             return res.status(200).json({ message: 'Update room successfully' });
         }catch(e){
             return res.status(500).json({ message: e.message });
