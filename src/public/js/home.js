@@ -16,6 +16,10 @@ function checkAvailable() {
     let quantity = parseInt(adults) + parseInt(children);
     let isChildren = (children > 0) ? true : false;
     console.log(fromDate, toDate, quantity, isChildren);
+    if (!fromDate || !toDate || !quantity) {
+        toastr.error('Please fill all fields!');
+        return;
+    }
 
     $.ajax({
         url: '/api/reservation/booking',
@@ -30,6 +34,10 @@ function checkAvailable() {
         success: function (data) {
             window.href = '#next';
             console.log(data);
+            if (data.status === 400) {
+                toastr.error(data.message);
+                return;
+            }
             if (data.length === 0) {
                 toastr.info('No room available!');
                 return;

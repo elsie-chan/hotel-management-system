@@ -32,9 +32,19 @@ function editReservation(id) {
     let lname = $('#reservation_lname--edit').val();
     let phone = $('#reservation_phone--edit').val();
     let status = $('#reservation_status--edit').val();
-    let room = new Array($('#reservation_room--edit').val());
+    let room = $('#reservation_room--edit').val();
     let vehicle = $('#reservation_vehicle--edit').val();
     let note = $('#reservation_note--edit').val();
+    const data = {
+        fname,
+        lname,
+        phone,
+        status,
+        room,
+        vehicle,
+        note
+    }
+    console.log(data)
 
     $.ajax({
         url: '/api/reservation/' + id,
@@ -44,17 +54,18 @@ function editReservation(id) {
             lname,
             phone,
             status,
-            roomNumber: room,
+            room,
             transport: vehicle,
             note
         }),
         contentType: 'application/json',
         success: function (data) {
             console.log(data);
+            if (data.status === 400) return toastr.error(data.message);
             toastr.success('Reservation updated successfully');
             setInterval(function () {
                 window.location.reload();
-            }, 2000);
+            }, 2000);ho
         },
         error: function (err) {
             console.log(err);

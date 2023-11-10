@@ -4,10 +4,11 @@ import passport from "passport";
 import ApiAuthController from "../../controllers/api/api.auth.controller.js";
 
 
-const Router = express.Router()
+const router = express.Router()
 
-Router.post("/create", validation, ApiAuthController.create.bind(ApiAuthController))
-Router.post("/authenticate", validation, (req, res, next) => {
+router.post("/create", validation, ApiAuthController.create.bind(ApiAuthController))
+router.post("/authenticate", validation, (req, res, next) => {
+    console.log("req.body", req.body)
     passport.authenticate('local', {
             successRedirect: '/',
             failureRedirect: '/auth/login',
@@ -29,13 +30,27 @@ Router.post("/authenticate", validation, (req, res, next) => {
         }
         req.logIn(user, (err) => {
             if (err) {
-                return res.redirect('/auth/login')
+                console.log(err)
+                return res.status(200).json('/auth/login');
             }
+            if (req.user.role === 'MANAGER') {
 
+                return res.status(200).json('/manager/dashboard');
+            }
+            if (req.user.role === 'RECEPTIONIST') {
+                return res.status(200).json('/receptionist/frontdesk');
+            }
             return res.redirect('/');
 
         })
     })(req, res, next);
 })
 
-export default Router;
+router.get("/current_user", (req, res, next) => {
+    res.status(200).json({
+        user: req.user
+    })
+
+})
+router.get("/logout", ApiAuthController.logout.bind(ApiAuthController))
+export default router;

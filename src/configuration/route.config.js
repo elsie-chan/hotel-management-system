@@ -12,21 +12,22 @@ import { default as GuestRoutes} from '../routes/api/api.guest.route.js'
 import { default as FeedbackRoutes} from '../routes/api/api.feedback.route.js'
 import { default as InvoiceRoutes} from '../routes/api/api.invoice.route.js'
 import session from "express-session";
+import AuthMiddleware from "../middleware/auth.middleware.js";
 
 export default (app) => {
     app.use('/', HomeRoute);
     app.use('/auth', AuthRoute);
     app.use('/api/v1/auth', ApiAuthRoute);
-    app.use('/manager', ManagerRoute);
-    app.use('/receptionist', ReceptionistRoute);
-    app.use('/api/room',RoomRoutes);
-    app.use('/api/transport',TransportRoutes);
-    app.use('/api/category', CategoryRoutes);
-    app.use('/api/meal', MealRoutes);
-    app.use('/api/guest', GuestRoutes)
+    app.use('/manager', AuthMiddleware, ManagerRoute);
+    app.use('/receptionist', AuthMiddleware, ReceptionistRoute);
+    app.use('/api/room', AuthMiddleware,RoomRoutes);
+    app.use('/api/transport', AuthMiddleware,TransportRoutes);
+    app.use('/api/category', AuthMiddleware, CategoryRoutes);
+    app.use('/api/meal', AuthMiddleware, MealRoutes);
+    app.use('/api/guest', AuthMiddleware, GuestRoutes)
     app.use('/api/reservation', ReservationRoutes);
-    app.use('/api/feedback', FeedbackRoutes);
-    app.use('/api/invoice', InvoiceRoutes);
+    app.use('/api/feedback', AuthMiddleware, FeedbackRoutes);
+    app.use('/api/invoice', AuthMiddleware, InvoiceRoutes);
 
     app.get('/test', (req, res) => {
         if (!req.isAuthenticated()) return res.status(401).json({ message: 'Unauthorized' });

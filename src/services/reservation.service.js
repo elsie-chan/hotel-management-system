@@ -5,7 +5,7 @@ import Room from "../models/room.model.js";
 import Category from "../models/category.model.js";
 import Transport from "../models/transport.model.js";
 import Meal from "../models/meal.model.js";
-
+import InvoiceService from "./invoice.service.js";
 const getAll = async () => {
     try {
         const reservations = Reservation.find().populate("room").populate("meals").populate("transport");
@@ -71,7 +71,9 @@ const update = async (id, data) => {
     try {
         const reservation = await Reservation.findOne({_id: id});
         if(!reservation) return ErrorMessage(400, "Reservation not found");
+        if(reservation.status === "Cancelled" || reservation.status === "Checked out") return ErrorMessage(400, "Cannot update reservation after check out or cancel");
         if(data.transport){
+            if (reservation.status=== "Checked in") return ErrorMessage(400, "Cannot update transport after check in");
             const transport = await Transport.findOne({vehicle: data.transport});
             if(!transport) return ErrorMessage(400, "Transport not found");
             data.transport = transport._id;
@@ -88,23 +90,43 @@ const update = async (id, data) => {
         if(data.room){
             await Room.findByIdAndUpdate(reservation.room,{$set: {isAvailable: "Available"}});
             const rooms = await checkRoomInDay(reservation.checkIn, reservation.checkOut);
-            if(!rooms.includes(data.room)) return ErrorMessage(400, "Room not available");
+            if(rooms.includes(data.room)) return ErrorMessage(400, "Room not available");
             const room_id = await Room.findOne({roomNumber: data.room});
             if(!room_id) return ErrorMessage(400, "Room not found");
             data.room = room_id;
-            await Room.findByIdAndUpdate(data.room,{$set: {isAvailable: "Unavailable"}});
+            await Room.findByIdAndUpdate(data.room,{$set: {isAvailable: "Occupied"}});
         }
         switch(data.status){
+            case "Confirmed":{
+                return ErrorMessage(400, "Cannot update status to confirmed");
+                break;
+            }
             case "Checked in":{
-                await Room.findByIdAndUpdate(reservation.room,{$set: {isAvailable: "Unavailable"}});
+                if (reservation.status=== "Confirmed") {
+                    await Room.findByIdAndUpdate(reservation.room,{$set: {isAvailable: "Occupied"}});
+                } else {
+                    return ErrorMessage(400, "Cannot update status to checked in");
+                }
                 break;
             }
             case "Checked out":{
-                await Room.findByIdAndUpdate(reservation.room,{$set: {isAvailable: "Available"}});
+                if (reservation.status === "Checked in") {
+                    await Room.findByIdAndUpdate(reservation.room,{$set: {isAvailable: "Available"}});
+                    console.log(reservation.id)
+                    await InvoiceService.create(reservation.id, "Cash");
+                } else {
+                    return ErrorMessage(400, "Cannot update status to checked out");
+                }
                 break;
             }
             case "Cancelled":{
-                data.status = "Cancelled";
+                if (reservation.status=== "Confirmed") {
+                    data.status = "Cancelled";
+                    await Room.findByIdAndUpdate(reservation.room,{$set: {isAvailable: "Available"}});
+                    if (reservation.status=== "Checked in") {
+                        await InvoiceService.create(reservation.id, "Cash");
+                    }
+                }
                 break;
             }
             default:
@@ -149,6 +171,7 @@ const checkRoomInDay = async (fromDate, toDate) => {
 const bookingRoom = async(fromDate, toDate, quantity, isChildren) => {
     console.log(fromDate, toDate, quantity, isChildren)
     try {
+        if (fromDate >= toDate) return ErrorMessage(400, "Check in date must be before check out date");
         const reservation = await Reservation.find({$and: [{checkIn: {$gte: fromDate}}, {checkOut: {$lte: toDate}}]});
         if(!reservation) return ErrorMessage(400, "Reservation not found");
         let room_id = [];
@@ -175,6 +198,8 @@ const bookingRoom = async(fromDate, toDate, quantity, isChildren) => {
         if(category === "") return ErrorMessage(400, "Category not found");
         const cate = await Category.find({name: category});
         const room = Room.find({$and: [{_id: {$nin: room_id}}, {isChildren: isChildren}, {roomType: cate}, {isAvailable: "Available"}]}).populate("roomType", "name");
+        console.log(cate)
+
         return await room;
     } catch (e) {
         return ErrorMessage(400, "Reservation not found");

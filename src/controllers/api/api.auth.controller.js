@@ -1,4 +1,5 @@
 import {AuthService} from "../../services/index.js";
+import Account from "../../models/account.model.js";
 
 class ApiAuthController {
     async create(req, res) {
@@ -17,6 +18,13 @@ class ApiAuthController {
             return res.status(500).json(e)
         }
     }
+    async logout(req, res) {
+        req.session.destroy();
+        res.clearCookie("refreshToken");
+        res.clearCookie("role");
+        return res.status(200).json({message: "Logout success"});
+    }
+
 }
 
 export default new ApiAuthController();
