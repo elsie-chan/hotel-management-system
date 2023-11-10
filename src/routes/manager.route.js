@@ -13,6 +13,9 @@ const Router = express.Router()
 Router.get("/dashboard", (req, res) => {
     res.render("layouts/manager/dashboard")
 })
+Router.get("/frontdesk", async (req, res) => {
+  res.render("layouts/receptionist/frontdesk", {title: "Front Desk", role: "manager"});
+})
 Router.get("/room", async ( req, res) => {
     const rooms = await ApiRoomController.getAll(req,res);
     const categories = await Category.find();
@@ -22,7 +25,7 @@ Router.get("/reservation", async (req, res) => {
     // res.render("layouts/manager/reservation")
     const reservations = await ApiReservationController.getAll(req, res);
     // console.log(reservations)
-    res.render("layouts/manager/reservation", {reservations: reservations.data, pagination: reservations.pagination})
+    res.render("layouts/manager/reservation", {reservations: reservations.data, pagination: reservations.pagination, role: "manager"})
 })
 Router.get("/invoice", async (req, res) => {
     const invoices = await ApiInvoiceController.getAll(req, res);

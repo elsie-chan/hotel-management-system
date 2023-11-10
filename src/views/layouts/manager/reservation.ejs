@@ -18,7 +18,7 @@
 <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
      data-sidebar-position="fixed" data-header-position="fixed">
     <!-- Sidebar Start -->
-    <aside class="left-sidebar">
+    <aside class="left-sidebar <%= (role==="receptionist")? 'd-none': ''%>">
         <!-- Sidebar scroll-->
         <div>
             <div class="brand-logo d-flex align-items-center justify-content-between">
@@ -174,6 +174,72 @@
             <!-- End Sidebar navigation -->
         </div>
     </aside>
+    <aside class="left-sidebar <%= (role==="manager")? 'd-none': ''%>">
+        <!-- Sidebar scroll-->
+        <div>
+            <div class="brand-logo d-flex align-items-center justify-content-between">
+                <a href="/" class="text-nowrap logo-img">
+                    <img src="/images/Logo.png" width="150" alt=""/>
+                </a>
+                <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-bar-left" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M4 12l10 0" />
+                        <path d="M4 12l4 4" />
+                        <path d="M4 12l4 -4" />
+                        <path d="M20 4l0 16" />
+                    </svg>
+                </div>
+            </div>
+            <!-- Sidebar navigation-->
+            <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+                <ul id="sidebarnav">
+                    <li class="nav-small-cap">
+                        <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                        <span class="hide-menu">Receptionist</span>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/receptionist/frontdesk" aria-expanded="false">
+                            <span>
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home-2"
+                                   width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                   fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                   <path d="M5 12l-2 0l9 -9l9 9l-2 0"></path>
+                                   <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"></path>
+                                   <path d="M10 12h4v4h-4z"></path>
+                                </svg>
+                            </span>
+                            <span class="hide-menu">Frontdesk</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link active" href="/receptionist/reservation" aria-expanded="false">
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                   <path d="M14 2a5 5 0 0 1 5 5v14a1 1 0 0 1 -1.555 .832l-5.445 -3.63l-5.444 3.63a1 1 0 0 1 -1.55 -.72l-.006 -.112v-14a5 5 0 0 1 5 -5h4z" stroke-width="0" fill="currentColor"></path>
+                                </svg>
+                            </span>
+                            <span class="hide-menu">Reservation</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/contact" aria-expanded="false">
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-note" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M13 20l7 -7" />
+  <path d="M13 20v-6a1 1 0 0 1 1 -1h6v-7a2 2 0 0 0 -2 -2h-12a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7" />
+</svg>
+                            </span>
+                            <span class="hide-menu">Send feedback</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </aside>
     <div class="body-wrapper">
         <!--  Header Start -->
         <header class="app-header">
@@ -193,9 +259,7 @@
                     <div class="row align-items-center mb-3">
                         <a href="#" class="col-2 link-primary card-title fw-semibold card-link">Upcoming</a>
                         <a href="#" class="col card-title fw-semibold card-link ">Past</a>
-                        <button type="button" class="ms-auto col-2 btn btn-outline-primary" data-bs-toggle="modal"
-                                data-bs-target="#addReservationModal">Add reservation
-                        </button>
+
                     </div>
                     <div class="row">
                         <div class="col">
@@ -301,7 +365,7 @@
                                             <div class="col d-flex align-items-center">
                                                 <h6 class="card-subtitle fw-semibold">Airport transfer:
                                                     <% if (reservation.transport) { %>
-                                                    <a href="/manager/transport/<%= reservation.transport._id %>" class="link-info">View detail</a>
+                                                    <a href="/manager/transport/<%= reservation.transport._id %>"   onclick="<%= (role==="receptionist")? 'return false;': ''%>" class="link-info   <%= (role==="receptionist")? 'text-muted': ''%>"><%= (role==="receptionist")? reservation.transport.time : 'View detail'%></a>
                                                     <% } else { %>
                                                         <span class="fw-light text-muted"> None</span></h6>
                                                 <% } %>
