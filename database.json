@@ -109,6 +109,11 @@
           "roomNumber": 101
         }
       ],
+      "meals": [
+        {
+          "name": "Bún bò"
+        }
+      ],
       "transport" : "BMW",
       "status": "Confirmed",
       "quests": 1,
