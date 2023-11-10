@@ -26,7 +26,7 @@ export default (app) => {
     app.use('/api/meal', AuthMiddleware, MealRoutes);
     app.use('/api/guest', AuthMiddleware, GuestRoutes)
     app.use('/api/reservation', ReservationRoutes);
-    app.use('/api/feedback', AuthMiddleware, FeedbackRoutes);
+    app.use('/api/feedback', FeedbackRoutes);
     app.use('/api/invoice', AuthMiddleware, InvoiceRoutes);
 
     app.get('/test', (req, res) => {
