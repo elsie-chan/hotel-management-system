@@ -7,10 +7,10 @@ $(document).ready(function() {
             method: 'PUT',
             success: function(data) {
                 console.log(data);
+                toastr.success('Feedback solved!')
                 setTimeout(function () {
                     location.reload();
                 }, 1000);
-                toastr.success('Feedback solved!')
             },
             error: function(err) {
                 console.log(err);

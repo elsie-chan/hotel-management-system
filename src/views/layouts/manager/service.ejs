@@ -212,6 +212,11 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    <% if (services.length===0) { %>
+                                        <div class="alert alert-warning" role="alert">
+                                            No data!
+                                        </div>
+                                    <% } else { %>
                                     <% services.forEach(function(service) { %>
                                         <tr class="">
                                             <td class="border-bottom-0"><h6
@@ -236,59 +241,40 @@
 
                                         </tr>
                                     <% }); %>
-                                    </tbody>
-                                </table>
-
-                                <table class="table-hover table restaurantTable text-nowrap mb-0 align-middle d-none">
-                                    <thead class="text-dark fs-4">
-                                    <tr>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Reservation id</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Guest</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0"># of guests</h6>
-                                        </th>
-                                        <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">Reservation</h6>
-                                        </th>
-
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr class="">
-                                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0">#0012345</h6></td>
-                                        <td class="border-bottom-0">
-                                            <h6 class="fw-normal mb-1">John Smith</h6>
-                                            <span class="fw-normal mb-1">(102)345-678</span>
-                                        </td>
-                                        <td class="border-bottom-0 ">
-                                            <h6 class="fw-normal ">4</h6>
-                                        </td>
-                                        <td class="border-bottom-0">
-                                            <p class="mb-0 fw-normal">2021-08-20 10:00</p>
-                                        </td>
-                                        <td class="border-bottom-0">
-                                            <div class="d-flex align-items-center gap-2 cursor-pointer">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                     class="icon icon-tabler icon-tabler-dots" width="24" height="24"
-                                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                                     fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                    <path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
-                                                    <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
-                                                    <path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
-                                                </svg>
-                                            </div>
-                                        </td>
-                                    </tr>
 
                                     </tbody>
                                 </table>
+
+
                             </div>
                         </div>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item <%= pagination.page == 1 ? 'disabled' : ''%>">
+                                    <a class="page-link"
+                                       href="/manager/serviceservice/?page=<%= +pagination.page -1 && 1 %>"
+                                       aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <% for (let i = 1; i <= pagination.pages; i++) {%>
+                                    <li class="page-item <%= i == (pagination.page) && 'active'%>">
+                                        <a class="page-link" href="/manager/service/?page=<%= i %>"
+                                        ><%= i %></a>
+                                    </li>
+                                <% }%>
+                                <li class="page-item <%= pagination.page == pagination.pages ? 'disabled' : ''%>">
+                                    <a
+                                            class="page-link"
+                                            href="/manager/service/?page=<%= +pagination.page  + 1 %>"
+                                            aria-label="Next"
+                                    >
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <% } %>
                     </div>
                 </div>
             </div>

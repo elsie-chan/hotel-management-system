@@ -113,7 +113,10 @@ function addRoom() {
         contentType: false,
         success: function (data) {
             console.log(data)
-            location.href = '/manager/room'
+            toastr.success(data.message, 'Success', {timeOut: 5000});
+            setTimeout(function () {
+                location.reload();
+            }, 1000);
         },
         error: function (err) {
             console.log("err")
@@ -176,10 +179,10 @@ function updateRoom(id) {
         contentType: false,
         success: function (data) {
             console.log(data)
-            toastr.success(data.message, 'Success', {timeOut: 5000});
+            toastr.success('Success');
             setTimeout(function () {
                 location.reload();
-            }, 1000);
+            }, 2000);
         },
         error: function (err) {
             console.log(err)

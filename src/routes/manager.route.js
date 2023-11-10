@@ -26,7 +26,7 @@ Router.get("/reservation", async (req, res) => {
 })
 Router.get("/invoice", async (req, res) => {
     const invoices = await ApiInvoiceController.getAll(req, res);
-    console.log(invoices)
+    // console.log(invoices)
     res.render("layouts/manager/invoice", {invoices: invoices.data, pagination: invoices.pagination})
 })
 Router.get("/feedback", async (req, res) => {

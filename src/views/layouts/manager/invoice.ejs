@@ -186,7 +186,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col">
+                        <div class="col invoiceSearchResult" >
                             <h5 class="card-title fw-semibold mb-4">All invoices</h5>
                             <% if (invoices.length===0) { %>
                             <div class="alert alert-warning" role="alert">
@@ -204,16 +204,16 @@
 <!--                                            <span class="badge bg-success rounded-3 "></span>-->
 <!--                                        </div>-->
 <!--                                    </div>-->
-                                    <div class="row justify-content-between">
+                                    <div class="row justify-content-between mb-2">
                                         <div class="col">
                                             <h6 class="card-subtitle fw-semibold">Room:
                                                 <span
-                                                        class="fw-light text-muted"><%= invoice.reservation.roomNumber %></span>
+                                                        class="fw-light text-muted"><%= invoice.reservation.room.roomNumber %></span>
                                             </h6>
                                         </div>
                                         <div class="col">
                                             <h6 class="card-subtitle fw-semibold">Total: <span
-                                                        class="fw-light text-muted"><%= invoice.reservation.roomNumber %></span>
+                                                        class="fw-light text-muted"><%= invoice.roomTotal %></span>
                                             </h6>
                                         </div>
                                         <div class="col">
@@ -221,16 +221,16 @@
                                             </h6>
                                         </div>
                                     </div>
-                                    <div class="row justify-content-between">
+                                    <div class="row justify-content-between mb-2">
                                         <div class="col">
-                                            <h6 class="card-subtitle fw-semibold">Room:
+                                            <h6 class="card-subtitle fw-semibold">Airport Transfer:
                                                 <span
-                                                        class="fw-light text-muted"><%= invoice.reservation.roomNumber %></span>
+                                                        class="fw-light text-muted"><%= (invoice.reservation.transport)? 'Yes': 'No' %></span>
                                             </h6>
                                         </div>
                                         <div class="col">
                                             <h6 class="card-subtitle fw-semibold">Total: <span
-                                                        class="fw-light text-muted"><%= invoice.reservation.roomNumber %></span>
+                                                        class="fw-light text-muted"><%= invoice.transportTotal %></span>
                                             </h6>
                                         </div>
                                         <div class="col">
@@ -238,40 +238,75 @@
                                             </h6>
                                         </div>
                                     </div>
-
+                                    <div class="row justify-content-between mb-2">
+                                        <div class="col">
+                                            <h6 class="card-subtitle fw-semibold">Meal:
+                                                <span
+                                                        class="fw-light text-muted"><%= (invoice.reservation.meal)? 'Yes': 'No' %></span>
+                                            </h6>
+                                        </div>
+                                        <div class="col">
+                                            <h6 class="card-subtitle fw-semibold">Total: <span
+                                                        class="fw-light text-muted"><%= invoice.mealTotal %></span>
+                                            </h6>
+                                        </div>
+                                        <div class="col">
+                                            <h6 class="card-subtitle fw-semibold">
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2 justify-content-start ">
+                                        <div class="col d-flex flex-row">
+                                            <h6 class="card-subtitle fw-semibold">Subtotal: <span
+                                                        class="fw-light text-muted"><%= invoice.subTotal %></span></h6>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2 justify-content-start ">
+                                        <div class="col d-flex flex-row">
+                                            <h6 class="card-subtitle fw-semibold">Taxes: <span
+                                                        class="fw-light text-muted"><%= invoice.taxes %></span></h6>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2 justify-content-start ">
+                                        <div class="col d-flex flex-row">
+                                            <h6 class="card-subtitle fw-semibold">Total: <span
+                                                        class="fw-light "><%= invoice.total %></span></h6>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <% }); %>
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination justify-content-center">
+                                        <li class="page-item <%= pagination.page == 1 ? 'disabled' : ''%>">
+                                            <a class="page-link"
+                                               href="/manager/invoice/?page=<%= +pagination.page -1 && 1 %>"
+                                               aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        <% for (let i = 1; i <= pagination.pages; i++) {%>
+                                            <li class="page-item <%= i == (pagination.page) && 'active'%>">
+                                                <a class="page-link" href="/manager/invoice/?page=<%= i %>"
+                                                ><%= i %></a>
+                                            </li>
+                                        <% }%>
+                                        <li class="page-item <%= pagination.page == pagination.pages ? 'disabled' : ''%>">
+                                            <a
+                                                    class="page-link"
+                                                    href="/manager/invoice/?page=<%= +pagination.page  + 1 %>"
+                                                    aria-label="Next"
+                                            >
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
                             <% } %>
                         </div>
                     </div>
                 </div>
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item <%= pagination.page == 1 ? 'disabled' : ''%>">
-                            <a class="page-link"
-                               href="/manager/invoice/?page=<%= +pagination.page -1 && 1 %>"
-                               aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <% for (let i = 1; i <= pagination.pages; i++) {%>
-                            <li class="page-item <%= i == (pagination.page) && 'active'%>">
-                                <a class="page-link" href="/manager/invoice/?page=<%= i %>"
-                                ><%= i %></a>
-                            </li>
-                        <% }%>
-                        <li class="page-item <%= pagination.page == pagination.pages ? 'disabled' : ''%>">
-                            <a
-                                    class="page-link"
-                                    href="/manager/invoice/?page=<%= +pagination.page  + 1 %>"
-                                    aria-label="Next"
-                            >
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+
             </div>
         </div>
     </div>
@@ -288,7 +323,7 @@
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 <script src="/js/manager/sidebarmenu.js"></script>
-
+<script src="/js/manager/invoice.js"></script>
 </body>
 
 </html>

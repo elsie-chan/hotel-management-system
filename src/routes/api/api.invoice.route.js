@@ -6,5 +6,6 @@ const router = express.Router();
 
 router.get("/", ApiInvoiceController.getAll);
 router.post("/add", validation, ApiInvoiceController.create);
+router.get("/search?", ApiInvoiceController.search);
 
 export default router;
