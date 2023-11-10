@@ -19,7 +19,7 @@ export default (app) => {
     app.use('/auth', AuthRoute);
     app.use('/api/v1/auth', ApiAuthRoute);
     app.use('/manager', AuthMiddleware, ManagerRoute);
-    app.use('/receptionist', AuthMiddleware, ReceptionistRoute);
+    app.use('/receptionist', ReceptionistRoute);
     app.use('/api/room', AuthMiddleware,RoomRoutes);
     app.use('/api/transport', AuthMiddleware,TransportRoutes);
     app.use('/api/category', AuthMiddleware, CategoryRoutes);

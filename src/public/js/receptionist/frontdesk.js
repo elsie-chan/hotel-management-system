@@ -8,6 +8,7 @@ function loadFormData(n) {
   $(tabs_pill[n]).addClass("active");
   $(tabs[n]).removeClass("d-none");
   $("#back_button").attr("disabled", n == 0 ? true : false);
+
   n == tabs.length - 1
     ? $("#next_button").text("Submit").removeAttr("onclick")
     : $("#next_button")
@@ -30,4 +31,74 @@ function back() {
 
   current--;
   loadFormData(current);
+}
+
+
+$(document).ready(function (){
+  $('.checkAvailableBtnBookroom').on('click', function (e) {
+      e.preventDefault();
+      checkAvailable();
+  });
+
+});
+function checkAvailable() {
+  let fromDate = $('#book_room_from').val();
+  let toDate = $('#book_room_to').val();
+  let adults = $('#adults').val();
+  let children = $('#children').val();
+  let quantity = parseInt(adults) + parseInt(children);
+  let isChildren = (children > 0) ? true : false;
+  console.log(fromDate, toDate, quantity, isChildren);
+  if ( !fromDate || !toDate) {
+    toastr.error('Please fill all fields!');
+    return;
+  }
+  $.ajax({
+      url: '/api/reservation/booking',
+      type: 'POST',
+      data: JSON.stringify({
+          fromDate,
+          toDate,
+          quantity,
+          isChildren
+      }),
+      contentType: 'application/json',
+      success: function (data) {
+          window.href = '#next';
+          console.log(data);
+          if (data.status === 400){
+            toastr.info(data.message);
+              return;
+          }
+          if (data.length === 0) {
+              toastr.info('No room available!');
+              return;
+          };
+          $('.roomsList').empty();
+          data.forEach(function (item) {
+              const result = `
+              <div class="col-md-6 col-lg-4" data-aos="fade-up">
+              <button class="btn mt-5 btn-outline-primary room">
+                  <div class="p-3 text-center room-info" >
+                      <h2>${item.roomType.name}</h2>
+                      <span class="text-uppercase letter-spacing-1">${parseInt(item.price).toLocaleString("vi-VN",{
+                        currency:"VND", style: "currency"
+                      })} / per night</span>
+                  </div>
+              </button>
+          </div>
+          `
+              $('.roomsList').append(result);
+
+          })
+
+          $('.room').on('click', function(e) {
+            e.preventDefault();
+            $('.btn-next').prop('disabled', false);
+          })
+      },
+      error: function (err) {
+          console.log(err);
+      }
+  })
 }

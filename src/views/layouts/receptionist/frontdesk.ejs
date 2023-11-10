@@ -317,53 +317,124 @@ data-sidebartyp="full"data-sidebar-position="fixed" data-header-position="relati
                                 <div class="card-body">
                                   <div class="tab d-none">
                                     <div class="row">
-                                      <div class="col-md-3 form-group">
-                                        <label for="name" class="form-label">From</label>
-                                        <input type="date" id="book_room_from--add" class="form-control">
-                                      </div>
-                                      <div class="col-md-3 form-group">
-                                        <label for="email" class="form-label">To</label>
-                                        <input type="date" id="book_room_to--add" class="form-control">
-                                      </div>
-                                      <div class="col-md-3 form-group">
-                                        <label for="book_room_adult--add" class="font-weight-bold text-black">Adults</label>
-                                          <div class="field-icon-wrap"  >
-                                              <select name="" id="book_room_adult--add" class="form-control">
-                                                  <option value="1">1</option>
-                                                  <option value="2">2</option>
-                                                  <option value="3">3</option>
-                                                  <option value="4+">4+</option>
-                                              </select>
+                                      <section class="section bg-light pb-0"  >
+                                        <div class="container">
+                                            <div class="row check-availabilty" id="next">
+                                                <div class="block-32" data-aos="fade-up" data-aos-offset="-200">
+                                                    <form onsubmit="false">
+                                                        <div class="row">
+                                                            <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
+                                                                <label for="book_room_from" class="font-weight-bold text-black">From</label>
+                                                                <div class="field-icon-wrap">
+                                                                    <div class="icon"><span class="icon-calendar"></span></div>
+                                                                    <input type="date" id="book_room_from" class="form-control"  min="<%= new Date().toJSON().slice(0,10).replace(/-/g,'-')%>" >
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
+                                                                <label for="book_room_to" class="font-weight-bold text-black">To</label>
+                                                                <div class="field-icon-wrap">
+                                                                    <div class="icon"><span class="icon-calendar"></span></div>
+                                                                    <input type="date" id="book_room_to" class="form-control" min="<%= new Date().toJSON().slice(0,10).replace(/-/g,'-')%>">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 mb-3 mb-md-0 col-lg-3">
+                                                                <div class="row">
+                                                                    <div class="col-md-6 mb-3 mb-md-0">
+                                                                        <label for="adults" class="font-weight-bold text-black">Adults</label>
+                                                                        <div class="field-icon-wrap">
+                                                                            <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                                            <select name="" id="adults" class="form-control">
+                                                                                <option value="1">1</option>
+                                                                                <option value="2">2</option>
+                                                                                <option value="3">3</option>
+                                                                                <option value="4">4+</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6 mb-3 mb-md-0">
+                                                                        <label for="children" class="font-weight-bold text-black">Children</label>
+                                                                        <div class="field-icon-wrap">
+                                                                            <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                                            <select name="" id="children" class="form-control">
+                                                                                <option value="0">0</option>
+                                                                                <option value="1">1</option>
+                                                                                <option value="2">2</option>
+                                                                                <option value="3">3+</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-lg-3 align-self-end">
+                                                                <button class="checkAvailableBtnBookroom btn btn-primary btn-block text-white" type="button">Check Availabilty</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                    <section class="section">
+                                      <div class="container">
+                                          <div class="row roomsList">
+                                              <!-- <div class="col-md-6 col-lg-4" data-aos="fade-up">
+                                                  <a href="#" class="room">
+                                                      
+                                                      <div class="p-3 text-center room-info">
+                                                          <h2>Single Room</h2>
+                                                          <span class="text-uppercase letter-spacing-1">500.000 ₫/ per night</span>
+                                                      </div>
+                                                  </a>
+                                              </div>
+
+                                              <div class="col-md-6 col-lg-4" data-aos="fade-up">
+                                                <a href="#" class="room">
+                                                    
+                                                    <div class="p-3 text-center room-info">
+                                                        <h2>Double Room</h2>
+                                                        <span class="text-uppercase letter-spacing-1">1.000.000 ₫/ per night</span>
+                                                    </div>
+                                                </a>
+                                              </div>
+                                  
+                                              <div class="col-md-6 col-lg-4" data-aos="fade-up">
+                                                  <a href="#" class="room">
+                                                      
+                                                      <div class="p-3 text-center room-info">
+                                                          <h2>Family Room</h2>
+                                                          <span class="text-uppercase letter-spacing-1">1.500.000 ₫/ per night</span>
+                                                      </div>
+                                                  </a>
+                                              </div>
+                                  
+                                              <div class="col-md-6 col-lg-4" data-aos="fade-up">
+                                                  <a href="#" class="room">
+                                                      
+                                                      <div class="p-3 text-center room-info">
+                                                          <h2>VIP Room</h2>
+                                                          <span class="text-uppercase letter-spacing-1">2.500.000 ₫/ per night</span>
+                                                      </div>
+                                                  </a>
+                                              </div> -->
+
                                           </div>
                                       </div>
-                                      <div class="col-md-3 form-group">
-                                        <label for="book_room_children--add" class="font-weight-bold text-black">Children</label>
-                                            <div class="field-icon-wrap">
-                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                <select name="" id="book_room_children--add" class="form-control">
-                                                    <option value="0">0</option>
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3+">3+</option>
-                                                </select>
-                                            </div>
-                                      </div>
-                                      <div class="row mb-6 ">
-                                        <div class="col-md-12 form-group">
-                                            <label class="text-black font-weight-bold" for="reservation_note--add">Room information</label>
-                                            <textarea name="message" id="room_note--add" class="form-control " cols="10" rows="8"></textarea>
-                                        </div>
-                                    </div>
-                                    </div>
+                                  </section>
+                                  
+                                  </div>
                                   </div>
                                   <div class="tab d-none">
                                     <div class="mb-3">
-                                      <label for="name" class="form-label">Name</label>
-                                      <input type="text" class="form-control" name="name" id="name" placeholder="Please enter Guest's name">
+                                      <label for="name" class="form-label">First Name</label>
+                                      <input type="text" class="form-control" name="name" id="name" placeholder="Enter Guest's first name">
+                                    </div>
+                                    <div class="mb-3">
+                                      <label for="name" class="form-label">Last Name</label>
+                                      <input type="text" class="form-control" name="name" id="name" placeholder="Enter Guest's last name">
                                     </div>
                                     <div class="mb-3">
                                       <label for="phone number" class="form-label">Phone</label>
-                                      <input type="text" class="form-control" name="phone" id="phone" placeholder="Please enter Guest's phone">
+                                      <input type="text" class="form-control" name="phone" id="phone" placeholder="Enter Guest's phone">
                                     </div>
                                     <div class="mb-3">
                                       <label for="book_room_vehicle--add" class="font-weight-bold text-black">Vehicle</label>
@@ -378,11 +449,11 @@ data-sidebartyp="full"data-sidebar-position="fixed" data-header-position="relati
                                             <div class="row">
                                               <div class="col-md-6 form-group">
                                                   <label class="text-black font-weight-bold" for="book_room_vehicle_pickUp--add"></label>
-                                                  <input type="text" id="book_room_vehicle_pickUp--add" class="form-control "placeholder="Please enter Vehicle Pick up location">
+                                                  <input type="text" id="book_room_vehicle_pickUp--add" class="form-control "placeholder="Enter Vehicle Pick up location">
                                               </div>
                                               <div class="col-md-6 form-group">
                                                 <label class="text-black font-weight-bold" for="book_room_vehicle_destination--add"></label>
-                                                <input type="text" id="book_room_vehicle_destination--add" class="form-control "placeholder="Please enter Vehicle destination">
+                                                <input type="text" id="book_room_vehicle_destination--add" class="form-control "placeholder="Enter Vehicle destination">
                                             </div>
                                           </div>
                                     </div>
@@ -391,23 +462,31 @@ data-sidebartyp="full"data-sidebar-position="fixed" data-header-position="relati
                                             <div class="row">
                                               <div class="col-md-4 form-group">
                                                   <label class="text-black font-weight-bold" for="book_room_meal_name--add"></label>
-                                                  <input type="text" id="book_room_meal_type--add" class="form-control" placeholder="Please enter Meal name">
+                                                  <input type="text" id="book_room_meal_type--add" class="form-control" placeholder="Enter Meal name">
                                               </div>
                                               <div class="col-md-4 form-group">
                                                 <label class="text-black font-weight-bold" for="book_room_meal_type--add"></label>
-                                                <input type="text" id="book_room_meal_type--add" class="form-control "placeholder="Please enter Meal type">
+                                                <input type="text" id="book_room_meal_type--add" class="form-control "placeholder="Enter Meal type">
                                               </div>
                                               <div class="col-md-4 form-group">
                                                 <label class="text-black font-weight-bold" for="book_room_meal_price--add"></label>
-                                                <input type="text" id="book_room_meal_price--add" class="form-control "placeholder="Please enter Meal price">
+                                                <input type="text" id="book_room_meal_price--add" class="form-control "placeholder="Enter Meal price">
                                               </div>
                                             <div class ="row">
                                               <div class="col-md-12 form-group">
                                                 <label class="text-black font-weight-bold" for="book_room_meal_price--add"></label>
-                                                <input type="text" id="book_room_meal_ingredients--add" class="form-control "placeholder="Please enter Meal ingredients">
+                                                <input type="text" id="book_room_meal_ingredients--add" class="form-control "placeholder="Enter Meal ingredients">
                                               </div>
                                             </div>
                                           </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="row mb-6 ">
+                                        <div class="col-md-12 form-group">
+                                            <label class="text-black font-weight-bold" for="reservation_note--add">Special Service</label>
+                                            <textarea name="message" id="room_note--add" class="form-control " cols="10" rows="8"></textarea>
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
                                   <div class="tab d-none">
@@ -417,7 +496,7 @@ data-sidebartyp="full"data-sidebar-position="fixed" data-header-position="relati
                                 <div class="card-footer text-end">
                                   <div class="d-flex">
                                     <button type="button" id="back_button" class="btn btn-link" onclick="back()">Back</button>
-                                    <button type="button" id="next_button" class="btn btn-primary ms-auto" onclick="next()">Next</button>
+                                    <button type="button" id="next_button" class="btn btn-primary ms-auto btn-next" disabled="disabled" onclick="next()">Next</button>
                                   </div>
                                 </div>
                               </form>
@@ -436,6 +515,8 @@ data-sidebartyp="full"data-sidebar-position="fixed" data-header-position="relati
 
     </div>
 </body>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
