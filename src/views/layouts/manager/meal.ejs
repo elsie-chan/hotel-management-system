@@ -210,9 +210,7 @@
                         <table class="table-hover table airportTable text-nowrap mb-0 align-middle ">
                             <thead class="text-dark fs-4">
                             <tr>
-                                <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Id</h6>
-                                </th>
+
                                 <th class="border-bottom-0">
                                     <h6 class="fw-semibold mb-0">Name</h6>
                                 </th>
@@ -232,15 +230,14 @@
                             <tbody>
                             <% meals.forEach((meal) => { %>
                                 <tr class="">
-                                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><%= meal.id %></h6></td>
                                     <td class="border-bottom-0">
                                         <p class="mb-0 fw-normal"><%= meal.name %></p>
                                     </td>
                                     <td class="border-bottom-0">
                                         <p class="mb-0 fw-normal"><%= meal.type %></p>
                                     </td>
-                                    <td class="border-bottom-0">
-                                        <p class="mb-0 fw-normal"><%= meal.ingredients %></p>
+                                    <td class="border-bottom-0" style="max-width: 15rem;">
+                                        <p class="mb-0 fw-normal text-truncate" data-bs-toggle="tooltip" title="<%= meal.ingredients%>"><%= meal.ingredients %></p>
                                     </td>
                                     <td class="border-bottom-0">
                                         <p class="mb-0 fw-normal"><%= meal.price %></p>

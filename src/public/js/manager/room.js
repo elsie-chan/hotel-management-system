@@ -129,11 +129,18 @@ function fillData(id) {
         url: '/api/room/' + id,
         type: 'GET',
         success: function (data) {
-            console.log(data.images)
+            console.log(data)
             $('#edit--room_number').val(data.roomNumber);
             // $('#edit--room_type').val(data.roomType);
             $("#edit--room_type option[value='" + data.roomType +"']").attr("selected", 1);
             $('#edit--room_floor').val(data.roomFloor);
+            $('#edit--cleaning-status').find('option').filter(function () {
+                return $(this).text() === data.status;
+            }).prop('selected', true);
+
+            $('#edit--room_status').find('option').filter(function () {
+                return $(this).text() === data.isAvailable;
+            }).prop('selected', true);
             // $("#edit--cleaning-status option:contains(" + data.status + ")")[0].prop('selected', true);
             // $("#edit--room-status option:contains(" + data.isAvailable + ")").prop('selected', true)[0] = true;
             $('#edit--room-price').val(data.price);

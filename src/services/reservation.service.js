@@ -69,11 +69,12 @@ const create = async (data) => {
 
 const update = async (id, data) => {
     try {
-        const reservation = await Reservation.findOne({_id: id});
+        const reservation = await Reservation.findOne({_id: id}).populate("transport", "vehicle");
         if(!reservation) return ErrorMessage(400, "Reservation not found");
         if(reservation.status === "Cancelled" || reservation.status === "Checked out") return ErrorMessage(400, "Cannot update reservation after check out or cancel");
         if(data.transport){
-            if (reservation.status=== "Checked in") return ErrorMessage(400, "Cannot update transport after check in");
+            console.log(data.transport, reservation.transport.vehicle)
+            if (data.transport !== reservation.transport.vehicle && reservation.status=== "Checked in") return ErrorMessage(400, "Cannot update transport after check in");
             const transport = await Transport.findOne({vehicle: data.transport});
             if(!transport) return ErrorMessage(400, "Transport not found");
             data.transport = transport._id;
