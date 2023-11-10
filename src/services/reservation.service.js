@@ -32,17 +32,9 @@ const getReservationByGuest = async (guest) => {
         return ErrorMessage(400, "Reservation not found");
     }
 }
-const updateStatus = async () => {
-    try {
-        const currDate = new Date.now();
-        console.log(currDate);
-    } catch (e) {
-        return ErrorMessage(400, "Reservation not found");
-    }
-}
 const updateCheckIn = async (id, checkIn) => {
     try {
-        const reservation = await Reservation.findOne({$and: [{_id: id}, {checkIn: {$lte: checkIn}}, {isDeleted: false}]},{$set:{isAvailable: "Unavailable"}});
+        const reservation = await Reservation.findOne({$and: [{_id: id}, {checkIn: {$lte: checkIn}}]},{$set:{status: "Check In"}});
         if(!reservation) return ErrorMessage(400, "Reservation not found");
         return await reservation;
     } catch(e){
@@ -51,7 +43,7 @@ const updateCheckIn = async (id, checkIn) => {
 }
 const updateCheckOut = async (id, checkOut) => {
     try {
-        const reservation = await Reservation.findOne({$and: [{_id: id}, {checkOut: {$lte: checkOut}}, {isDeleted: false}]},{$set:{isAvailable: "Available"}});
+        const reservation = await Reservation.findOne({$and: [{_id: id}, {checkOut: {$lte: checkOut}}]},{$set:{status: "Check Out"}});
         if(!reservation) return ErrorMessage(400, "Reservation not found");
         return await reservation;
     } catch(e){
@@ -94,11 +86,29 @@ const update = async (id, data) => {
             data.meals = meal_id;
         }
         if(data.room){
+            await Room.findByIdAndUpdate(reservation.room,{$set: {isAvailable: "Available"}});
             const rooms = await checkRoomInDay(reservation.checkIn, reservation.checkOut);
             if(!rooms.includes(data.room)) return ErrorMessage(400, "Room not available");
             const room_id = await Room.findOne({roomNumber: data.room});
             if(!room_id) return ErrorMessage(400, "Room not found");
             data.room = room_id;
+            await Room.findByIdAndUpdate(data.room,{$set: {isAvailable: "Unavailable"}});
+        }
+        switch(data.status){
+            case "Checked in":{
+                await Room.findByIdAndUpdate(reservation.room,{$set: {isAvailable: "Unavailable"}});
+                break;
+            }
+            case "Checked out":{
+                await Room.findByIdAndUpdate(reservation.room,{$set: {isAvailable: "Available"}});
+                break;
+            }
+            case "Cancelled":{
+                data.status = "Cancelled";
+                break;
+            }
+            default:
+                break;
         }
         const newReservation = await Reservation.findByIdAndUpdate(id,data);
         if(!newReservation) return ErrorMessage(400, "Reservation not found");
@@ -110,7 +120,7 @@ const update = async (id, data) => {
 
 const remove = async (id) => {
     try {
-        const reservation = Reservation.findByIdAndUpdate(id,{isDeleted: true});
+        const reservation = Reservation.findByIdAndUpdate(id,{$set:{status: "Cancelled"}});
         if(!reservation) return ErrorMessage(400, "Reservation not found");
         return await reservation;
     } catch(e){

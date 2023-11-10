@@ -33,11 +33,6 @@ const reservationSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    isDeleted: {
-        type: Boolean,
-        required: false,
-        default: false
-    },
     room: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Room'
