@@ -162,7 +162,7 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="" aria-expanded="false">
+                        <a class="sidebar-link logout" href="" aria-expanded="false">
                             <span>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout-2"
                                      width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
@@ -311,6 +311,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 <script src="/js/manager/sidebarmenu.js"></script>
 <script src="/js/manager/service.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.logout').click(function () {
+            $.ajax({
+                url: '/api/v1/auth/logout',
+                type: 'GET',
+                success: function (data) {
+                    if (data.message == 'Logout success') {
+                        window.location.href = '/manager/login';
+                    }
+                }
+            });
+        });
+    });
+</script>
 </body>
 
 </html>

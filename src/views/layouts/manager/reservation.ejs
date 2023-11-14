@@ -12,13 +12,24 @@
           integrity="sha512-tpsEzNMLQS7w9imFSjbEOHdZav3/aObSESAL1y5jyJDoICFF2YwEdAHOPdOr1t+h8hTzar0flphxR76pd0V1zQ=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+    <style>
+        .meal.active {
+
+            /*background: #ffba5a;*/
+            -webkit-box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.2);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            /*border: 4px solid #ffba5a;*/
+            background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+        }
+    </style>
 </head>
 <body>
 <!--  Body Wrapper -->
 <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
      data-sidebar-position="fixed" data-header-position="fixed">
     <!-- Sidebar Start -->
-    <aside class="left-sidebar <%= (role==="receptionist")? 'd-none': ''%>">
+    <aside class="left-sidebar <%= (role === "receptionist") ? 'd-none' : '' %>">
         <!-- Sidebar scroll-->
         <div>
             <div class="brand-logo d-flex align-items-center justify-content-between">
@@ -171,7 +182,7 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="" aria-expanded="false">
+                        <a class="sidebar-link logout" href="" aria-expanded="false">
                             <span>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout-2"
                                      width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
@@ -191,7 +202,7 @@
             <!-- End Sidebar navigation -->
         </div>
     </aside>
-    <aside class="left-sidebar <%= (role==="manager")? 'd-none': ''%>">
+    <aside class="left-sidebar <%= (role === "manager") ? 'd-none' : '' %>">
         <!-- Sidebar scroll-->
         <div>
             <div class="brand-logo d-flex align-items-center justify-content-between">
@@ -199,12 +210,14 @@
                     <img src="/images/Logo.png" width="150" alt=""/>
                 </a>
                 <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-bar-left" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-bar-left"
+                         width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                         stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M4 12l10 0" />
-                        <path d="M4 12l4 4" />
-                        <path d="M4 12l4 -4" />
-                        <path d="M20 4l0 16" />
+                        <path d="M4 12l10 0"/>
+                        <path d="M4 12l4 4"/>
+                        <path d="M4 12l4 -4"/>
+                        <path d="M20 4l0 16"/>
                     </svg>
                 </div>
             </div>
@@ -233,9 +246,13 @@
                     <li class="sidebar-item">
                         <a class="sidebar-link active" href="/receptionist/reservation" aria-expanded="false">
                             <span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     class="icon icon-tabler icon-tabler-bookmark-filled" width="24" height="24"
+                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                     stroke-linecap="round" stroke-linejoin="round">
                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                   <path d="M14 2a5 5 0 0 1 5 5v14a1 1 0 0 1 -1.555 .832l-5.445 -3.63l-5.444 3.63a1 1 0 0 1 -1.55 -.72l-.006 -.112v-14a5 5 0 0 1 5 -5h4z" stroke-width="0" fill="currentColor"></path>
+                                   <path d="M14 2a5 5 0 0 1 5 5v14a1 1 0 0 1 -1.555 .832l-5.445 -3.63l-5.444 3.63a1 1 0 0 1 -1.55 -.72l-.006 -.112v-14a5 5 0 0 1 5 -5h4z"
+                                         stroke-width="0" fill="currentColor"></path>
                                 </svg>
                             </span>
                             <span class="hide-menu">Reservation</span>
@@ -244,10 +261,12 @@
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="/contact" aria-expanded="false">
                             <span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-note" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-note"
+                                     width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50"
+                                     fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <path d="M13 20l7 -7" />
-  <path d="M13 20v-6a1 1 0 0 1 1 -1h6v-7a2 2 0 0 0 -2 -2h-12a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7" />
+  <path d="M13 20l7 -7"/>
+  <path d="M13 20v-6a1 1 0 0 1 1 -1h6v-7a2 2 0 0 0 -2 -2h-12a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7"/>
 </svg>
                             </span>
                             <span class="hide-menu">Send feedback</span>
@@ -319,11 +338,14 @@
                                                     <div class="message-body">
                                                         <a href="#"
                                                            class="update-reservation d-flex align-items-center gap-2 dropdown-item"
-                                                           data-bs-toggle="modal" data-bs-target="#editReservationModal" data-id="<%= reservation.id %>">
-                                                            <p class="mb-0 fs-3" >Edit</p>
+                                                           data-bs-toggle="modal" data-bs-target="#editReservationModal"
+                                                           data-id="<%= reservation.id %>">
+                                                            <p class="mb-0 fs-3">Edit</p>
                                                         </a>
                                                         <a href="#"
-                                                           class="d-flex align-items-center gap-2 dropdown-item">
+                                                           class="addMeal d-flex align-items-center gap-2 dropdown-item"
+                                                           data-bs-toggle="modal" data-bs-target="#addMealModal"
+                                                           data-id="<%= reservation.id %>">
                                                             <p class="mb-0 fs-3">Add meal</p>
                                                         </a>
                                                     </div>
@@ -369,19 +391,22 @@
                                         </div>
                                         <div class="row mb-2 justify-content-start ">
                                             <div class="col d-flex align-items-center">
-                                                <h6 class="card-subtitle fw-semibold">Status: <span class="fw-light text-muted"><%= reservation.status %></span></h6>
+                                                <h6 class="card-subtitle fw-semibold">Status: <span
+                                                            class="fw-light text-muted"><%= reservation.status %></span>
+                                                </h6>
                                             </div>
                                         </div>
                                         <div class="row mb-2 justify-content-start ">
                                             <div class="col d-flex align-items-center">
                                                 <% if (reservation.meals) { %>
-                                                <h6 class="card-subtitle fw-semibold">Meal:
-                                                <% reservation.meals.forEach((meal) => { %>
-                                                    <span class="fw-light text-muted"><%= meal.name %></span>
-                                                <% }) %>
-                                                </h6>
+                                                    <h6 class="card-subtitle fw-semibold">Meal:
+                                                        <% reservation.meals.forEach((meal) => { %>
+                                                            <span class="fw-light text-muted"><%= meal.quantity + ' ' + meal.meal_id.name %></span>
+                                                        <% }) %>
+                                                    </h6>
                                                 <% } else { %>
-                                                <h6 class="card-subtitle fw-semibold">Meal: <span class="fw-light text-muted">None</span></h6>
+                                                    <h6 class="card-subtitle fw-semibold">Meal: <span
+                                                                class="fw-light text-muted">None</span></h6>
                                                 <% } %>
                                             </div>
                                         </div>
@@ -389,55 +414,60 @@
                                             <div class="col d-flex align-items-center">
                                                 <h6 class="card-subtitle fw-semibold">Airport transfer:
                                                     <% if (reservation.transport) { %>
-                                                    <a href="/manager/transport/<%= reservation.transport._id %>"   onclick="<%= (role==="receptionist")? 'return false;': ''%>" class="link-info   <%= (role==="receptionist")? 'text-muted': ''%>"><%= (role==="receptionist")? reservation.transport.time : 'View detail'%></a>
+                                                        <a href="/manager/transport/<%= reservation.transport._id %>"
+                                                           onclick="<%= (role === "receptionist") ? 'return false;' : '' %>"
+                                                           class="link-info   <%= (role === "receptionist") ? 'text-muted' : '' %>"><%= (role === "receptionist") ? reservation.transport.time : 'View detail' %></a>
                                                     <% } else { %>
-                                                        <span class="fw-light text-muted"> None</span></h6>
+                                                        <span class="fw-light text-muted"> None</span>
+                                                </h6>
                                                 <% } %>
                                             </div>
                                         </div>
                                         <div class="row mb-2 justify-content-start ">
                                             <div class="col d-flex flex-row">
                                                 <h6 class="card-subtitle fw-semibold">Special request: <span
-                                                            class="fw-light text-muted"><%= reservation.note %></span></h6>
+                                                            class="fw-light text-muted"><%= reservation.note %></span>
+                                                </h6>
                                             </div>
                                         </div>
 
                                     </div>
                                 </div>
                             <% }) %>
-                                <nav aria-label="Page navigation example">
-                                    <ul class="pagination justify-content-center">
-                                        <li class="page-item <%= pagination.page == 1 ? 'disabled' : ''%>">
-                                            <a class="page-link"
-                                               href="/manager/invoice/?page=<%= +pagination.page -1 && 1 %>"
-                                               aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                            </a>
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item <%= pagination.page == 1 ? 'disabled' : '' %>">
+                                        <a class="page-link"
+                                           href="/manager/invoice/?page=<%= +pagination.page - 1 && 1 %>"
+                                           aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <% for (let i = 1; i <= pagination.pages; i++) { %>
+                                        <li class="page-item <%= i == (pagination.page) && 'active' %>">
+                                            <a class="page-link" href="/manager/invoice/?page=<%= i %>"
+                                            ><%= i %></a>
                                         </li>
-                                        <% for (let i = 1; i <= pagination.pages; i++) {%>
-                                            <li class="page-item <%= i == (pagination.page) && 'active'%>">
-                                                <a class="page-link" href="/manager/invoice/?page=<%= i %>"
-                                                ><%= i %></a>
-                                            </li>
-                                        <% }%>
-                                        <li class="page-item <%= pagination.page == pagination.pages ? 'disabled' : ''%>">
-                                            <a
-                                                    class="page-link"
-                                                    href="/manager/invoice/?page=<%= +pagination.page  + 1 %>"
-                                                    aria-label="Next"
-                                            >
-                                                <span aria-hidden="true">&raquo;</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
+                                    <% } %>
+                                    <li class="page-item <%= pagination.page == pagination.pages ? 'disabled' : '' %>">
+                                        <a
+                                                class="page-link"
+                                                href="/manager/invoice/?page=<%= +pagination.page + 1 %>"
+                                                aria-label="Next"
+                                        >
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- Edit reservation modal -->
-            <div class="modal fade" id="editReservationModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal fade" id="editReservationModal" tabindex="-1" role="dialog" aria-labelledby=""
+                 aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="">Edit reservation</h5>
@@ -450,11 +480,13 @@
                                 <div class="col-10">
                                     <div class="row">
                                         <div class="col-md-6 form-group">
-                                            <label class="text-black font-weight-bold" for="reservation_fname--edit">First name</label>
+                                            <label class="text-black font-weight-bold" for="reservation_fname--edit">First
+                                                name</label>
                                             <input type="text" id="reservation_fname--edit" class="form-control ">
                                         </div>
                                         <div class="col-md-6 form-group">
-                                            <label class="text-black font-weight-bold" for="reservation_lname--edit">Last name</label>
+                                            <label class="text-black font-weight-bold" for="reservation_lname--edit">Last
+                                                name</label>
                                             <input type="text" id="reservation_lname--edit" class="form-control ">
                                         </div>
                                     </div>
@@ -477,7 +509,8 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12 form-group">
-                                            <label class="text-black font-weight-bold" for="reservation_room--edit">Room</label>
+                                            <label class="text-black font-weight-bold"
+                                                   for="reservation_room--edit">Room</label>
                                             <input type="text" id="reservation_room--edit" class="form-control ">
                                         </div>
                                     </div>
@@ -500,7 +533,8 @@
                                         <div class="row mb-4">
                                             <div class="col-md-12 form-group">
                                                 <label class="text-black font-weight-bold" for="reservation_note--edit">Notes</label>
-                                                <textarea name="message" id="reservation_note--edit" class="form-control " cols="30" rows="8"></textarea>
+                                                <textarea name="message" id="reservation_note--edit"
+                                                          class="form-control " cols="30" rows="8"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -509,12 +543,47 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn " data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="editReservationBtn btn btn-primary" >Save</button>
+                            <button type="button" class="editReservationBtn btn btn-primary">Save</button>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- Edit reservation modal -->
+            <!-- Add meal modal -->
+            <div class="modal fade modal-fullscreen modal-fullscreen-lg-down" id="addMealModal" tabindex="-1"
+                 role="dialog" aria-labelledby="" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-fullscreen modal-fullscreen-lg-down"
+                     role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="">Add meal</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"></span>
+                            </button>
+                        </div>
+                        <div class="modal-body  ">
+                            <div class="row meals mx-2 align-items-stretch">
+                                <% meals.forEach(function(meal) { %>
+                                <div class="col-3 p-2 ">
+                                    <div class="card meal h-100 mb-0" data-id="<%= meal.id %>">
+                                        <div class="card-body">
+                                            <h5 class="card-title"><%= meal.name %></h5>
+                                            <p class="card-text"><%= meal.ingredients %></p>
+                                            <a href="#" class="btn btn-dark-light"><%= meal.price %></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% }); %>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn " data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="addMealBtn btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Add meal modal -->
         </div>
     </div>
 </div>
@@ -531,6 +600,26 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 <script src="/js/manager/sidebarmenu.js"></script>
 <script src="/js/manager/reservation.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.logout').click(function () {
+            $.ajax({
+                url: '/api/v1/auth/logout',
+                type: 'GET',
+                success: function (data) {
+                    if (data.message == 'Logout success') {
+                        window.location.href = '/manager/login';
+                    }
+                }
+            });
+        });
+
+        $('.meal').on('click', function (e) {
+            e.preventDefault();
+            $(this).toggleClass('active');
+        })
+    });
+</script>
 </body>
 
 </html>

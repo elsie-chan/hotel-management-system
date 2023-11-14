@@ -1,3 +1,4 @@
+
 $(document).ready(function () {
     $('.update-reservation').on('click', function () {
         let id = $(this).attr('data-id');
@@ -6,6 +7,15 @@ $(document).ready(function () {
         $('.editReservationBtn').click(function (e) {
           e.preventDefault();
           editReservation(id);
+        })
+    });
+    $('.addMeal').click(function (e) {
+        e.preventDefault();
+        let id  = $(this).attr('data-id');
+        console.log(id)
+        $('.addMealBtn').click(function (e) {
+            e.preventDefault();
+            addMeal(id);
         })
     });
 });
@@ -66,6 +76,33 @@ function editReservation(id) {
             setInterval(function () {
                 window.location.reload();
             }, 2000);ho
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    })
+}
+
+function addMeal(id) {
+    let meals = [];
+    $('.meal.active').map((i, meal) => {
+        meals.push(meal.getAttribute('data-id'))
+    })
+    // console.log(meals)
+    $.ajax({
+        url: '/api/reservation/add-meal/' + id,
+        type: 'POST',
+        data: JSON.stringify({
+            meals
+        }),
+        contentType: 'application/json',
+        success: function (data) {
+            console.log(data);
+            if (data.status === 400) return toastr.error(data.message);
+            toastr.success('Meal added successfully');
+            setInterval(function () {
+                window.location.reload();
+            }, 2000);
         },
         error: function (err) {
             console.log(err);

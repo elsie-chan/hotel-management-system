@@ -93,12 +93,13 @@ const addMeal = async(id, meals) => {
         if(!reservation) return ErrorMessage(400, "Reservation not found");
         const meal_id = [];
         for(let i= 0; i<meals.length; i++){
-            const meal = await Meal.findOne({name: meals[i].name});
+            console.log(meals[i])
+            const meal = await Meal.findOne({_id: meals[i]});
             if(!meal) return ErrorMessage(400, "Meal not found");
             if(mealExists.includes(meal._id)){
                 await Reservation.findByIdAndUpdate({_id: id, "meals.meal_id": meal._id},{$inc: {"meals.$.quantity": meals[i].quantity}});
             }else{
-                meal_id.push({meal_id: meal._id, quantity: meals[i].quantity, note: meals[i].note});
+                meal_id.push({meal_id: meal._id, quantity: 1});
             }
         }
         await Reservation.findByIdAndUpdate(id,{$push: {meals: meal_id}});

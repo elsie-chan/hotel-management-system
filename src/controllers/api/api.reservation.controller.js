@@ -67,6 +67,7 @@ class ApiReservationController{
     }
     async addMealToReservation(req, res){
         try {
+            console.log(req.body.meals)
             const reservation = await ReservationService.addMeal(req.params.id, req.body.meals);
             return res.status(200).json(reservation);
         } catch (e) {

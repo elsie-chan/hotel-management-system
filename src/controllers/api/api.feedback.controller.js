@@ -34,6 +34,7 @@ class ApiFeedbackController{
         try{
             const data = req.body;
             const feedback = await FeedbackService.sendFeedback(data);
+            console.log(data)
             return res.status(200).json(feedback);
         } catch(e){
             return res.status(400).json(e.message);
