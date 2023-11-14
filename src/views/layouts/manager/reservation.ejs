@@ -400,9 +400,10 @@
                                             <div class="col d-flex align-items-center">
                                                 <% if (reservation.meals) { %>
                                                     <h6 class="card-subtitle fw-semibold">Meal:
-                                                        <% reservation.meals.forEach((meal) => { %>
-                                                            <span class="fw-light text-muted"><%= meal.quantity + ' ' + meal.meal_id.name %></span>
-                                                        <% }) %>
+                                                        <% const meals = reservation.meals.map((meal) => {
+                                                            return `<span class="fw-light text-muted"> ${meal.quantity} ${meal.meal_id.name} </span>`
+                                                         }).join(",") %>
+                                                        <%- meals %>
                                                     </h6>
                                                 <% } else { %>
                                                     <h6 class="card-subtitle fw-semibold">Meal: <span
@@ -565,11 +566,15 @@
                             <div class="row meals mx-2 align-items-stretch">
                                 <% meals.forEach(function(meal) { %>
                                 <div class="col-3 p-2 ">
-                                    <div class="card meal h-100 mb-0" data-id="<%= meal.id %>">
+                                    <div class="card card-hover meal h-100 mb-0" data-id="<%= meal.id %>">
                                         <div class="card-body">
                                             <h5 class="card-title"><%= meal.name %></h5>
                                             <p class="card-text"><%= meal.ingredients %></p>
-                                            <a href="#" class="btn btn-dark-light"><%= meal.price %></a>
+                                            <a href="#" class="btn btn-dark-light"><%= parseInt(meal.price).toLocaleString("vi-VN", {
+                                                style: "currency",
+                                                currency: "VND",
+                                                }) %></a>
+                                            <input class="quantity <%= meal.id %> form-text form-control" style="background-color: #fff;" min="0" name="quantity" value="1" type="number">
                                         </div>
                                     </div>
                                 </div>
@@ -616,8 +621,12 @@
 
         $('.meal').on('click', function (e) {
             e.preventDefault();
+            // $(this).toggleClass('active');
+            // ignore when click input
+            if (e.target.tagName === 'INPUT') return;
             $(this).toggleClass('active');
         })
+
     });
 </script>
 </body>

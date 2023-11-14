@@ -6,6 +6,7 @@ class ApiTransportController {
         try {
             const page = req.query.page || 1;
             const transports = await TransportService.getAll();
+            // return res.status(200).json({ transports});
             return paginate(transports, page, 10);
         } catch (e) {
             return res.status(500).json({ message: e });

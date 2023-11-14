@@ -13,7 +13,7 @@ class ApiStatisticController{
                 transport_revenue: transport,
                 total: total
             }
-            return res.status(200).json(revenue);
+            return revenue;
         } catch (e) {
             return res.status(500).json({message : e});
         }

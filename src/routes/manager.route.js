@@ -7,6 +7,7 @@ import ApiGuestController from "../controllers/api/api.guest.controller.js";
 import ApiMealController from "../controllers/api/api.meal.controller.js";
 import ApiFeedbackController from "../controllers/api/api.feedback.controller.js";
 import ApiInvoiceController from "../controllers/api/api.invoice.controller.js";
+import ApiStatisticController from "../controllers/api/api.statistic.controller.js";
 
 const Router = express.Router()
 
@@ -30,8 +31,9 @@ Router.get("/reservation", async (req, res) => {
 })
 Router.get("/invoice", async (req, res) => {
     const invoices = await ApiInvoiceController.getAll(req, res);
+    const revenue = await ApiStatisticController.getRevenue(req, res);
     console.log(invoices)
-    res.render("layouts/manager/invoice", {invoices: invoices.data, pagination: invoices.pagination})
+    res.render("layouts/manager/invoice", {invoices: invoices.data, pagination: invoices.pagination, revenue: revenue})
 })
 Router.get("/feedback", async (req, res) => {
     const feedback = await ApiFeedbackController.getAll(req, res);
@@ -40,7 +42,7 @@ Router.get("/feedback", async (req, res) => {
 })
 Router.get("/service", async (req, res) => {
     const services = await ApiTransportController.getAll(req, res);
-    // console.log(services)
+    console.log(services.data[0].guest)
     res.render("layouts/manager/service", {services: services.data, pagination: services.pagination})
 })
 Router.get("/transport/:id", async (req, res) => {

@@ -200,6 +200,104 @@
             </nav>
         </header>
         <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                    <div class="card">
+                        <div class="card-body p-3">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="numbers">
+                                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Revenue</p>
+                                        <h5 class="font-weight-bolder mb-0">
+                                            <%= parseInt(revenue.total).toLocaleString("vi-VN", {
+                                            style: "currency",
+                                            currency: "VND",
+                                            }) %>
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-end">
+                                    <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                        <i class='bx bx-wallet-alt text-lg opacity-10' aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                    <div class="card">
+                        <div class="card-body p-3">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="numbers">
+                                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Room Revenue</p>
+                                        <h5 class="font-weight-bolder mb-0">
+                                            <%= parseInt(revenue.room_revenue).toLocaleString("vi-VN", {
+                                                style: "currency",
+                                                currency: "VND",
+                                            }) %>
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-end">
+                                    <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                        <i class='bx bxs-contact text-lg opacity-10' aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                    <div class="card">
+                        <div class="card-body p-3">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="numbers">
+                                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Food Revenue</p>
+                                        <h5 class="font-weight-bolder mb-0">
+                                            <%= parseInt(revenue.meal_revenue).toLocaleString("vi-VN", {
+                                                style: "currency",
+                                                currency: "VND",
+                                            }) %>
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-end">
+                                    <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                        <i class='bx bxs-user text-lg opacity-10' aria-hidden="true" ></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-body p-3">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="numbers">
+                                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Transfer Revenue</p>
+                                        <h5 class="font-weight-bolder mb-0">
+                                            <%= parseInt(revenue.transport_revenue).toLocaleString("vi-VN", {
+                                                style: "currency",
+                                                currency: "VND",
+                                            }) %>
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-end">
+                                    <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                        <i class='bx bxs-credit-card text-lg opacity-10' aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="card">
                 <div class="card-body">
                     <div class="row">
@@ -258,8 +356,10 @@
                                     <div class="row justify-content-between mb-2">
                                         <div class="col">
                                             <h6 class="card-subtitle fw-semibold">Meal:
-                                                <span
-                                                        class="fw-light text-muted"><%= (invoice.reservation.meal)? 'Yes': 'No' %></span>
+                                                <% const meals = invoice.reservation.meals.map((meal) => {
+                                                    return `<span class="fw-light text-muted"> ${meal.quantity} ${meal.meal_id.name} </span>`
+                                                }).join(",") %>
+                                                <%- meals %>
                                             </h6>
                                         </div>
                                         <div class="col">

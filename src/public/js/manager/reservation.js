@@ -86,7 +86,14 @@ function editReservation(id) {
 function addMeal(id) {
     let meals = [];
     $('.meal.active').map((i, meal) => {
-        meals.push(meal.getAttribute('data-id'))
+        // meals.push(meal.getAttribute('data-id'))
+        const id = $(meal).data('id');
+        const quantity = $(meal).find('.quantity').val();
+        const mealObj = {
+            _id: id,
+            quantity
+        }
+        meals.push(mealObj);
     })
     // console.log(meals)
     $.ajax({
