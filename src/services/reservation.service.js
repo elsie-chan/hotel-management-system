@@ -88,6 +88,11 @@ const create = async (data) => {
             await newGuest.save();
             data.guest = newGuest._id;
         }
+        if(data.transport){
+            const transport = await Transport.findOne({_id: data.transport},{$push: {guests: guest._id}});
+            if(!transport) return ErrorMessage(400, "Transport not found");
+            data.transport = transport._id;
+        }
         const reservation = new Reservation(data);
         await reservation.save()
         await Guest.findByIdAndUpdate(data._id,{$push: {reservations: reservation._id}});

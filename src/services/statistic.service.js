@@ -21,6 +21,24 @@ const mealRevenue = async() => {
     }
 }
 
+const roomRevenue = async() => {
+    try {
+        const invoices = await Invoice.find().populate({
+            path: "reservation",
+            populate: {
+                path: "room"
+            }
+        });
+        let total = 0;
+        invoices.forEach(invoice => {
+            total += invoice.roomTotal;
+        })
+        return total;
+    } catch (e) {
+        return ErrorMessage(500, e.message);
+    }
+}
+
 const transportRevenue = async() => {
     try {
         const invoices = await Invoice.find().populate({
@@ -68,5 +86,6 @@ export default {
     transportRevenue,
     mealRevenue,
     subtotalRevenue,
+    roomRevenue,
     totalRevenue
 }

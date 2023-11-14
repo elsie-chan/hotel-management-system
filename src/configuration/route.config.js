@@ -11,6 +11,7 @@ import { default as ReservationRoutes} from '../routes/api/api.reservation.route
 import { default as GuestRoutes} from '../routes/api/api.guest.route.js'
 import { default as FeedbackRoutes} from '../routes/api/api.feedback.route.js'
 import { default as InvoiceRoutes} from '../routes/api/api.invoice.route.js'
+import { default as StatisticRoutes} from '../routes/api/api.statistic.route.js'
 import session from "express-session";
 import AuthMiddleware from "../middleware/auth.middleware.js";
 
@@ -28,6 +29,7 @@ export default (app) => {
     app.use('/api/reservation', ReservationRoutes);
     app.use('/api/feedback', FeedbackRoutes);
     app.use('/api/invoice', AuthMiddleware, InvoiceRoutes);
+    app.use('/api/statistic', AuthMiddleware, StatisticRoutes);
 
     app.get('/test', (req, res) => {
         if (!req.isAuthenticated()) return res.status(401).json({ message: 'Unauthorized' });
