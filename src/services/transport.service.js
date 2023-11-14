@@ -11,7 +11,7 @@ const getAll = async () => {
 }
 const getTransportById = async (id) => {
     try {
-        const transport = Transport.findById(id);
+        const transport = Transport.findById(id).populate("guest");
         return await transport;
     } catch (e) {
         return ErrorMessage(400, "Transport not found");
