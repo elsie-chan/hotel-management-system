@@ -41,6 +41,15 @@ class ApiReservationController{
             return res.status(400).json(e.message);
         }
     }
+
+    async autoUpdate(req, res){
+        try {
+            const reservation = await ReservationService.autoUpdate();
+            return res.status(200).json(reservation);
+        } catch (e) {
+            return res.status(400).json(e.message);
+        }
+    }
     async updateCheckIn(req, res){
         try {
             const reservation = await ReservationService.updateCheckIn(req.params.id, req.body.checkIn);
@@ -67,7 +76,6 @@ class ApiReservationController{
     }
     async addMealToReservation(req, res){
         try {
-            console.log(req.body.meals)
             const reservation = await ReservationService.addMeal(req.params.id, req.body.meals);
             return res.status(200).json(reservation);
         } catch (e) {

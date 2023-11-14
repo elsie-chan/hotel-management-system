@@ -8,13 +8,17 @@ const getAll = async () => {
              {
                  path: "reservation",
                     populate: {
-                        path: "room meals transport",
+                        path: "meals",
                         populate: {
                             path: "meal_id"
                         }
                     }
-             }
-         );
+             }).populate({
+                path: "reservation",
+                populate: {
+                    path: "room transport"
+                }
+         });
          return await invoices;
      } catch (e) {
          return ErrorMessage(500, e.message)
@@ -64,17 +68,24 @@ const create = async(reservation_id, payment_status) => {
 }
 const search = async (id) => {
     try {
-        const invoices = await Invoice.find({reservation: {
-            _id: id
-
-            }}).populate(
+        const invoices = await Invoice.find({reservation: { _id: id }}).populate(
             {
                 path: "reservation",
                 populate: {
-                    path: "room meals transport"
+                    path: "meals",
+                    populate: {
+                        path: "meal_id"
+                    }
                 }
+            }).populate({
+            path: "reservation",
+            populate: {
+                path: "room transport"
             }
-        );
+        });
+        if(!invoices){
+            return ErrorMessage(404, "Invoice not found");
+        }
         return await invoices;
     } catch (e) {
         return ErrorMessage(500, e.message)

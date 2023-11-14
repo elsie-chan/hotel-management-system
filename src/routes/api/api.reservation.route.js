@@ -8,6 +8,7 @@ router.get("/", ApiReservationController.getAll);
 router.get("/guest/:id", ApiReservationController.getReservationByGuest);
 router.get("/checkIn", ApiReservationController.updateCheckIn);
 router.get("/checkOut", ApiReservationController.updateCheckOut);
+router.get("/auto-update", ApiReservationController.autoUpdate);
 router.post("/booking", ApiReservationController.bookingRoom);
 router.post("/add-meal/:id", validation, ApiReservationController.addMealToReservation);
 router.post("/add", validation, ApiReservationController.create);

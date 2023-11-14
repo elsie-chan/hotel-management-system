@@ -17,10 +17,10 @@ const guestSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    reservations: {
-        type: Array,
-        required: false
-    },
+    reservations: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Reservation"
+    }],
     role: {
         type: String,
         required: false,

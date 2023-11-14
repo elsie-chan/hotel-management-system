@@ -46,10 +46,6 @@ const reservationSchema = new mongoose.Schema({
         quantity: {
             type: Number,
             require: true
-        },
-        note: {
-            type: String,
-            require: false
         }
     }],
     transport:{

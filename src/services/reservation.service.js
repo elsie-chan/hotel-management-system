@@ -60,14 +60,25 @@ const updateCheckOut = async (id, checkOut) => {
     }
 }
 
-// const autoUpdateStatus = async () => {
-//     try{
-//         const current = new Date.now();
-//         const reservations = await Reservation.find().map(reservation => {
-//             if(reservation.checkIn)
-//         })
-//     }
-// }
+const autoUpdateStatus = async () => {
+    try{
+        const current = new Date.now();
+        const reservations = await Reservation.find().map(reservation => {
+            if(reservation.checkIn.getDate() === current.getDate() && reservation.checkIn.getMonth() === current.getMonth() && reservation.checkIn.getFullYear() === current.getFullYear()){
+                if(reservation.checkIn.getHours() > current.getHours()){
+                    return reservation;
+                }
+            }
+        })
+        if(reservations){
+            for (const reservation of reservations) {
+                await Reservation.findByIdAndUpdate(reservation._id,{$set:{status: "Cancelled"}});
+            }
+        }
+    } catch(e){
+        return ErrorMessage(400, "Reservation not updated");
+    }
+}
 
 const create = async (data) => {
     try {
@@ -79,7 +90,7 @@ const create = async (data) => {
         }
         const reservation = new Reservation(data);
         await reservation.save()
-        await Guest.findByIdAndUpdate(data._id,{$push: {reservations: reservation}});
+        await Guest.findByIdAndUpdate(data._id,{$push: {reservations: reservation._id}});
         return await reservation;
     } catch (e) {
         return ErrorMessage(400, "Reservation not created");
@@ -93,13 +104,12 @@ const addMeal = async(id, meals) => {
         if(!reservation) return ErrorMessage(400, "Reservation not found");
         const meal_id = [];
         for(let i= 0; i<meals.length; i++){
-            console.log(meals[i])
-            const meal = await Meal.findOne({_id: meals[i]});
+            const meal = await Meal.findOne({_id: meals[i]._id});
             if(!meal) return ErrorMessage(400, "Meal not found");
-            if(mealExists.includes(meal._id)){
-                await Reservation.findByIdAndUpdate({_id: id, "meals.meal_id": meal._id},{$inc: {"meals.$.quantity": meals[i].quantity}});
+            if(mealExists.some(m => m.equals(meal._id))){
+                await Reservation.updateOne({_id: id, "meals.meal_id":meal._id}, {$inc: {"meals.$.quantity": meals[i].quantity}});
             }else{
-                meal_id.push({meal_id: meal._id, quantity: 1});
+                meal_id.push({meal_id: meal._id, quantity: meals[i].quantity});
             }
         }
         await Reservation.findByIdAndUpdate(id,{$push: {meals: meal_id}});

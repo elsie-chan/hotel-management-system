@@ -36,8 +36,6 @@ const loadDatabase = async () => {
     });
 
     const transports = data.transports.map((transport) => {
-        // transport.time = dayjs(transport.time).format("YYYY-MM-DD HH:mm:ss");
-        // console.log(transport.time)
         return Transport.create({...transport});
     });
 
@@ -76,11 +74,11 @@ const loadDatabase = async () => {
     }
 
     const guest = await Guest.findOne({lname: "Si"});
-    await Transport.findOneAndUpdate({vehicle: "BMW"}, {guest: guest});
+    await Transport.findOneAndUpdate({vehicle: "Car"}, {guest: guest});
     for(let i = 0; i < reservations.length; i++){
         const reservation = await reservations[i];
         const guest = await Guest.findOne({lname: reservation.lname});
-        await Guest.findByIdAndUpdate(guest._id,{$push: {reservations: reservation}});
+        await Guest.findByIdAndUpdate(guest._id,{$push: {reservations: reservation._id}});
     }
 }
 

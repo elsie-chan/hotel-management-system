@@ -4,8 +4,7 @@
       "fname": "Lam",
       "lname": "Si",
       "phone": "0231823934",
-      "email": "thientaitrinhlamnhu@gmail.com",
-      "reservation": []
+      "email": "thientaitrinhlamnhu@gmail.com"
     }
   ],
   "categories": [
@@ -112,8 +111,7 @@
       "meals": [
         {
           "name": "Bún bò",
-          "quantity": 1,
-          "note": "Không ớt"
+          "quantity": 1
         }
       ],
       "transport" : "Car",
