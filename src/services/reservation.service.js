@@ -8,7 +8,11 @@ import Meal from "../models/meal.model.js";
 import InvoiceService from "./invoice.service.js";
 const getAll = async () => {
     try {
-        const reservations = Reservation.find().populate("room").populate("meals").populate("transport");
+        const reservations = Reservation.find().populate("room", "roomNumber").populate({
+            path: "meals", populate: {
+                path: "meal_id"
+            }
+        }).populate("transport");
         return await reservations;
     } catch (e) {
         return ErrorMessage(400, "Reservation not found");
@@ -17,7 +21,12 @@ const getAll = async () => {
 
 const getReservationById = async (id) => {
     try {
-        const reservation = Reservation.findById(id).populate("room", "roomNumber").populate("meals").populate("transport");
+        const reservation = Reservation.findById(id).populate("room", "roomNumber").populate({
+            path: "meals",
+            populate: {
+                path: "meal_id"
+            }
+        }).populate("transport");
         return await reservation;
     } catch (e) {
         return ErrorMessage(400, "Reservation not found");
@@ -50,6 +59,16 @@ const updateCheckOut = async (id, checkOut) => {
         return ErrorMessage(400, "Reservation not updated");
     }
 }
+
+// const autoUpdateStatus = async () => {
+//     try{
+//         const current = new Date.now();
+//         const reservations = await Reservation.find().map(reservation => {
+//             if(reservation.checkIn)
+//         })
+//     }
+// }
+
 const create = async (data) => {
     try {
         const guest = await Guest.findOne({phone: data.phone});
@@ -66,28 +85,49 @@ const create = async (data) => {
         return ErrorMessage(400, "Reservation not created");
     }
 }
-
+const addMeal = async(id, meals) => {
+    try {
+        if(!meals) return ErrorMessage(400, "Meal not found");
+        const reservation = await Reservation.findOne({_id: id});
+        const mealExists = reservation.meals.map(m => m.meal_id);
+        if(!reservation) return ErrorMessage(400, "Reservation not found");
+        const meal_id = [];
+        for(let i= 0; i<meals.length; i++){
+            const meal = await Meal.findOne({name: meals[i].name});
+            if(!meal) return ErrorMessage(400, "Meal not found");
+            if(mealExists.includes(meal._id)){
+                await Reservation.findByIdAndUpdate({_id: id, "meals.meal_id": meal._id},{$inc: {"meals.$.quantity": meals[i].quantity}});
+            }else{
+                meal_id.push({meal_id: meal._id, quantity: meals[i].quantity, note: meals[i].note});
+            }
+        }
+        await Reservation.findByIdAndUpdate(id,{$push: {meals: meal_id}});
+        return await reservation;
+    } catch(e){
+        return ErrorMessage(400, "Reservation not updated");
+    }
+}
 const update = async (id, data) => {
     try {
         const reservation = await Reservation.findOne({_id: id}).populate("transport", "vehicle");
         if(!reservation) return ErrorMessage(400, "Reservation not found");
         if(reservation.status === "Cancelled" || reservation.status === "Checked out") return ErrorMessage(400, "Cannot update reservation after check out or cancel");
         if(data.transport){
-            console.log(data.transport, reservation.transport.vehicle)
+            // console.log(data.transport, reservation.transport.vehicle)
             if (data.transport !== reservation.transport.vehicle && reservation.status=== "Checked in") return ErrorMessage(400, "Cannot update transport after check in");
             const transport = await Transport.findOne({vehicle: data.transport});
             if(!transport) return ErrorMessage(400, "Transport not found");
             data.transport = transport._id;
         }
-        if(data.meals){
-            const meal_id = [];
-            for(let i= 0; i<data.meals.length; i++){
-                const meal = await Meal.findOne({name: data.meals[i].name});
-                if(!meal) return ErrorMessage(400, "Meal not found");
-                meal_id.push(meal._id);
-            }
-            data.meals = meal_id;
-        }
+        // if(data.meals){
+        //     const meal_id = [];
+        //     for(let i= 0; i<data.meals.length; i++){
+        //         const meal = await Meal.findOne({name: data.meals[i].name});
+        //         if(!meal) return ErrorMessage(400, "Meal not found");
+        //         meal_id.push(meal._id);
+        //     }
+        //     data.meals = meal_id;
+        // }
         if(data.room){
             await Room.findByIdAndUpdate(reservation.room,{$set: {isAvailable: "Available"}});
             const rooms = await checkRoomInDay(reservation.checkIn, reservation.checkOut);
@@ -113,7 +153,7 @@ const update = async (id, data) => {
             case "Checked out":{
                 if (reservation.status === "Checked in") {
                     await Room.findByIdAndUpdate(reservation.room,{$set: {isAvailable: "Available"}});
-                    console.log(reservation.id)
+                    // console.log(reservation.id)
                     await InvoiceService.create(reservation.id, "Cash");
                 } else {
                     return ErrorMessage(400, "Cannot update status to checked out");
@@ -214,6 +254,7 @@ export default {
     create,
     bookingRoom,
     update,
+    addMeal,
     updateCheckIn,
     updateCheckOut,
     remove

@@ -47,7 +47,7 @@ const loadDatabase = async () => {
         const meals_id = [];
         for(let i = 0; i < reservation.meals.length; i++){
             const meal = await Meal.findOne({name: reservation.meals[i].name});
-            meals_id.push(meal._id);
+            meals_id.push({ meal_id : meal._id, quantity: reservation.meals[i].quantity, note: reservation.meals[i].note});
         }
         const reservationData = {
             fname: reservation.fname,
@@ -59,7 +59,7 @@ const loadDatabase = async () => {
             note: reservation.note,
             guests: reservation.guests,
             room: await room,
-            meals: [...meals_id],
+            meals: meals_id,
             transport: await transport
         };
         return Reservation.create({...reservationData});

@@ -80,7 +80,7 @@
   ],
   "transports": [
     {
-      "vehicle": "BMW",
+      "vehicle": "Car",
       "pickup_location": "Q7, HCM",
       "destination": "abc",
       "price": 250000,
@@ -111,10 +111,12 @@
       ],
       "meals": [
         {
-          "name": "Bún bò"
+          "name": "Bún bò",
+          "quantity": 1,
+          "note": "Không ớt"
         }
       ],
-      "transport" : "BMW",
+      "transport" : "Car",
       "status": "Confirmed",
       "quests": 1,
       "note": "Tôi có vấn đề về OCD"

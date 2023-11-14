@@ -65,6 +65,14 @@ class ApiReservationController{
             return res.status(400).json(e.message);
         }
     }
+    async addMealToReservation(req, res){
+        try {
+            const reservation = await ReservationService.addMeal(req.params.id, req.body.meals);
+            return res.status(200).json(reservation);
+        } catch (e) {
+            return res.status(400).json(e.message);
+        }
+    }
     async update(req, res){
         try {
             const reservation = await ReservationService.update(req.params.id, req.body);
@@ -81,17 +89,6 @@ class ApiReservationController{
             return res.status(400).json(e.message);
         }
     }
-    // async paginate(req, res){
-    //     try {
-    //         const reservations = await ReservationService.getAll();
-    //         const page = parseInt(req.query.page);
-    //         const limit = parseInt(req.query.limit);
-    //         const results = paginate(reservations, page, limit);
-    //         return res.status(200).json(results);
-    //     } catch (e) {
-    //         return res.status(400).json(e.message);
-    //     }
-    // }
 }
 
 export default new ApiReservationController();

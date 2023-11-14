@@ -38,8 +38,19 @@ const reservationSchema = new mongoose.Schema({
         ref: 'Room'
     },
     meals:[{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Meal'
+        _id: false,
+        meal_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Meal'
+        },
+        quantity: {
+            type: Number,
+            require: true
+        },
+        note: {
+            type: String,
+            require: false
+        }
     }],
     transport:{
         type: mongoose.Schema.Types.ObjectId,

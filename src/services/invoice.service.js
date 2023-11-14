@@ -8,7 +8,10 @@ const getAll = async () => {
              {
                  path: "reservation",
                     populate: {
-                        path: "room meals transport"
+                        path: "room meals transport",
+                        populate: {
+                            path: "meal_id"
+                        }
                     }
              }
          );
@@ -20,22 +23,27 @@ const getAll = async () => {
 
 const create = async(reservation_id, payment_status) => {
     try {
-        const reservation = await Reservation.findById(reservation_id).populate("room", "price").populate("transport", "price").populate("meals");
+        const reservation = await Reservation.findById(reservation_id).populate("room", "price").populate("transport", "price").populate({
+            path: "meals",
+            populate: {
+                path: "meal_id",
+                select: "price"
+            }
+        });
         if (!reservation) {
             return ErrorMessage(404, "Reservation not found");
         }
         let total = 0;
-        let taxes = 0;
         const day = (reservation.checkOut - reservation.checkIn) / (1000 * 60 * 60 * 24);
         const roomTotal = reservation.room.price * day;
         const transportTotal = reservation.transport.price;
-        const mealTotal = 0;
+        let mealTotal = 0;
         reservation.meals.forEach(meal => {
-            total += meal.price;
+            mealTotal += meal.meal_id.price * meal.quantity;
         });
         total += roomTotal + transportTotal + mealTotal;
         console.log(total)
-        taxes = total * 8 / 100;
+        const taxes = total * 8 / 100;
         console.log(taxes)
         total = total + taxes;
         const data = {
