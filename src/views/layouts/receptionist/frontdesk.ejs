@@ -11,6 +11,11 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/1.35.0/iconfont/tabler-icons.min.css"
           integrity="sha512-tpsEzNMLQS7w9imFSjbEOHdZav3/aObSESAL1y5jyJDoICFF2YwEdAHOPdOr1t+h8hTzar0flphxR76pd0V1zQ=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+          <style>
+            .room.active{
+                background-color: #5D87FF;
+            }
+          </style>
 </head>
 <body>
 <div  class="page-wrapper show-sidebar" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" 
@@ -311,6 +316,7 @@ data-sidebartyp="full"data-sidebar-position="fixed" data-header-position="relati
                                   <nav class="nav nav-pills nav-fill">
                                     <a class="nav-link tab-pills" href="#">Book a room</a>
                                     <a class="nav-link tab-pills" href="#">Add information</a>
+                                    <a class="nav-link tab-pills" href="#">Add meal</a>
                                     <a class="nav-link tab-pills" href="#">Comfirm</a>
                                   </nav>
                                 </div>
@@ -377,46 +383,7 @@ data-sidebartyp="full"data-sidebar-position="fixed" data-header-position="relati
                                     <section class="section">
                                       <div class="container">
                                           <div class="row roomsList">
-                                              <!-- <div class="col-md-6 col-lg-4" data-aos="fade-up">
-                                                  <a href="#" class="room">
-                                                      
-                                                      <div class="p-3 text-center room-info">
-                                                          <h2>Single Room</h2>
-                                                          <span class="text-uppercase letter-spacing-1">500.000 ₫/ per night</span>
-                                                      </div>
-                                                  </a>
-                                              </div>
-
-                                              <div class="col-md-6 col-lg-4" data-aos="fade-up">
-                                                <a href="#" class="room">
-                                                    
-                                                    <div class="p-3 text-center room-info">
-                                                        <h2>Double Room</h2>
-                                                        <span class="text-uppercase letter-spacing-1">1.000.000 ₫/ per night</span>
-                                                    </div>
-                                                </a>
-                                              </div>
-                                  
-                                              <div class="col-md-6 col-lg-4" data-aos="fade-up">
-                                                  <a href="#" class="room">
-                                                      
-                                                      <div class="p-3 text-center room-info">
-                                                          <h2>Family Room</h2>
-                                                          <span class="text-uppercase letter-spacing-1">1.500.000 ₫/ per night</span>
-                                                      </div>
-                                                  </a>
-                                              </div>
-                                  
-                                              <div class="col-md-6 col-lg-4" data-aos="fade-up">
-                                                  <a href="#" class="room">
-                                                      
-                                                      <div class="p-3 text-center room-info">
-                                                          <h2>VIP Room</h2>
-                                                          <span class="text-uppercase letter-spacing-1">2.500.000 ₫/ per night</span>
-                                                      </div>
-                                                  </a>
-                                              </div> -->
-
+                                              
                                           </div>
                                       </div>
                                   </section>
@@ -426,11 +393,11 @@ data-sidebartyp="full"data-sidebar-position="fixed" data-header-position="relati
                                   <div class="tab d-none">
                                     <div class="mb-3">
                                       <label for="name" class="form-label">First Name</label>
-                                      <input type="text" class="form-control" name="name" id="name" placeholder="Enter Guest's first name">
+                                      <input type="text" class="form-control " name="name" id="fname" placeholder="Enter Guest's first name">
                                     </div>
                                     <div class="mb-3">
                                       <label for="name" class="form-label">Last Name</label>
-                                      <input type="text" class="form-control" name="name" id="name" placeholder="Enter Guest's last name">
+                                      <input type="text" class="form-control" name="name" id="lname" placeholder="Enter Guest's last name">
                                     </div>
                                     <div class="mb-3">
                                       <label for="phone number" class="form-label">Phone</label>
@@ -457,29 +424,7 @@ data-sidebartyp="full"data-sidebar-position="fixed" data-header-position="relati
                                             </div>
                                           </div>
                                     </div>
-                                    <div class="mb-3">
-                                      <label for="book_room_vehicle--add" class="font-weight-bold text-black">Meal</label>
-                                            <div class="row">
-                                              <div class="col-md-4 form-group">
-                                                  <label class="text-black font-weight-bold" for="book_room_meal_name--add"></label>
-                                                  <input type="text" id="book_room_meal_type--add" class="form-control" placeholder="Enter Meal name">
-                                              </div>
-                                              <div class="col-md-4 form-group">
-                                                <label class="text-black font-weight-bold" for="book_room_meal_type--add"></label>
-                                                <input type="text" id="book_room_meal_type--add" class="form-control "placeholder="Enter Meal type">
-                                              </div>
-                                              <div class="col-md-4 form-group">
-                                                <label class="text-black font-weight-bold" for="book_room_meal_price--add"></label>
-                                                <input type="text" id="book_room_meal_price--add" class="form-control "placeholder="Enter Meal price">
-                                              </div>
-                                            <div class ="row">
-                                              <div class="col-md-12 form-group">
-                                                <label class="text-black font-weight-bold" for="book_room_meal_price--add"></label>
-                                                <input type="text" id="book_room_meal_ingredients--add" class="form-control "placeholder="Enter Meal ingredients">
-                                              </div>
-                                            </div>
-                                          </div>
-                                    </div>
+                                    
                                     <div class="row">
                                       <div class="row mb-6 ">
                                         <div class="col-md-12 form-group">
@@ -487,6 +432,24 @@ data-sidebartyp="full"data-sidebar-position="fixed" data-header-position="relati
                                             <textarea name="message" id="room_note--add" class="form-control " cols="10" rows="8"></textarea>
                                         </div>
                                       </div>
+                                    </div>
+                                  </div>
+                                  <div class="tab d-none">
+                                    <div class="row meals mx-2 align-items-stretch">
+                                        <% meals.forEach(function(meal) { %>
+                                        <div class="col-3 p-2 ">
+                                            <div class="card meal h-100 mb-0" data-id="<%= meal.id %>">
+                                                <button class="btn mt-5 btn-outline-primary meal">
+                                                    <h5 class="card-title"><%= meal.name %></h5>
+                                                    <p class="card-text"><%= meal.ingredients %></p>
+                                                    <span class="btn btn-light"><%= parseInt(meal.price).toLocaleString("vi-VN",{
+                                                        currency:"VND", style: "currency"
+                                                      }) %></span>
+                                                    <input class ="number_meal form-control" type ="number" placeholder="Enter Number">
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <% }); %>
                                     </div>
                                   </div>
                                   <div class="tab d-none">
@@ -529,6 +492,7 @@ data-sidebartyp="full"data-sidebar-position="fixed" data-header-position="relati
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 </body>
+<script src="/js/manager/meal.js"></script>
 <script src="/js/manager/sidebarmenu.js"></script>
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
 <script>

@@ -20,9 +20,20 @@ function loadFormData(n) {
 function next() {
   $(tabs[current]).addClass("d-none");
   $(tabs_pill[current]).removeClass("active");
-
-  current++;
+  
+  if(current ==1){
+    if(validateName() == false){
+      loadFormData(current);
+    }
+    else{
+      current++;
+    loadFormData(current);
+    }
+  }else{
+    current++;
   loadFormData(current);
+  }
+
 }
 
 function back() {
@@ -49,6 +60,7 @@ function checkAvailable() {
   let quantity = parseInt(adults) + parseInt(children);
   let isChildren = (children > 0) ? true : false;
   console.log(fromDate, toDate, quantity, isChildren);
+
   if ( !fromDate || !toDate) {
     toastr.error('Please fill all fields!');
     return;
@@ -80,7 +92,7 @@ function checkAvailable() {
               <div class="col-md-6 col-lg-4" data-aos="fade-up">
               <button class="btn mt-5 btn-outline-primary room">
                   <div class="p-3 text-center room-info" >
-                      <h2>${item.roomType.name}</h2>
+                      <h2>${item.roomNumber}</h2>
                       <span class="text-uppercase letter-spacing-1">${parseInt(item.price).toLocaleString("vi-VN",{
                         currency:"VND", style: "currency"
                       })} / per night</span>
@@ -95,6 +107,15 @@ function checkAvailable() {
           $('.room').on('click', function(e) {
             e.preventDefault();
             $('.btn-next').prop('disabled', false);
+
+          })
+          $('.room').on('click', function(e){
+            if($(this).hasClass('active')){
+              $('.room').removeClass("active");
+            }else{
+              $('.room').removeClass("active");
+              $(this).addClass('active');
+            }
           })
       },
       error: function (err) {
@@ -102,3 +123,23 @@ function checkAvailable() {
       }
   })
 }
+
+function validateName(){
+  let fname = $('#fname').val();
+  let lname = $('#lname').val();
+  let phone = $('#phone').val();
+  console.log(fname, lname, phone);
+  if ( (fname =="" || lname=="" || phone=="") ) {
+    toastr.error('Please fill all fields!');
+    return false;
+  }
+  return true;
+
+}
+$('.meal').on('click', function(e){
+  if($(this).hasClass('active')){
+    $(this).removeClass('active');
+  }else{
+    $(this).addClass('active');
+  }
+})
