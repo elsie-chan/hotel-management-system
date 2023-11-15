@@ -9,8 +9,9 @@ async function create(data) {
         if (existAccount) {
             return ErrorMessage(400, "Account already exist");
         }
-        const salt = bcrypt.genSaltSync(10);
-        const hashPassword = bcrypt.hashSync(data.password, salt);
+        console.log(data)
+        const salt = await bcrypt.genSaltSync(10);
+        const hashPassword = await bcrypt.hashSync(data.password, salt);
         const newAccount = new Account({
             ...data,
             username: data.username,
@@ -24,7 +25,11 @@ async function create(data) {
             sales: []
         })
         await newAccount.save();
-        return newAccount;
+        // return ignore password
+        return {
+            ...newAccount._doc,
+            password: undefined
+        }
     } catch (e) {
         console.log(e)
         return ErrorMessage(500, "Internal server error");

@@ -217,19 +217,30 @@
                             <div class="card-body">
                                 <form>
                                     <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Username</label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                        <label for="username" class="form-label">Username</label>
+                                        <input type="text" class="form-control" id="username" aria-describedby="emailHelp">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="exampleInputPassword1" class="form-label">Password</label>
-                                        <input type="password" class="form-control" id="exampleInputPassword1">
+                                        <label for="fullname" class="form-label">Full name</label>
+                                        <input type="text" class="form-control" id="fullname" aria-describedby="emailHelp">
                                     </div>
-                                    <div class="mb-3 form-check">
-                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <div class="mb-3">
+                                        <label for="password" class="form-label">Password</label>
+                                        <input type="password" class="form-control" id="password">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="role" class="form-label">Role</label>
+                                        <select id="role" class="form-select">
+                                            <option value="RECEPTIONIST">Receptionist</option>
+                                            <option value="ACCOUNTANT">Accountant</option>
+                                            <option value="MANAGER">Manager</option>
+                                        </select>
+                                    </div>
+                                    <button type="button" class="createAccountBtn btn btn-primary">Submit</button>
                                 </form>
                             </div>
                         </div>
@@ -267,4 +278,5 @@
     });
 </script>
 <script src="/js/manager/sidebarmenu.js"></script>
+<script src="/js/manager/index.js"></script>
 </html>
