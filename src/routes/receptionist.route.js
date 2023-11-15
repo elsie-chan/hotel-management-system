@@ -1,10 +1,12 @@
 import express from "express";
 import ApiReservationController from "../controllers/api/api.reservation.controller.js";
+import ApiMealController from "../controllers/api/api.meal.controller.js";
 
 const Router = express.Router()
 
-Router.get("/frontdesk", (req, res) => {
-    res.render("layouts/receptionist/frontdesk", {title: "Front Desk", role: "receptionist" });
+Router.get("/frontdesk", async (req, res) => {
+    const meals = await ApiMealController.getAll(req, res);
+    res.render("layouts/receptionist/frontdesk", {title: "Front Desk", role: "receptionist", meals: meals.data  });
 })
 
 Router.get("/reservation", async (req, res) => {
