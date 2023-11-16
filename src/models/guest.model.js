@@ -15,11 +15,15 @@ const guestSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        required: false
     },
     reservations: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Reservation"
+    }],
+    invoices: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Invoice"
     }],
     role: {
         type: String,

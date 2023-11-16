@@ -1,6 +1,7 @@
 import Invoice from "../models/invoice.model.js";
 import Reservation from "../models/reservation.model.js";
 import {ErrorMessage} from "../error/message.error.js";
+import Account from "../models/account.model.js";
 
 const getAll = async () => {
      try {
@@ -25,7 +26,7 @@ const getAll = async () => {
      }
 }
 
-const create = async(reservation_id, payment_status) => {
+const create = async(account_id, reservation_id, payment_status) => {
     try {
         const reservation = await Reservation.findById(reservation_id).populate("room", "price").populate("transport", "price").populate({
             path: "meals",
@@ -61,7 +62,9 @@ const create = async(reservation_id, payment_status) => {
             reservation: reservation_id
         }
         const invoice = new Invoice(data);
-        return await invoice.save();
+        await invoice.save();
+        await Account.findByIdAndUpdate(account_id, {$push: {invoices: invoice._id}});
+        return invoice;
     } catch (e) {
         return ErrorMessage(500, e.message)
     }

@@ -93,6 +93,8 @@ const create = async (data) => {
             if(!transport) return ErrorMessage(400, "Transport not found");
             data.transport = transport._id;
         }
+        const room = await Room.findOne({_id: data.room});
+        if(!room) return ErrorMessage(400, "Room not found");
         const reservation = new Reservation(data);
         await reservation.save()
         await Guest.findByIdAndUpdate(data._id,{$push: {reservations: reservation._id}});
@@ -123,7 +125,7 @@ const addMeal = async(id, meals) => {
         return ErrorMessage(400, "Reservation not updated");
     }
 }
-const update = async (id, data) => {
+const update = async (id, data, account_id) => {
     try {
         const reservation = await Reservation.findOne({_id: id}).populate("transport", "vehicle");
         if(!reservation) return ErrorMessage(400, "Reservation not found");
@@ -169,8 +171,7 @@ const update = async (id, data) => {
             case "Checked out":{
                 if (reservation.status === "Checked in") {
                     await Room.findByIdAndUpdate(reservation.room,{$set: {isAvailable: "Available"}});
-                    // console.log(reservation.id)
-                    await InvoiceService.create(reservation.id, "Cash");
+                    await InvoiceService.create(account_id, reservation.id, "Cash");
                 } else {
                     return ErrorMessage(400, "Cannot update status to checked out");
                 }
