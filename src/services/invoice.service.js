@@ -63,7 +63,6 @@ const create = async(account_id, reservation_id, payment_status) => {
         }
         const invoice = new Invoice(data);
         await invoice.save();
-        await Account.findByIdAndUpdate(account_id, {$push: {invoices: invoice._id}});
         return invoice;
     } catch (e) {
         return ErrorMessage(500, e.message)

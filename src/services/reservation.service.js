@@ -125,7 +125,7 @@ const addMeal = async(id, meals) => {
         return ErrorMessage(400, "Reservation not updated");
     }
 }
-const update = async (id, data, account_id) => {
+const update = async (id, data) => {
     try {
         const reservation = await Reservation.findOne({_id: id}).populate("transport", "vehicle");
         if(!reservation) return ErrorMessage(400, "Reservation not found");
@@ -171,7 +171,7 @@ const update = async (id, data, account_id) => {
             case "Checked out":{
                 if (reservation.status === "Checked in") {
                     await Room.findByIdAndUpdate(reservation.room,{$set: {isAvailable: "Available"}});
-                    await InvoiceService.create(account_id, reservation.id, "Cash");
+                    await InvoiceService.create(reservation.id, "Cash");
                 } else {
                     return ErrorMessage(400, "Cannot update status to checked out");
                 }
