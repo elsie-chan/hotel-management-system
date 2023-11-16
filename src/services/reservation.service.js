@@ -190,7 +190,6 @@ const update = async (id, data) => {
             case "Checked out":{
                 if (reservation.status === "Checked in") {
                     await Room.findByIdAndUpdate(reservation.room,{$set: {isAvailable: "Available"}});
-                    // console.log(reservation.id)
                     await InvoiceService.create(reservation.id, "Cash");
                 } else {
                     return ErrorMessage(400, "Cannot update status to checked out");

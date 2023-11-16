@@ -21,10 +21,6 @@ const guestSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Reservation"
     }],
-    invoices: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Invoice"
-    }],
     role: {
         type: String,
         required: false,
