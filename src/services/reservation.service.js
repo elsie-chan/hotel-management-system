@@ -81,15 +81,33 @@ const autoUpdateStatus = async () => {
 }
 
 const create = async (data) => {
+
     try {
         const guest = await Guest.findOne({phone: data.phone});
+        console.log(guest);
         if(!guest){
-            const newGuest = new Guest({fname: data.fname, lname: data.lname, phone: data.phone});
+
+            const newGuest = new Guest({fname: data.fname, lname: data.lname, phone: data.phone, email:data.email});
+            console.log(newGuest);
             await newGuest.save();
             data.guest = newGuest._id;
         }
         if(data.transport){
-            const transport = await Transport.findOne({_id: data.transport},{$push: {guests: guest._id}});
+            const transport = await Transport.findOne({_id: data.transport});
+            if(data?.guest){
+                transport.guest.push({
+                    _id: data.guest,
+                    
+                })
+            }else{
+                transport.guest.push({
+                    _id: guest._id,
+                    
+                })
+            }
+            
+            await transport.save();
+            console.log(transport);
             if(!transport) return ErrorMessage(400, "Transport not found");
             data.transport = transport._id;
         }
@@ -100,6 +118,7 @@ const create = async (data) => {
         await Guest.findByIdAndUpdate(data._id,{$push: {reservations: reservation._id}});
         return await reservation;
     } catch (e) {
+        console.log(e);
         return ErrorMessage(400, "Reservation not created");
     }
 }
@@ -125,7 +144,7 @@ const addMeal = async(id, meals) => {
         return ErrorMessage(400, "Reservation not updated");
     }
 }
-const update = async (id, data, account_id) => {
+const update = async (id, data) => {
     try {
         const reservation = await Reservation.findOne({_id: id}).populate("transport", "vehicle");
         if(!reservation) return ErrorMessage(400, "Reservation not found");
@@ -171,7 +190,8 @@ const update = async (id, data, account_id) => {
             case "Checked out":{
                 if (reservation.status === "Checked in") {
                     await Room.findByIdAndUpdate(reservation.room,{$set: {isAvailable: "Available"}});
-                    await InvoiceService.create(account_id, reservation.id, "Cash");
+                    // console.log(reservation.id)
+                    await InvoiceService.create(reservation.id, "Cash");
                 } else {
                     return ErrorMessage(400, "Cannot update status to checked out");
                 }
