@@ -156,11 +156,11 @@ $('.btn-meal').on('click', function(e){
 
 
 function addBooking(){
-  let checkin = $('#book_room_from').val();
-  let checkout = $('#book_room_to').val();
+  let checkin = $('#book_room_from').val() + "T17:00:00.000Z";
+  let checkout = $('#book_room_to').val() + "T17:00:00.000Z";
   let adults = $('#adults').val();
   let children = $('#children').val();
-  let guest = parseInt(adults) + parseInt(children);
+  let guests = parseInt(adults) + parseInt(children);
   let fname = $('#fname').val();
   let lname = $('#lname').val();
   let phone = $('#phone').val();
@@ -186,9 +186,9 @@ function addBooking(){
     checkin,
     checkout,
     note,
-    guest,
+    guests,
     status,
-    id_room,
+    room: id_room,
     meals,
     transport: car
   }
