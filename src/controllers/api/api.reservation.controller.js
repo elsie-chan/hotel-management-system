@@ -84,7 +84,7 @@ class ApiReservationController{
     }
     async update(req, res){
         try {
-            const reservation = await ReservationService.update(req.params.id, req.body);
+            const reservation = await ReservationService.update(req.params.id, req.body, req.body.accountId);
             return res.status(200).json(reservation);
         } catch (e) {
             return res.status(400).json(e.message);
