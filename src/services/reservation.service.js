@@ -79,7 +79,6 @@ const autoUpdateStatus = async () => {
         return ErrorMessage(400, "Reservation not updated");
     }
 }
-
 const create = async (data) => {
 
     try {

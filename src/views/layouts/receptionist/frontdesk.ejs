@@ -401,16 +401,16 @@ data-sidebartyp="full"data-sidebar-position="fixed" data-header-position="relati
                                     </div>
                                     <div class="mb-3">
                                       <label for="phone number" class="form-label">Phone</label>
-                                      <input type="text" class="form-control" name="phone" id="phone" placeholder="Enter Guest's phone">
+                                      <input type="number" class="form-control" name="phone" id="phone" placeholder="Enter Guest's phone">
                                     </div>
                                     <div class="mb-3">
                                       <label for="book_room_vehicle--add" class="font-weight-bold text-black">Vehicle</label>
                                             <div class="field-icon-wrap">
-                                                <select name="" id="book_room_vehicle--add" class="form-control">
-                                                    <option value="None">None</option>
-                                                    <option value="Car">Car</option>
-                                                    <option value="Bus">Bus</option>
-                                                    <option value="Limousine">Limousine</option>
+                                                <select name="" id="book_room_vehicle--add" class="form-control" data-id="">
+                                                    <% car.forEach(function(cars) { %>
+                                                    <option value="<%= cars.id%>"><%= cars.vehicle %></option>
+                                                    <% }); %>
+
                                                 </select>
                                             </div>
                                             <div class="row">
@@ -438,14 +438,14 @@ data-sidebartyp="full"data-sidebar-position="fixed" data-header-position="relati
                                     <div class="row meals mx-2 align-items-stretch">
                                         <% meals.forEach(function(meal) { %>
                                         <div class="col-3 p-2 ">
-                                            <div class="card meal h-100 mb-0" data-id="<%= meal.id %>">
-                                                <button class="btn mt-5 btn-outline-primary meal">
+                                            <div class="card meal h-100 mb-0">
+                                                <button class="btn mt-5 btn-outline-primary btn-meal" type="button" data-id="<%= meal.id %>">
                                                     <h5 class="card-title"><%= meal.name %></h5>
                                                     <p class="card-text"><%= meal.ingredients %></p>
-                                                    <span class="btn btn-light"><%= parseInt(meal.price).toLocaleString("vi-VN",{
+                                                    <span class="light"><%= parseInt(meal.price).toLocaleString("vi-VN",{
                                                         currency:"VND", style: "currency"
                                                       }) %></span>
-                                                    <input class ="number_meal form-control" type ="number" placeholder="Enter Number">
+                                                    <input id="number_meals" class ="number_meal form-control" type ="number" placeholder="Enter Number">
                                                 </button>
                                             </div>
                                         </div>
@@ -512,7 +512,10 @@ data-sidebartyp="full"data-sidebar-position="fixed" data-header-position="relati
                         title: 'item 1',
                         start: '2023-11-07T18:46:57.560Z',
                         end: '2023-11-08T18:46:57.560Z',
-                        color: '#C00000'
+                        color: '#C00000',
+                        extendedProps: {
+                            department: 'BioChemistry'
+                        },
                     },
                     {title: 'item 2',
                         start: '2023-11-07T18:46:57.560Z',

@@ -71,6 +71,320 @@
 
         </div>
     </aside>
+    <div class="body-wrapper">
+        <!--  Header Start -->
+        <header class="app-header">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <ul class="navbar-nav">
+                    <li class="nav-item d-block d-xl-none">
+                        <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
+                            <i class="ti ti-menu-2"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center mb-3">
+                        <a href="#" class="col-2 link-primary card-title fw-semibold card-link">Upcoming</a>
+
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <% reservations.forEach(function(reservation) { %>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Reservation Id: <%= reservation.id %></h5>
+                                        <div class="row justify-content-between">
+                                            <div class="col">
+                                                <h6 class="card-subtitle fw-semibold">Check in:
+                                                    <span
+                                                            class="fw-light text-muted"><%= new Date(reservation.checkIn).toLocaleString() %></span>
+                                                </h6>
+                                            </div>
+                                            <div class="col">
+                                                <h6 class="card-subtitle fw-semibold">Check out: <span
+                                                            class="fw-light text-muted"><%= new Date(reservation.checkOut).toLocaleString() %></span>
+                                                </h6>
+                                            </div>
+                                            <div class="col">
+                                                <h6 class="card-subtitle fw-semibold">Guests: <span
+                                                            class="fw-light text-muted"><%= reservation.guests %></span>
+                                                </h6>
+                                            </div>
+                                            <div class="col-1 text-end">
+                                                <div class="d-flex align-items-center gap-2 cursor-pointer"
+                                                     data-bs-toggle="dropdown">
+                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                         class="icon icon-tabler icon-tabler-dots" width="24"
+                                                         height="24" viewBox="0 0 24 24" stroke-width="2"
+                                                         stroke="currentColor" fill="none" stroke-linecap="round"
+                                                         stroke-linejoin="round">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                        <path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                                                        <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                                                        <path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                                                    </svg>
+                                                </div>
+                                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
+                                                     aria-labelledby="drop2">
+                                                    <div class="message-body">
+                                                        <a href="#"
+                                                           class="update-reservation d-flex align-items-center gap-2 dropdown-item"
+                                                           data-bs-toggle="modal" data-bs-target="#editReservationModal"
+                                                           data-id="<%= reservation.id %>">
+                                                            <p class="mb-0 fs-3">Edit</p>
+                                                        </a>
+                                                        <a href="#"
+                                                           class="addMeal d-flex align-items-center gap-2 dropdown-item"
+                                                           data-bs-toggle="modal" data-bs-target="#addMealModal"
+                                                           data-id="<%= reservation.id %>">
+                                                            <p class="mb-0 fs-3">Add meal</p>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-between">
+                                            <div class="col">
+                                                <h6 class="card-subtitle fw-semibold">Name:
+                                                    <span
+                                                            class="fw-light text-muted"><%= reservation.fname + " " + reservation.lname %></span>
+                                                </h6>
+                                            </div>
+                                            <div class="col">
+                                                <h6 class="card-subtitle fw-semibold">Phone: <span
+                                                            class="fw-light text-muted"><%= reservation.phone %></span>
+                                                </h6>
+                                            </div>
+                                            <div class="col">
+
+                                            </div>
+                                            <div class="col-1 text-end invisible">
+                                                <div class="d-flex align-items-center gap-2 cursor-pointer">
+                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                         class="icon icon-tabler icon-tabler-dots" width="24"
+                                                         height="24"
+                                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                         fill="none"
+                                                         stroke-linecap="round" stroke-linejoin="round">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                        <path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                                                        <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                                                        <path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2 justify-content-start ">
+                                            <div class="col d-flex align-items-center">
+                                                <h6 class="card-subtitle fw-semibold">Room: </h6>
+                                                <span class="badge bg-success rounded-3 "><%= reservation.room.roomNumber %></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2 justify-content-start ">
+                                            <div class="col d-flex align-items-center">
+                                                <h6 class="card-subtitle fw-semibold">Status: <span
+                                                            class="fw-light text-muted"><%= reservation.status %></span>
+                                                </h6>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2 justify-content-start ">
+                                            <div class="col d-flex align-items-center">
+                                                <% if (reservation.meals) { %>
+                                                    <h6 class="card-subtitle fw-semibold">Meal:
+                                                        <% const meals = reservation.meals.map((meal) => {
+                                                            return `<span class="fw-light text-muted"> ${meal.quantity} ${meal.meal_id.name} </span>`
+                                                         }).join(",") %>
+                                                        <%- meals %>
+                                                    </h6>
+                                                <% } else { %>
+                                                    <h6 class="card-subtitle fw-semibold">Meal: <span
+                                                                class="fw-light text-muted">None</span></h6>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2 justify-content-start ">
+                                            <div class="col d-flex align-items-center">
+                                                <h6 class="card-subtitle fw-semibold">Airport transfer:
+                                                    <% if (reservation.transport) { %>
+                                                        <a href="/manager/transport/<%= reservation.transport._id %>"
+                                                           onclick="<%= (role === "receptionist") ? 'return false;' : '' %>"
+                                                           class="link-info   <%= (role === "receptionist") ? 'text-muted' : '' %>"><%= (role === "receptionist") ? reservation.transport.time : 'View detail' %></a>
+                                                    <% } else { %>
+                                                        <span class="fw-light text-muted"> None</span>
+                                                </h6>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2 justify-content-start ">
+                                            <div class="col d-flex flex-row">
+                                                <h6 class="card-subtitle fw-semibold">Special request: <span
+                                                            class="fw-light text-muted"><%= reservation.note %></span>
+                                                </h6>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            <% }) %>
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item <%= pagination.page == 1 ? 'disabled' : '' %>">
+                                        <a class="page-link"
+                                           href="/manager/invoice/?page=<%= +pagination.page - 1 && 1 %>"
+                                           aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <% for (let i = 1; i <= pagination.pages; i++) { %>
+                                        <li class="page-item <%= i == (pagination.page) && 'active' %>">
+                                            <a class="page-link" href="/manager/invoice/?page=<%= i %>"
+                                            ><%= i %></a>
+                                        </li>
+                                    <% } %>
+                                    <li class="page-item <%= pagination.page == pagination.pages ? 'disabled' : '' %>">
+                                        <a
+                                                class="page-link"
+                                                href="/manager/invoice/?page=<%= +pagination.page + 1 %>"
+                                                aria-label="Next"
+                                        >
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Edit reservation modal -->
+            <div class="modal fade" id="editReservationModal" tabindex="-1" role="dialog" aria-labelledby=""
+                 aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="">Edit reservation</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"></span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="d-flex flex-row justify-content-center row">
+                                <div class="col-10">
+                                    <div class="row">
+                                        <div class="col-md-6 form-group">
+                                            <label class="text-black font-weight-bold" for="reservation_fname--edit">First
+                                                name</label>
+                                            <input type="text" id="reservation_fname--edit" class="form-control ">
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label class="text-black font-weight-bold" for="reservation_lname--edit">Last
+                                                name</label>
+                                            <input type="text" id="reservation_lname--edit" class="form-control ">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <label class="text-black font-weight-bold" for="reservation_phone--edit">Phone</label>
+                                            <input type="text" id="reservation_phone--edit" class="form-control ">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <label class="text-black font-weight-bold" for="reservation_status--edit">Status</label>
+                                            <select name="" id="reservation_status--edit" class="form-control">
+                                                <option value="Confirmed">Confirmed</option>
+                                                <option value="Checked in">Checked in</option>
+                                                <option value="Checked out">Checked out</option>
+                                                <option value="Cancelled">Cancelled</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <label class="text-black font-weight-bold"
+                                                   for="reservation_room--edit">Room</label>
+                                            <input type="text" id="reservation_room--edit" class="form-control ">
+                                        </div>
+                                    </div>
+
+                                    <span class="d-block text-uppercase">Airport Transfer:</span>
+
+                                    <div class="row">
+                                        <div class="col-md-6 form-group">
+                                            <label for="reservation_vehicle--edit" class="font-weight-bold text-black">Vehicle</label>
+                                            <div class="field-icon-wrap">
+                                                <select name="" id="reservation_vehicle--edit" class="form-control">
+                                                    <option value="Car">Car</option>
+                                                    <option value="Bus">Bus</option>
+                                                    <option value="Limousine">Limousine</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row mb-4">
+                                            <div class="col-md-12 form-group">
+                                                <label class="text-black font-weight-bold" for="reservation_note--edit">Notes</label>
+                                                <textarea name="message" id="reservation_note--edit"
+                                                          class="form-control " cols="30" rows="8"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn " data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="editReservationBtn btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Edit reservation modal -->
+            <!-- Add meal modal -->
+            <div class="modal fade modal-fullscreen modal-fullscreen-lg-down" id="addMealModal" tabindex="-1"
+                 role="dialog" aria-labelledby="" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-fullscreen modal-fullscreen-lg-down"
+                     role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="">Add meal</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"></span>
+                            </button>
+                        </div>
+                        <div class="modal-body  ">
+                            <div class="row meals mx-2 align-items-stretch">
+                                <% meals.forEach(function(meal) { %>
+                                <div class="col-3 p-2 ">
+                                    <div class="card card-hover meal h-100 mb-0" data-id="<%= meal.id %>">
+                                        <div class="card-body">
+                                            <h5 class="card-title"><%= meal.name %></h5>
+                                            <p class="card-text"><%= meal.ingredients %></p>
+                                            <a href="#" class="btn btn-dark-light"><%= parseInt(meal.price).toLocaleString("vi-VN", {
+                                                style: "currency",
+                                                currency: "VND",
+                                                }) %></a>
+                                            <input class="quantity <%= meal.id %> form-text form-control" style="background-color: #fff;" min="0" name="quantity" value="1" type="number">
+                                        </div>
+                                    </div>
+                                </div>
+                                <% }); %>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn " data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="addMealBtn btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Add meal modal -->
+        </div>
 </div>
 <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

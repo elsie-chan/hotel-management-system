@@ -9,18 +9,20 @@ function loadFormData(n) {
   $(tabs[n]).removeClass("d-none");
   $("#back_button").attr("disabled", n == 0 ? true : false);
 
-  n == tabs.length - 1
+  n == tabs.length
     ? $("#next_button").text("Submit").removeAttr("onclick")
     : $("#next_button")
         .attr("type", "button")
         .text("Next")
         .attr("onclick", "next()");
+  
+
 }
 
 function next() {
   $(tabs[current]).addClass("d-none");
-  $(tabs_pill[current]).removeClass("active");
-  
+  $(tabs_pill[current]).removeClass("active");;
+
   if(current ==1){
     if(validateName() == false){
       loadFormData(current);
@@ -32,6 +34,9 @@ function next() {
   }else{
     current++;
   loadFormData(current);
+  }
+  if(current == 4){
+    addBooking();
   }
 
 }
@@ -50,6 +55,11 @@ $(document).ready(function (){
       e.preventDefault();
       checkAvailable();
   });
+  $('.addBooking').click(function (e) {
+    e.preventDefault();
+    addBooking();
+    
+});
 
 });
 function checkAvailable() {
@@ -59,7 +69,6 @@ function checkAvailable() {
   let children = $('#children').val();
   let quantity = parseInt(adults) + parseInt(children);
   let isChildren = (children > 0) ? true : false;
-  console.log(fromDate, toDate, quantity, isChildren);
 
   if ( !fromDate || !toDate) {
     toastr.error('Please fill all fields!');
@@ -90,7 +99,7 @@ function checkAvailable() {
           data.forEach(function (item) {
               const result = `
               <div class="col-md-6 col-lg-4" data-aos="fade-up">
-              <button class="btn mt-5 btn-outline-primary room">
+              <button class="btn mt-5 btn-outline-primary room" data-id="${item._id}">
                   <div class="p-3 text-center room-info" >
                       <h2>${item.roomNumber}</h2>
                       <span class="text-uppercase letter-spacing-1">${parseInt(item.price).toLocaleString("vi-VN",{
@@ -136,10 +145,70 @@ function validateName(){
   return true;
 
 }
-$('.meal').on('click', function(e){
-  if($(this).hasClass('active')){
-    $(this).removeClass('active');
-  }else{
-    $(this).addClass('active');
+$('.btn-meal').on('click', function(e){
+  if( e.target.tagName.toLowerCase() == "input"){
+    return;
   }
+  $(this).toggleClass("active");
+
 })
+
+
+
+function addBooking(){
+  let checkin = $('#book_room_from').val();
+  let checkout = $('#book_room_to').val();
+  let adults = $('#adults').val();
+  let children = $('#children').val();
+  let guest = parseInt(adults) + parseInt(children);
+  let fname = $('#fname').val();
+  let lname = $('#lname').val();
+  let phone = $('#phone').val();
+  let id_room = $('.room.active').data("id");
+  let car = $('#book_room_vehicle--add').val();
+  let status ="ssss";
+
+  let note = $('#room_note--add').val();
+  let meals =[];
+  $('.btn-meal.active').map((i,meal) => {
+    const id = $(meal).data('id');
+    const quantity = $(meal).find('#number_meals').val();
+    const mealObj = {
+      meal_id: id,
+      quantity
+    }
+    meals.push(mealObj);    
+  })
+  const data = {
+    fname,
+    lname,
+    phone,
+    checkin,
+    checkout,
+    note,
+    guest,
+    status,
+    id_room,
+    meals,
+    transport: car
+  }
+  console.log(data);
+  $.ajax({
+    url: '/api/reservation/add',
+    method: 'POST',
+    data: JSON.stringify(data),
+    contentType: 'application/json',
+    success: function(data){
+      console.log(data);
+      if (data.status === 400) return toastr.error(data.message);
+            toastr.success('Booking added successfully');
+            setInterval(function () {
+                window.location.reload();
+            }, 2000);
+    },
+    error:function(err){
+      console.log(err)
+    }
+  })
+}
+
