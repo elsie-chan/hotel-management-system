@@ -31,7 +31,8 @@ const reservationSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        require: true
+        require: true,
+        default: 'Confirmed'
     },
     room: {
         type: mongoose.Schema.Types.ObjectId,

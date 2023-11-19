@@ -39,7 +39,7 @@ const sendFeedback = async (data) => {
         const reservation = await Reservation.findById(data.reservation);
         if(!reservation) return ErrorMessage(400, "Reservation not found");
         const guest = await Guest.findOne({phone: data.guest});
-        if(!guest) return ErrorMessage(400, "Guest not found");
+        if(!guest) return ErrorMessage(400, "Phone number is not correct");
         data.guest = guest._id;
         const newFeedback = new Feedback(data);
         return await newFeedback.save();

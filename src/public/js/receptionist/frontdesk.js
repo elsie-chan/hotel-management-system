@@ -4,6 +4,10 @@ var tabs_pill = $(".tab-pills");
 
 loadFormData(current);
 
+$('#book_room_vehicle--add').change(function(){
+   $('.transfer-information').removeClass('d-none') ;
+});
+
 function loadFormData(n) {
   $(tabs_pill[n]).addClass("active");
   $(tabs[n]).removeClass("d-none");
@@ -156,8 +160,8 @@ $('.btn-meal').on('click', function(e){
 
 
 function addBooking(){
-  let checkin = $('#book_room_from').val() + "T17:00:00.000Z";
-  let checkout = $('#book_room_to').val() + "T17:00:00.000Z";
+  let checkIn = $('#book_room_from').val() + "T17:00:00.000+00:00";
+  let checkOut = $('#book_room_to').val() + "T17:00:00.000+00:00";
   let adults = $('#adults').val();
   let children = $('#children').val();
   let guests = parseInt(adults) + parseInt(children);
@@ -165,8 +169,18 @@ function addBooking(){
   let lname = $('#lname').val();
   let phone = $('#phone').val();
   let id_room = $('.room.active').data("id");
-  let car = $('#book_room_vehicle--add').val();
-  let status ="ssss";
+  let vehicle = $('#book_room_vehicle--add').val();
+  if (vehicle !== "None") {
+    let pickUp = $('#book_room_vehicle_pickUp--add').val();
+    let dropOff = $('#book_room_vehicle_destination--add').val();
+    let time = $('#book_room_vehicle_time--add').val() + "T17:00:00.000+00:00";
+    vehicle = {
+        vehicle,
+        pickup_location: pickUp,
+        destination: dropOff,
+        time
+    }
+  }
 
   let note = $('#room_note--add').val();
   let meals =[];
@@ -183,14 +197,14 @@ function addBooking(){
     fname,
     lname,
     phone,
-    checkin,
-    checkout,
+    checkIn,
+    checkOut,
     note,
     guests,
-    status,
+    // status,
     room: id_room,
     meals,
-    transport: car
+    transport: vehicle
   }
   console.log(data);
   $.ajax({

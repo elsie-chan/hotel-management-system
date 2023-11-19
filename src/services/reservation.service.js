@@ -83,38 +83,50 @@ const create = async (data) => {
 
     try {
         const guest = await Guest.findOne({phone: data.phone});
-        console.log(guest);
-        if(!guest){
 
+
+        if(!guest){
             const newGuest = new Guest({fname: data.fname, lname: data.lname, phone: data.phone, email:data.email});
-            console.log(newGuest);
+            // console.log(newGuest);
             await newGuest.save();
             data.guest = newGuest._id;
+        } else {
+            console.log(guest);
+            data.guest = guest._id;
         }
-        if(data.transport){
-            const transport = await Transport.findOne({_id: data.transport});
-            if(data?.guest){
+
+        if(data.transport) {
+            if (data.transport === "None") {
+                data.transport = null;
+            } else {
+                const transport = new Transport(data.transport);
+                await transport.save();
                 transport.guest.push({
                     _id: data.guest,
-                    
                 })
-            }else{
-                transport.guest.push({
-                    _id: guest._id,
-                    
-                })
+                // console.log(transport);
+                await transport.save();
+                data.transport = transport._id;
             }
-            
-            await transport.save();
-            console.log(transport);
-            if(!transport) return ErrorMessage(400, "Transport not found");
-            data.transport = transport._id;
         }
         const room = await Room.findOne({_id: data.room});
         if(!room) return ErrorMessage(400, "Room not found");
+        // console.log(data)
         const reservation = new Reservation(data);
         await reservation.save()
-        await Guest.findByIdAndUpdate(data._id,{$push: {reservations: reservation._id}});
+        if (guest) {
+            guest.reservations.push({
+                _id: reservation._id,
+            })
+            guest.save();
+        } else {
+            const guest = await Guest.findOne({_id: data.guest});
+            guest.reservations.push({
+                _id: reservation._id,
+            })
+            guest.save();
+        }
+
         return await reservation;
     } catch (e) {
         console.log(e);
@@ -269,6 +281,7 @@ const bookingRoom = async(fromDate, toDate, quantity, isChildren) => {
                 category = "VIP";
                 break;
             default:
+                category = "VIP";
                 break;
         }
         if(category === "") return ErrorMessage(400, "Category not found");

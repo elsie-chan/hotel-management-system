@@ -70,6 +70,10 @@ function sendFeedback() {
     let id = $('#reservationId').val();
     let phone = $('#phone').val();
     let message = $('#message').val();
+    if (!id || !phone || !message) {
+        toastr.warning('Please fill all fields!')
+    }
+
     $.ajax({
         url: '/api/feedback/send-feedback/',
         type: 'POST',
@@ -81,6 +85,10 @@ function sendFeedback() {
         contentType: 'application/json',
         success: function (data) {
             console.log(data);
+            if(data.status === 400) {
+                toastr.error(data.message);
+                return;
+            }
             toastr.success('Feedback sent successfully!');
             setTimeout(function () {
                 window.location.href = '/contact';
