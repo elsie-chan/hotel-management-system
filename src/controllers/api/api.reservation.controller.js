@@ -32,9 +32,6 @@ class ApiReservationController{
     async bookingRoom(req, res){
         try {
             const { fromDate, toDate, quantity, isChildren } = req.body;
-            // const from = new Date(dayjs(fromDate).format("YYYY-MM-DD"));
-            // const to = new Date(dayjs(toDate).format("YYYY-MM-DD"));
-            console.log(fromDate, toDate)
             const reservation = await ReservationService.bookingRoom(fromDate, toDate, quantity, isChildren);
             return res.status(200).json(reservation);
         } catch (e) {
