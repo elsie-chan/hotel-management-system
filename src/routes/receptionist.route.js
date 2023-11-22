@@ -13,6 +13,7 @@ Router.get("/frontdesk", async (req, res) => {
 
 Router.get("/reservation", async (req, res) => {
     const reservations = await ApiReservationController.getAll(req, res);
-    res.render("layouts/manager/reservation", {reservations: reservations.data, pagination: reservations.pagination, role: "receptionist"})
+    const meals = await ApiMealController.getAll(req, res);
+    res.render("layouts/manager/reservation", {reservations: reservations.data, pagination: reservations.pagination, role: "receptionist", meals: meals.data})
 })
 export default Router;

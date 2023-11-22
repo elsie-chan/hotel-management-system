@@ -337,13 +337,13 @@
                                                      aria-labelledby="drop2">
                                                     <div class="message-body">
                                                         <a href="#"
-                                                           class="update-reservation d-flex align-items-center gap-2 dropdown-item"
+                                                           class="update-reservation d-flex align-items-center gap-2 dropdown-item <%= (reservation.status==='Checked out' || reservation.status==='Cancelled')? 'disabled' : ''%>"
                                                            data-bs-toggle="modal" data-bs-target="#editReservationModal"
                                                            data-id="<%= reservation.id %>">
                                                             <p class="mb-0 fs-3">Edit</p>
                                                         </a>
                                                         <a href="#"
-                                                           class="addMeal d-flex align-items-center gap-2 dropdown-item"
+                                                           class="addMeal d-flex align-items-center gap-2 dropdown-item <%= (reservation.status==='Checked out' || reservation.status==='Cancelled')? 'disabled' : ''%>"
                                                            data-bs-toggle="modal" data-bs-target="#addMealModal"
                                                            data-id="<%= reservation.id %>">
                                                             <p class="mb-0 fs-3">Add meal</p>
@@ -398,16 +398,16 @@
                                         </div>
                                         <div class="row mb-2 justify-content-start ">
                                             <div class="col d-flex align-items-center">
-                                                <% if (reservation.meals) { %>
+                                                <% if (reservation.meals.length === 0) { %>
+                                                    <h6 class="card-subtitle fw-semibold">Meal: <span
+                                                                class="fw-light text-muted">None</span></h6>
+                                                <% } else { %>
                                                     <h6 class="card-subtitle fw-semibold">Meal:
                                                         <% const meals = reservation.meals.map((meal) => {
                                                             return `<span class="fw-light text-muted"> ${meal.quantity} ${meal.meal_id.name} </span>`
-                                                         }).join(",") %>
+                                                        }).join(",") %>
                                                         <%- meals %>
                                                     </h6>
-                                                <% } else { %>
-                                                    <h6 class="card-subtitle fw-semibold">Meal: <span
-                                                                class="fw-light text-muted">None</span></h6>
                                                 <% } %>
                                             </div>
                                         </div>
@@ -523,6 +523,7 @@
                                             <label for="reservation_vehicle--edit" class="font-weight-bold text-black">Vehicle</label>
                                             <div class="field-icon-wrap">
                                                 <select name="" id="reservation_vehicle--edit" class="form-control">
+                                                    <option value="null">None</option>
                                                     <option value="Car">Car</option>
                                                     <option value="Bus">Bus</option>
                                                     <option value="Limousine">Limousine</option>

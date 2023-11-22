@@ -157,15 +157,19 @@ const addMeal = async(id, meals) => {
 }
 const update = async (id, data) => {
     try {
-        const reservation = await Reservation.findOne({_id: id}).populate("transport", "vehicle");
+        console.log(data)
+        const reservation = await Reservation.findOne({_id: id}).populate("transport");
         if(!reservation) return ErrorMessage(400, "Reservation not found");
         if(reservation.status === "Cancelled" || reservation.status === "Checked out") return ErrorMessage(400, "Cannot update reservation after check out or cancel");
         if(data.transport){
-            // console.log(data.transport, reservation.transport.vehicle)
-            if (data.transport !== reservation.transport.vehicle && reservation.status=== "Checked in") return ErrorMessage(400, "Cannot update transport after check in");
-            const transport = await Transport.findOne({vehicle: data.transport});
-            if(!transport) return ErrorMessage(400, "Transport not found");
-            data.transport = transport._id;
+            if (data.transport === "null") {
+                data.transport = null;
+            } else {
+                if (data.transport !== reservation.transport.vehicle && reservation.status=== "Checked in") return ErrorMessage(400, "Cannot update transport after check in");
+                const transport = await Transport.findOne({vehicle: data.transport});
+                if(!transport) return ErrorMessage(400, "Transport not found");
+                data.transport = transport._id;
+            }
         }
         // if(data.meals){
         //     const meal_id = [];
@@ -224,6 +228,7 @@ const update = async (id, data) => {
         if(!newReservation) return ErrorMessage(400, "Reservation not found");
         return newReservation;
     } catch(e){
+        console.log(e)
         return ErrorMessage(400, "Reservation not updated");
     }
 }
