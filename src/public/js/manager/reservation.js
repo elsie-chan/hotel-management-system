@@ -145,7 +145,10 @@ function fillData(id) {
             $('#reservation_phone--edit').val(data.phone);
             $("#reservation_status--edit option[value='" + data.status +"']").attr("selected", 1);
             $('#reservation_room--edit').val(data.room.roomNumber);
-            $("#reservation_vehicle--edit option[value='" + data.vehicle +"']").attr("selected", 1);
+            if (data.transport !== null) {
+                // console.log(data.transport.vehicle);
+                $("#reservation_vehicle--edit option[value='" + data.transport.vehicle +"']").attr("selected", 1);
+            }
             $('#reservation_note--edit').val(data.note);
         }
     })
