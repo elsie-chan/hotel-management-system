@@ -18,6 +18,119 @@ $(document).ready(function () {
             addMeal(id);
         })
     });
+    $('.seeInvoice').click(function (e) {
+       e.preventDefault();
+         let id = $(this).attr('data-id');
+            console.log(id)
+            $.ajax({
+                url: '/api/invoice/search?id=' + id,
+                type: 'GET',
+                contentType: 'application/json',
+                success: function (data) {
+                    console.log(data)
+                    const days = daysDifference(data[0].reservation.checkIn, data[0].reservation.checkOut);
+                    const invoice = `
+                        <div class="card-body">
+                                    <h5 class="card-title">Reservation: ${data[0].reservation._id}</h5>
+                                    <div class="row justify-content-between mb-2">
+                                        <div class="col">
+                                            <h6 class="card-subtitle fw-semibold">From:
+                                                <span
+                                                        class="fw-light text-muted">${formatDate(data[0].reservation.checkIn)}</span>
+                                            </h6>
+                                        </div>
+                                        <div class="col">
+                                            <h6 class="card-subtitle fw-semibold">To:
+                                                <span
+                                                        class="fw-light text-muted">${formatDate(data[0].reservation.checkOut)}</span>
+                                            </h6>
+                                        </div>
+                                        <div class="col">
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-between mb-2">
+                                        <div class="col">
+                                            <h6 class="card-subtitle fw-semibold">Room:
+                                                <span
+                                                        class="fw-light text-muted">${data[0].reservation.room.roomNumber}</span>
+                                            </h6>
+                                        </div>
+                                        <div class="col">
+                                            <h6 class="card-subtitle fw-semibold">Days:
+                                                <span
+                                                        class="fw-light text-muted">${days}</span>
+                                            </h6>
+                                        </div>
+                                        <div class="col">
+                                            <h6 class="card-subtitle fw-semibold">Total: <span
+                                                        class="fw-light text-muted">${data[0].roomTotal}</span>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-between mb-2">
+                                        <div class="col">
+                                            <h6 class="card-subtitle fw-semibold">Airport Transfer:
+                                                <span class="fw-light text-muted">
+                                                    ${data[0].reservation.transport ? 'Used' : 'No'}
+</span>
+                                            </h6>
+                                        </div>
+                                        <div class="col">
+                                            <h6 class="card-subtitle fw-semibold">Total: <span
+                                                        class="fw-light text-muted">${data[0].transportTotal}</span>
+                                            </h6>
+                                        </div>
+                                        <div class="col">
+                                            <h6 class="card-subtitle fw-semibold">
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-between mb-2">
+                                        <div class="col">
+                                            <h6 class="card-subtitle fw-semibold">Meal:
+                                                
+                                                ${data[0].reservation.meals.map(meal => {
+                        return `<span class="fw-light text-muted">${meal.quantity + " " + meal.meal_id.name}</span>`
+                    }).join(",")
+                    }
+                                            </h6>
+                                        </div>
+                                        <div class="col">
+                                            <h6 class="card-subtitle fw-semibold">Total: <span
+                                                        class="fw-light text-muted">${data[0].mealTotal}</span>
+                                            </h6>
+                                        </div>
+                                        <div class="col">
+                                            <h6 class="card-subtitle fw-semibold">
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2 justify-content-start ">
+                                        <div class="col d-flex flex-row">
+                                            <h6 class="card-subtitle fw-semibold">Subtotal: <span
+                                                        class="fw-light text-muted">${data[0].subTotal}</span></h6>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2 justify-content-start ">
+                                        <div class="col d-flex flex-row">
+                                            <h6 class="card-subtitle fw-semibold">Taxes: <span
+                                                        class="fw-light text-muted">${data[0].taxes}</span></h6>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row mb-2 justify-content-start ">
+                                        <div class="col d-flex flex-row">
+                                            <h6 class="card-subtitle fw-semibold">Total: <span
+                                                        class="fw-light ">${data[0].total}</span></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                    `
+                    $('#invoice').html(invoice);
+                }
+            })
+    });
 });
 
 function fillData(id) {
@@ -115,4 +228,29 @@ function addMeal(id) {
             console.log(err);
         }
     })
+}
+function daysDifference(d0, d1) {
+    // console.log(d0, d1)
+    var startDate = new Date(d0);
+    var endDate = new Date(d1);
+    var differenceInMilliseconds = endDate - startDate;
+
+    var differenceInDays = differenceInMilliseconds / (1000 * 60 * 60 * 24);
+    return differenceInDays;
+}
+function formatDate(dateString) {
+
+// Create a new Date object
+    var date = new Date(dateString);
+
+// Extract the day, month, and year
+    var day = String(date.getUTCDate()).padStart(2, '0');
+    var month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Months are zero-based
+    var year = date.getUTCFullYear();
+
+// Combine into the desired format
+    var formattedDate = day + '/' + month + '/' + year;
+
+    console.log(formattedDate);
+    return formattedDate;
 }

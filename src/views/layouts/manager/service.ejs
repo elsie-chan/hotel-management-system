@@ -204,6 +204,11 @@
                             <hr>
                             <div class="table-responsive">
                                 <table class="table-hover table airportTable text-nowrap mb-0 align-middle ">
+                                    <% if (services.length===0) { %>
+                                        <div class="alert alert-warning" role="alert">
+                                            No data!
+                                        </div>
+                                    <% } else { %>
                                     <thead class="text-dark fs-4">
                                     <tr>
                                         <th class="border-bottom-0">
@@ -229,11 +234,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <% if (services.length===0) { %>
-                                        <div class="alert alert-warning" role="alert">
-                                            No data!
-                                        </div>
-                                    <% } else { %>
+
                                     <% services.forEach(function(service) { %>
                                         <tr class="">
                                             <td class="border-bottom-0"><h6

@@ -148,9 +148,10 @@ const update = async (id, data) => {
             if(!transport) return ErrorMessage(400, "Transport not found");
             data.transport = transport._id;
         }
-        if(data.room){
+        if(data.room !== reservation.room){
             await Room.findByIdAndUpdate(reservation.room,{$set: {isAvailable: "Available"}});
             const rooms = await checkRoomInDay(reservation.checkIn, reservation.checkOut);
+            console.log(rooms)
             if(rooms.includes(data.room)) return ErrorMessage(400, "Room not available");
             const room_id = await Room.findOne({roomNumber: data.room});
             if(!room_id) return ErrorMessage(400, "Room not found");
@@ -173,7 +174,7 @@ const update = async (id, data) => {
             case "Checked out":{
                 if (reservation.status === "Checked in") {
                     await Room.findByIdAndUpdate(reservation.room,{$set: {isAvailable: "Available"}});
-                    return await InvoiceService.create(reservation.id, "Cash");
+                    await InvoiceService.create(reservation.id, "Cash");
                 } else {
                     return ErrorMessage(400, "Cannot update status to checked out");
                 }
@@ -194,6 +195,7 @@ const update = async (id, data) => {
         }
         const newReservation = await Reservation.findByIdAndUpdate(id,data);
         if(!newReservation) return ErrorMessage(400, "Reservation not found");
+
         return newReservation;
     } catch(e){
         console.log(e)
@@ -214,10 +216,10 @@ const remove = async (id) => {
 const checkRoomInDay = async (fromDate, toDate) => {
     try {
         fromDate = new Date(fromDate);
-        toDate = new Date(toDate+"T23:59:59.999Z");
-        const reservation = await Reservation.find({$and: [{checkIn: {$gte: fromDate}}, {checkOut: {$lte: toDate}}]});
-        if(!reservation) return ErrorMessage(400, "Reservation not found");
+        toDate = new Date(toDate);
         let room_id = [];
+        const reservation = await Reservation.find({$and: [{checkIn: {$gte: fromDate}}, {checkOut: {$lte: toDate}}]});
+        if(!reservation) return room_id;
         for(const temp of reservation){
             room_id.push(temp.room);
         }
@@ -228,6 +230,7 @@ const checkRoomInDay = async (fromDate, toDate) => {
         }
         return rooms_id;
     } catch (e) {
+        console.log(e)
         return ErrorMessage(400, "Reservation not found");
     }
 }

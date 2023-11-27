@@ -44,7 +44,7 @@ Router.get("/feedback", async (req, res) => {
 })
 Router.get("/service", async (req, res) => {
     const services = await ApiTransportController.getAll(req, res);
-    console.log(services.data[0].guest)
+    // console.log(services.data[0].guest)
     res.render("layouts/manager/service", {services: services.data, pagination: services.pagination})
 })
 Router.get("/transport/:id", async (req, res) => {
