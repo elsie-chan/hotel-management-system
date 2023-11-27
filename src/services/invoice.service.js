@@ -26,7 +26,7 @@ const getAll = async () => {
      }
 }
 
-const create = async(account_id, reservation_id, payment_status) => {
+const create = async(reservation_id, payment_status) => {
     try {
         const reservation = await Reservation.findById(reservation_id).populate("room", "price").populate("transport", "price").populate({
             path: "meals",
@@ -35,6 +35,7 @@ const create = async(account_id, reservation_id, payment_status) => {
                 select: "price"
             }
         });
+        console.log(reservation)
         if (!reservation) {
             return ErrorMessage(404, "Reservation not found");
         }
