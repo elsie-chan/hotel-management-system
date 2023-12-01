@@ -216,9 +216,39 @@ const remove = async (id) => {
 const checkRoomInDay = async (fromDate, toDate) => {
     try {
         fromDate = new Date(fromDate);
-        toDate = new Date(toDate);
+        toDate = new Date(toDate+"T23:59:59.999Z");
+        if (fromDate >= toDate) return ErrorMessage(400, "Check in date must be before check out date");
         let room_id = [];
-        const reservation = await Reservation.find({$and: [{checkIn: {$gte: fromDate}}, {checkOut: {$lte: toDate}}]});
+        const reservation = await Reservation.find({
+            $or: [
+                {
+                    $and: [
+                        { checkIn: { $gte: fromDate } },
+                        { checkIn: { $lte: toDate } },
+                        { checkOut: { $gte: toDate } }
+                    ]
+                },
+                {
+                    $and: [
+                        { checkIn: { $lte: fromDate } },
+                        { checkOut: { $gte: fromDate } },
+                        { checkOut: { $lte: toDate } }
+                    ]
+                },
+                {
+                    $and: [
+                        { checkIn: { $gte: fromDate } },
+                        { checkOut: { $lte: toDate } }
+                    ]
+                },
+                {
+                    $and: [
+                        { checkIn: { $lte: fromDate } },
+                        { checkOut: { $gte: toDate } }
+                    ]
+                }
+            ]
+        });
         if(!reservation) return room_id;
         for(const temp of reservation){
             room_id.push(temp.room);
@@ -239,7 +269,36 @@ const bookingRoom = async(fromDate, toDate, quantity, isChildren) => {
         fromDate = new Date(fromDate);
         toDate = new Date(toDate+"T23:59:59.999Z");
         if (fromDate >= toDate) return ErrorMessage(400, "Check in date must be before check out date");
-        const reservation = await Reservation.find({$and: [{checkIn: {$gte: fromDate}}, {checkOut: {$lte: toDate}}]});
+        const reservation = await Reservation.find({
+            $or: [
+                {
+                    $and: [
+                        { checkIn: { $gte: fromDate } },
+                        { checkIn: { $lte: toDate } },
+                        { checkOut: { $gte: toDate } }
+                    ]
+                },
+                {
+                    $and: [
+                        { checkIn: { $lte: fromDate } },
+                        { checkOut: { $gte: fromDate } },
+                        { checkOut: { $lte: toDate } }
+                    ]
+                },
+                {
+                    $and: [
+                        { checkIn: { $gte: fromDate } },
+                        { checkOut: { $lte: toDate } }
+                    ]
+                },
+                {
+                    $and: [
+                        { checkIn: { $lte: fromDate } },
+                        { checkOut: { $gte: toDate } }
+                    ]
+                }
+            ]
+        });
         if(!reservation) return ErrorMessage(400, "Reservation not found");
         let room_id = [];
         for(const temp of reservation){
@@ -278,6 +337,7 @@ export default {
     getReservationByGuest,
     create,
     bookingRoom,
+    checkRoomInDay,
     update,
     addMeal,
     updateCheckIn,
