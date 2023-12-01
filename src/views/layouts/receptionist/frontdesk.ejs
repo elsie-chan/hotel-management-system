@@ -560,29 +560,38 @@
                 center: 'title',
                 right: 'dayGridMonth,timeGridWeek,timeGridDay'
             },
-            contentsHeight: "auto",
             contentHeight: "auto",
             events: function (fetchInfo, successCallback, failureCallback) {
-                const data = [{
-                    title: 'item 1',
-                    start: '2023-11-07T18:46:57.560Z',
-                    end: '2023-11-08T18:46:57.560Z',
-                    color: '#C00000',
-                    extendedProps: {
-                        department: 'BioChemistry'
+                let reservation =[]
+                $.ajax ({
+                    type: 'GET',
+                    url: '/api/reservation/all',
+                    contentType: 'application/json',
+                    success: function(data) {
+                        const dataReser = data.data
+                        dataReser.forEach(element => {
+                            console.log(element)
+                            reservation.push({
+                                title: element.room.roomNumber,
+                                start: element.checkIn,
+                                end: element.checkOut,
+                                extendedProps: {
+                                    department: 'Booked'
+                                },
+                            })
+                        }),
+                        console.log(reservation)
+                        successCallback(reservation)
                     },
-                },
-                    {
-                        title: 'item 2',
-                        start: '2023-11-07T18:46:57.560Z',
-                        end: '2023-11-08T18:46:57.560Z',
-                        color: '#C00000'
-                    }];
-                successCallback(data);
+
+                    error: function (err) {
+                        console.log(err)
+                    }
+                })
             },
             eventClick: function (event) {
                 console.log(event.event.title);
-
+                alert('Phòng này đã được đặt trước');
             }
         });
         calendar.render();

@@ -5,6 +5,7 @@ import ApiReservationController from "../../controllers/api/api.reservation.cont
 const router = express.Router();
 
 router.get("/", ApiReservationController.getAll);
+router.get("/all",ApiReservationController.getAllForAjax);
 router.get("/guest/:id", ApiReservationController.getReservationByGuest);
 router.get("/checkIn", ApiReservationController.updateCheckIn);
 router.get("/checkOut", ApiReservationController.updateCheckOut);

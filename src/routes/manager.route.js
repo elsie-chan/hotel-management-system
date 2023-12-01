@@ -10,7 +10,7 @@ import ApiInvoiceController from "../controllers/api/api.invoice.controller.js";
 import ApiStatisticController from "../controllers/api/api.statistic.controller.js";
 import apiTransportController from "../controllers/api/api.transport.controller.js";
 
-const Router = express.Router()
+const  Router = express.Router()
 
 Router.get("/dashboard", (req, res) => {
     res.render("layouts/manager/dashboard")

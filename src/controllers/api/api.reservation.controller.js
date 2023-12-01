@@ -7,8 +7,22 @@ class ApiReservationController{
         try {
             const page = req.query.page || 1;
             const reservations = await ReservationService.getAll();
-            console.log(await reservations)
+            // console.log(await reservations)
+            // console.log(paginate(reservations, page, 10))
             return paginate(reservations, page, 10);
+            // return res.status(200).json(paginate(reservations, page, 10));
+        } catch (e) {
+            return res.status(400).json(e.message);
+        }
+    }
+    async getAllForAjax(req, res){
+        try {
+            const page = req.query.page || 1;
+            const reservations = await ReservationService.getAll();
+            // console.log(await reservations)
+            // console.log(paginate(reservations, page, 10))
+            // return paginate(reservations, page, 10);
+            return res.status(200).json(paginate(reservations, page, 10));
         } catch (e) {
             return res.status(400).json(e.message);
         }
