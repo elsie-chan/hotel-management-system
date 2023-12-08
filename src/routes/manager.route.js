@@ -27,6 +27,7 @@ Router.get("/room", async ( req, res) => {
 })
 Router.get("/reservation", async (req, res) => {
     const reservations = await ApiReservationController.getAll(req, res);
+    console.log(reservations)
     const meals = await ApiMealController.getAll(req, res);
     // console.log(meals)
     res.render("layouts/manager/reservation", {reservations: reservations.data, pagination: reservations.pagination,meals: meals.data, role: "manager"})

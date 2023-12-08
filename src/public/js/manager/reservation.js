@@ -131,6 +131,16 @@ $(document).ready(function () {
                 }
             })
     });
+    $('.printInvoice').click(function (e) {
+        const content = document.getElementById('invoice');
+
+        html2canvas(content).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jspdf.jsPDF();
+            pdf.addImage(imgData, 'PNG', 0, 0);
+            pdf.save("download.pdf");
+        });
+    })
 });
 
 function fillData(id) {
