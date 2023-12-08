@@ -99,8 +99,8 @@
       "lname": "Si",
       "fname": "Lam",
       "phone": "0231823934",
-      "checkIn": "Nov 4 2023",
-      "checkOut": "Nov 5 2023",
+      "checkIn": "Nov 4 2023 00:00:00",
+      "checkOut": "Nov 5 2023 23:59:59",
       "room": 101,
       "guests": 2,
       "rooms": [

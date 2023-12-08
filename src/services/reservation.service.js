@@ -148,10 +148,11 @@ const update = async (id, data) => {
             if(!transport) return ErrorMessage(400, "Transport not found");
             data.transport = transport._id;
         }
+
         if(data.room !== reservation.room){
+            console.log(reservation.checkIn, reservation.checkOut);
             await Room.findByIdAndUpdate(reservation.room,{$set: {isAvailable: "Available"}});
             const rooms = await checkRoomInDay(reservation.checkIn, reservation.checkOut);
-            console.log(rooms)
             if(rooms.includes(data.room)) return ErrorMessage(400, "Room not available");
             const room_id = await Room.findOne({roomNumber: data.room});
             if(!room_id) return ErrorMessage(400, "Room not found");
@@ -215,8 +216,6 @@ const remove = async (id) => {
 
 const checkRoomInDay = async (fromDate, toDate) => {
     try {
-        fromDate = new Date(fromDate);
-        toDate = new Date(toDate+"T23:59:59.999Z");
         if (fromDate >= toDate) return ErrorMessage(400, "Check in date must be before check out date");
         let room_id = [];
         const reservation = await Reservation.find({
@@ -269,40 +268,11 @@ const bookingRoom = async(fromDate, toDate, quantity, isChildren) => {
         fromDate = new Date(fromDate);
         toDate = new Date(toDate+"T23:59:59.999Z");
         if (fromDate >= toDate) return ErrorMessage(400, "Check in date must be before check out date");
-        const reservation = await Reservation.find({
-            $or: [
-                {
-                    $and: [
-                        { checkIn: { $gte: fromDate } },
-                        { checkIn: { $lte: toDate } },
-                        { checkOut: { $gte: toDate } }
-                    ]
-                },
-                {
-                    $and: [
-                        { checkIn: { $lte: fromDate } },
-                        { checkOut: { $gte: fromDate } },
-                        { checkOut: { $lte: toDate } }
-                    ]
-                },
-                {
-                    $and: [
-                        { checkIn: { $gte: fromDate } },
-                        { checkOut: { $lte: toDate } }
-                    ]
-                },
-                {
-                    $and: [
-                        { checkIn: { $lte: fromDate } },
-                        { checkOut: { $gte: toDate } }
-                    ]
-                }
-            ]
-        });
-        if(!reservation) return ErrorMessage(400, "Reservation not found");
+        const room_array = await checkRoomInDay(fromDate, toDate);
         let room_id = [];
-        for(const temp of reservation){
-            room_id.push(temp.room);
+        for(const room of room_array){
+            const r = await Room.find({roomNumber: room});
+            room_id.push(r[0]._id);
         }
         let category = "";
         switch(quantity){
@@ -324,7 +294,8 @@ const bookingRoom = async(fromDate, toDate, quantity, isChildren) => {
         }
         if(category === "") return ErrorMessage(400, "Category not found");
         const cate = await Category.find({name: category});
-        const room = Room.find({$and: [{_id: {$nin: room_id}}, {isChildren: isChildren}, {roomType: cate}, {isAvailable: "Available"}]}).populate("roomType", "name");
+        if(!cate) return ErrorMessage(400, "Category not found");
+        const room = Room.find({$and: [{_id: {$in: room_id}}, {isChildren: isChildren}, {roomType: cate}, {isAvailable: "Available"}]}).populate("roomType", "name");
         return await room;
     } catch (e) {
         return ErrorMessage(400, "Reservation not found");
